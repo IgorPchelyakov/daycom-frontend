@@ -1,0 +1,2032 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "xhtml11.dtd">
+<html lang="uk" class="_light">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			<meta name="Keywords" content="" />
+				<meta name="Description" content="" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="robots" content="noindex,nofollow">
+	<meta name="viewport" content="width=device-width, initial-scale=1" id="head-meta-viewport">
+
+	<title>Файл-менеджер</title>
+
+	<link href="/img/cms/toolbar/favicon.png" rel="shortcut icon" />
+    <link href="/css/semantic/admin.min.css?v=1709645771" rel="stylesheet" type="text/css" />
+
+	<link href="/css/stylus/support.css?v=1675876141" type="text/css" rel="stylesheet" />
+	<link href="/css/stylus/ufo.css?v=1700727160" rel="stylesheet" type="text/css" />
+	<link href="/css/user/user.css?v=1675876141" type="text/css" rel="stylesheet" />
+<!--	Эти стили держат дропдаун номеров, их лучше не убирать-->
+	<link media="none" onload="if(media!='all')media='all'" href="/css/stylus/input_admtools.css?v=1675876141" type="text/css" rel="stylesheet" />
+	<!-- Front-end refactor styles and scripts -->
+	<link href="/css/stylus/main.css?v=1710923514" rel="stylesheet" type="text/css" />
+	<link rel="manifest" href="/manifest.json">
+	<script src="/external_libs/jquery/dist/jquery.min.js?v=1702470179"></script>
+	<script src="/js/semantic/admin.min.js?v=1709645771"></script>
+
+	<script src="/js/shared/request.min.js?v=1708609457"></script>
+	<script src="/js/shared/global.min.js?v=1710488228"></script>
+	<script src="/js/shared/modal.min.js?v=1704901866"></script>
+	<script src="/js/ukraine/hosting.min.js?v=1703856831"></script>
+		<script defer src="/js/orfo/orfo.js?v=1679492316"></script>
+	
+		<script src="/external_libs/raven/raven.min.js?v=1675876141"></script>
+	
+<script nonce="180d9209">
+
+        $(function () {
+            Raven.config('https://763083cbfb804741839b5d8377cb6fe7@sentry.adm.tools/9', {
+                tags: {
+                    app: 'adm.tools',
+                },
+				release: 'f7186b311c526f9028e70efbd5ccabc972ac2f9a',
+            }).install();
+            Raven.setUserContext({
+                id: '786697',
+            });
+        });
+	</script>
+	
+	
+<script nonce="180d9209">
+
+        window.csrf_token = 'FZ8jn5b2SJ3L2Lak9RgyLg8BbB2224jf',
+        window._n = '180d9209',
+		window.ERROR_MESSAGE_SYMBOL = 'Вказано неприпустимий символ.';
+		window.user_is_switcher = +'';
+
+		addEventListener('DOMContentLoaded', function(){
+			$("div#checked_site").click(function () {
+				if($("#checked_site_arrow").attr('title') == '0'){
+					$("#checked_site_arrow").attr('title', '1');
+					$("#checked_site_arrow").html("&uarr;");
+				} else {
+					$("#checked_site_arrow").attr('title', '0');
+					$("#checked_site_arrow").html("&darr;");
+				}
+			});
+
+			// adm.tools sidebar
+			let htmlBlock = document.querySelector('html');
+			document.querySelector('.js-sidebar-toggle-btn').addEventListener('click', () => {
+				htmlBlock.classList.toggle('_sidebar-show');
+			});
+
+			// devices with touchscreen
+			if(window.touchDevice) {
+				swipeDetect(htmlBlock, direction => {
+					if(direction === 'left') {
+						htmlBlock.classList.remove('_sidebar-show');
+					} else if(direction === 'right') {
+						htmlBlock.classList.add('_sidebar-show')
+					}
+				})
+			}
+			// sidebar end
+
+            '';
+
+			'';
+
+			'';
+		});
+
+		$(document).keyup(function(e){
+			if (e.keyCode === 27) {
+				DW.close();
+			}
+		});
+
+        $(function() {
+			let sideBarSearch = document.querySelector('.side-nav.side-nav--search');
+            if(sideBarSearch) {
+
+				let index;
+				sideBarSearch.addEventListener('keydown', function(e) {
+					if(!['ArrowDown', 'ArrowUp'].includes(e.key)) {
+						return false;
+					}
+
+					let inputGlobalSearch = document.getElementById('global_search'),
+						searchResult = document.getElementById('search_result'),
+						links = searchResult.querySelectorAll('.item a'),
+						len = links.length - 1;
+
+					if(e.key === 'ArrowDown'
+						&& document.activeElement === inputGlobalSearch
+						&& searchResult.innerHTML
+					) {
+						index = -1;
+					}
+
+					if(e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+						e.preventDefault();
+					}
+
+					if(e.key === 'ArrowDown') {
+						if(index < len) {
+							index++;
+							links[index].setAttribute('tabindex', '-1');
+							links[index].focus();
+
+						} else if(index === len) {
+							index = 0;
+							links[index].setAttribute('tabindex', '-1');
+							links[index].focus();
+						}
+					} else if(e.key === 'ArrowUp') {
+						if(index > 0) {
+							--index;
+							links[index].setAttribute('tabindex', '-1');
+							links[index].focus();
+						} else if(index === 0) {
+							index = len;
+							links[index].setAttribute('tabindex', '-1');
+							links[index].focus();
+						}
+					}
+				});
+
+				let searchTimeout;
+				document.getElementById('global_search').addEventListener('keyup', function(e) {
+					if(!e.key.indexOf('Arrow')) {
+						return false;
+					}
+
+					clearTimeout(searchTimeout);
+
+					let text = document.getElementById('global_search');
+
+					if(!text) {
+						return;
+					}
+
+					let value = text.value.trim();
+
+					if(!value.length) {
+						let searchResult = document.getElementById('search_result');
+
+						if(!searchResult) {
+							return;
+						}
+
+						searchResult.innerHTML = '';
+						return;
+					}
+
+					searchTimeout = setTimeout(function () {
+						value = text.value.trim();
+						AjaxRequest.action('/action/hosting/search/result/', {'text': value});
+					}, 1000);
+				})
+			}
+        });
+
+	</script>
+
+<style>
+*,*:before,*:after{box-sizing:inherit;}.l-page{min-width:auto;}.l-main.l-main{background:#f0f3f6;}button::-moz-focus-inner{border:0;}
+</style>
+</head>
+<body class="l-body _light">
+	<div class="l-page">
+		<div class="l-page__inner">
+			<div class="l-header js-header " id="toolbar">
+	<link href="/css/cms/toolbar/userbar.css" rel="stylesheet" type="text/css" />
+
+<div class="ufo-chat " style="display: none">
+    <div class="expander"></div>
+    <div class="ufo-container">
+        <div class="ufo-header">
+            <div class="icon">
+                <i class="ui icon comment"></i>
+            </div>
+            <div class="title">
+                Онлайн-чат
+            </div>
+            <div class="rate js-popup" data-html="Оцініть якість відповідей в поточному діалозі. Оцінку можна змінювати необмежену кількість разів.">
+                <div class="ui mini red rating"></div>
+            </div>
+            <div class="hide-button" title="Приховати чат" onclick="return UfoClient.hideChat()">
+                <i class="ui icon minus"></i>
+            </div>
+            <div class="close-button" title="Закрити чат" onclick="return UfoClient.closeChat()">
+                <i class="ui icon times"></i>
+            </div>
+
+            <div class="message-counter"></div>
+        </div>
+                <div class="ufo-body">
+            <div class="chat-attach">
+                <i class="ui icon paperclip"></i>
+            </div>
+            <div class="auth-detect" style="display: none">
+                <div class="a-question">
+                    Ви наш клієнт?
+                </div>
+                <div class="ui buttons">
+                    <button class="ui button blue agree" onclick="location.href = LOGIN_URL">Авторизуватись</button>
+                    <button class="ui button green decline">Продовжити</button>
+                </div>
+            </div>
+            <div class="auth-user-data" style="display: none">
+                <form class="ui form tiny" onsubmit="return UfoClient.authorizeUser()">
+                    <div class="field">
+                        <label>Ваше ім’я:</label>
+                        <input name="name" type="text" required class="ui small fluid" autocomplete="off">
+                    </div>
+
+                    <div class="field">
+                        <label>Ваш Email:</label>
+                        <input name="email" type="email" required class="ui small fluid" autocomplete="off">
+                    </div>
+
+                    <button class="ui button blue fluid agree">Розпочати чат</button>
+                </form>
+
+            </div>
+            <div class="chat-container close">
+                <div class="messages full">
+                        <div class="message example">
+                            <div class="message-content">
+                                <div class="author"></div>
+                                <div class="time"></div>
+                                <div class="item"></div>
+                            </div>
+                        </div>
+
+                        <div class="message bot technical service">
+                            <div class="message-content">
+                                <div class="author"></div>
+                                <div class="time"></div>
+                                <div class="item ui form">
+                                    <div class="ui field mini fluid">
+                                        <label>Виберіть тип звернення:</label>
+                                        <select name="service" class="ui dropdown">
+                                            <option value="" disabled selected>Зробіть вибір</option>
+                                            <option value="hosting">Хостинг</option>
+                                            <option value="domain">Домен</option>
+                                            <option value="vps">VPS</option>
+                                            <option value="dedicated">Dedicated</option>
+                                            <option value="storage">Сховище</option>
+                                            <option value="mongo">MongoDB</option>
+                                            <option value="redis">Redis</option>
+                                            <option value="mysql">MySQL</option>
+                                            <option value="billing">Бухгалтерія</option>
+                                            <option value="other">Інше питання</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="message bot technical service-value">
+                            <div class="message-content">
+                                <div class="author"></div>
+                                <div class="time"></div>
+                                <div class="item has-services ui form" style="display: none">
+                                    <div class="ui field mini fluid">
+                                        <label>Виберіть послугу:</label>
+                                        <select name="service_value" class="ui dropdown search"></select>
+                                    </div>
+                                </div>
+
+                                <div class="item no-services ui form" style="display: none">
+                                    У вас немає послуг такого типу. Виберіть інший тип або просто почніть діалог.
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="message example file">
+                            <div class="message-content">
+                                <div class="author"></div>
+                                <div class="time"></div>
+                                <div class="file-attach">
+                                    <div class="file-row">
+                                        <i class="ui icon file"></i> <span class="file-name" onclick="UfoClient.downloadFile(this)"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="help-links">
+                                                        <a href="https://adm.tools/support/" class="ui text item">Історія звернень</a>
+                        </div>
+                    </div>
+                <div class="message-box">
+                    <div class="ui button primary call-operator-btn" onclick="UfoClient.callOperator(this)">Покликати оператора</div>
+                    <div class="message-area">
+                        <textarea contenteditable="true" placeholder="Повідомлення" name="message" autocomplete="off"></textarea>
+                        <div class="action-buttons">
+                            <div class="send-button" onclick="UfoClient.sendMessage()">
+                                <i class="ui icon paper plane"></i>
+                            </div>
+                            <div class="pending-button">
+                                <i class="ui icon circle notch loading"></i>
+                            </div>
+                            <div class="file-attach-button">
+                                <input type="file" multiple id="file-input">
+                                <label for="file-input">
+                                    <i class="ui icon paperclip"></i>
+                                </label>
+                            </div>
+                            <div class="screen-attach-button" onclick="UfoClient.sendScreenShot()" title="Надіслати скріншот">
+                                <i class="ui icon fa-images"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="in-telegram" onclick="return AjaxRequest.action('/action/telegram/chat/')">Продовжити в Telegram</a>
+                </div>
+            </div>
+            <div class="rate-form" style="display: none">
+                <div class="rf-form">
+                    <div class="rf-after">
+                        Дякуємо за вашу оцінку!
+                        <br><br><br><a class="rf-send-on-mail"
+                           id="send-on-mail"
+                           href="#">
+                            Надіслати переписку мені на пошту
+                        </a>
+                    </div>
+                    <div class="rating-group">
+                        <div class="ui huge red rating"></div>
+                    </div>
+                </div>
+                <div class="rf-comment">Будь ласка, оцініть нашу роботу.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/nodejs/socket.io-4.min.js?v=1675876142"></script>
+<script src="/js/ufo/client.min.js?v=1702470545"></script><script nonce="180d9209">
+const LOGIN_URL = "https://auth.adm.tools/uk/?return_url=" + location.href;
+const UFO_MESSAGES = {
+  'close_confirm_message': 'Закрити чат? Ви більше не зможете до нього повернутись.',
+  'operator_make_ticket_msg': 'Оператор перевів чат у тикет. \n\rПродовжити спілкування можна на сторінці ',
+  'system_make_ticket_msg': 'Чат переведено в тикет, тому що немає операторів онлайн. \n\rПродовжити спілкування можна на сторінці ',
+  'chat_is_offline': 'Вимкнено з’єднання з чатом, спробуйте пізніше або оновіть сторінку.',
+  'err_connection_refused': 'З технічних причин неможливо з’єднатися із сервером чату. Оновіть сторінку або напишіть нашому <br><a target="_blank" href="https://t.me/AdmToolsNotificationBot">Telegram</a> боту.',
+  'disconnectTimeout': 'З’єднання розірвано, тому що ви були неактивні 25 хвилин.',
+  'select_value': 'Зробіть вибір',
+  'no_name': 'Ви',
+  'bot_name': 'Помічник',
+  'restrict_email': 'Вказаний email не можна використовувати.',
+  'operatorWrite': 'Оператор набирає повідомлення',
+  'newMessage': '*** Нове повідомлення ***',
+  'assignNoChat': 'Чат не знайдений або вже оброблений.',
+  'assignAssigned': 'Чат вже назначений.',
+  'assignError': 'В даний момент немає доступних операторів. Протягом декількох хвилин вам дадуть відповідь.',
+  'assignSuccess': 'Оператор назначений, очікуйте на відповідь.',
+  'callOperatorWait': 'Оператор призначений і зараз буде на зв’язку',
+  'screenError': 'Помилка відправки скриншота',
+  'operatorName': 'Оператор',
+  'tech_services': 'Онлайн-чат зараз знаходиться на технічному обслуговуванні і протягом години відновить свою роботу.',
+  'max_upload_file_count': 'Максимальна кількість для завантаження - 10 файлів.',
+  'render_file_error': 'Помилка відтворення відправленого файлу',
+  'flood_protect': 'Система розпізнавання флуду заблокувала вас.',
+  'max_open_chat_error': 'Ви відкрили надто багато чатів останнім часом.',
+  'open_chat_before_attach_file': 'Щоб прикріпити файл, спочатку надішліть опис проблеми.',
+
+};
+
+$(document).ready(function () {
+  setTimeout(() => {
+    if (UfoClient.state !== 'closed' || +'0' > 0) {
+      UfoClient.openChat();
+    }
+  }, 300);
+
+
+  $('.message.service .ui.dropdown').dropdown({
+    allowReselection: true,
+    onChange: function (val) {
+      if (!val) {
+        return;
+      }
+
+      let serviceMessage = UfoClient.chatBlock.querySelector('.message.service-value'),
+        messageBox = UfoClient.chatBlock.querySelector('.message-box');
+
+      localStorage.serviceType = val;
+
+      UfoClient.chatBlock.querySelector('.chat-container .help-links').style.display = 'none';
+
+      if (val === 'other' || val === 'billing') {
+        messageBox.style.display = 'block';
+        serviceMessage.style.display = 'none';
+        return;
+      }
+
+      messageBox.style.display = 'none';
+      return AjaxRequest.action('/action/user/services/', {type: val}, response => {
+        UfoClient.appendServices(response)
+      });
+    }
+  });
+
+  $('.message.service-value .ui.dropdown').dropdown({
+    allowReselection: true,
+    fullTextSearch: true,
+    onChange: (val, text) => {
+      if(!val) {
+        return;
+      }
+
+      localStorage.serviceId = val;
+      localStorage.serviceName = text;
+      UfoClient.chatBlock.querySelector('.message-box').style.display = 'block';
+    }
+  });
+});
+
+
+function getDisplayMedia(options) {
+  if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+    return navigator.mediaDevices.getDisplayMedia(options);
+  }
+  if (navigator.getDisplayMedia) {
+    return navigator.getDisplayMedia(options);
+  }
+  if (navigator.webkitGetDisplayMedia) {
+    return navigator.webkitGetDisplayMedia(options);
+  }
+  if (navigator.mozGetDisplayMedia) {
+    return navigator.mozGetDisplayMedia(options);
+  }
+  throw new Error('getDisplayMedia is not defined');
+}
+
+async function takeScreenshotCanvas() {
+  const stream = await getDisplayMedia({
+    audio: false,
+    video: {
+      width: screen.width * (window.devicePixelRatio || 1),
+      height: screen.height * (window.devicePixelRatio || 1),
+      frameRate: 1,
+    },
+  });
+
+  const video = document.createElement('video');
+  const result = await new Promise((resolve, reject) => {
+    video.onloadedmetadata = () => {
+      video.play();
+      video.pause();
+
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      resolve(canvas);
+    };
+    video.srcObject = stream;
+  });
+
+  stream.getTracks().forEach(function (track) {
+    track.stop();
+  });
+
+  if (result == null) {
+    throw new Error('Cannot take canvas screenshot');
+  }
+
+  return result;
+}
+</script>
+<div class="head-menu">
+	<nav class="head-menu__left __has_left_menu">
+				<div class="head-menu__col head-menu__col--navbutton">
+			<button class="head-menu__link head-menu__link--nav-btn js-sidebar-toggle-btn" title="Меню">
+				<i class="icon bars"></i>
+			</button>
+		</div>
+				<div class="head-menu__col">
+			<a
+				class="head-menu__link c-logo _hide-s "
+				href="https://adm.tools"
+			>
+									<i class="swg_logo" style="background: url('/img/cms/toolbar/logo.svg')  no-repeat" ></i>
+								<span class="_hidden-vis">ADM.TOOLS</span>
+			</a>
+
+			<button
+				title="Приховати меню"
+				class="head-menu__link head-menu__link--sidebar-btn js-sidebar-toggle-btn"
+				area-label="Приховати меню"
+			>
+				<i class="fa fa-arrow-left fa-fw _fs20" aria-hidden="true"></i>
+				<i class="fa fa-bars fa-fw _fs20" aria-hidden="true"></i>
+			</button>
+		</div>
+
+					<div class="head-menu__col head-menu__col--catalog" id="top_service_menu">
+									<a data-uniq-name="hosting" class="head-menu__link has-service " href="/hosting/" title="">
+						<i class="fa fa-sitemap fa-fw" aria-hidden="true"></i>
+						<span>Хостинг</span>
+					</a>
+									<a data-uniq-name="domain" class="head-menu__link has-service " href="/domains/" title="">
+						<i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+						<span>Домени</span>
+					</a>
+									<a data-uniq-name="vps" class="head-menu__link  " href="/vps/" title="">
+						<i class="fa-regular fa-cloud" aria-hidden="true"></i>
+						<span>VPS</span>
+					</a>
+									<a data-uniq-name="dedicated" class="head-menu__link  " href="/dedicated/" title="Виділені сервера">
+						<i class="icon hdd" aria-hidden="true"></i>
+						<span>Dedicated</span>
+					</a>
+									<a data-uniq-name="storage" class="head-menu__link  " href="/storage/" title="">
+						<i class="fa-regular fa-cabinet-filing" aria-hidden="true"></i>
+						<span>Сховища</span>
+					</a>
+									<a data-uniq-name="mysql" class="head-menu__link  " href="/mysql/" title="">
+						<i class="icon database" aria-hidden="true"></i>
+						<span>MySQL</span>
+					</a>
+									<a data-uniq-name="mongodb" class="head-menu__link  " href="/mongodb/" title="">
+						<i class="icon leaf" aria-hidden="true"></i>
+						<span>MongoDB</span>
+					</a>
+									<a data-uniq-name="redis" class="head-menu__link  " href="/redis/" title="">
+						<i class="fa-regular fa-cube" aria-hidden="true"></i>
+						<span>Redis</span>
+					</a>
+								
+				<div class="head-menu__link ui dropdown userbar-service-dropdown">
+					<i class="chevron circle down icon"></i>
+					<div class="menu">
+													<a data-uniq-name="hosting" class="item " href="/hosting/" title="">
+								<i class="fa fa-sitemap fa-fw" aria-hidden="true"></i>
+								Хостинг							</a>
+													<a data-uniq-name="domain" class="item " href="/domains/" title="">
+								<i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+								Домени							</a>
+													<a data-uniq-name="vps" class="item " href="/vps/" title="">
+								<i class="fa-regular fa-cloud" aria-hidden="true"></i>
+								VPS							</a>
+													<a data-uniq-name="dedicated" class="item " href="/dedicated/" title="Виділені сервера">
+								<i class="icon hdd" aria-hidden="true"></i>
+								Dedicated							</a>
+													<a data-uniq-name="storage" class="item " href="/storage/" title="">
+								<i class="fa-regular fa-cabinet-filing" aria-hidden="true"></i>
+								Сховища							</a>
+													<a data-uniq-name="mysql" class="item " href="/mysql/" title="">
+								<i class="icon database" aria-hidden="true"></i>
+								MySQL							</a>
+													<a data-uniq-name="mongodb" class="item " href="/mongodb/" title="">
+								<i class="icon leaf" aria-hidden="true"></i>
+								MongoDB							</a>
+													<a data-uniq-name="redis" class="item " href="/redis/" title="">
+								<i class="fa-regular fa-cube" aria-hidden="true"></i>
+								Redis							</a>
+											</div>
+				</div>
+			</div>
+			</nav>
+
+	<nav class="head-menu__right">
+		<button style="min-width:42px; display: block;" class="head-menu__link switch-light" title="Вимкнути світло" onclick="return AjaxRequest.action('/action/user/switch_theme/');">
+			<i class="far fa-lightbulb-on"></i>
+		</button>
+		<a
+				class="head-menu__link _hide-mobile"
+				href="https://ukraine.com.ua"
+				target="_blank"
+				title="Замовлення послуг"
+		>
+			<i class="icon cart" aria-hidden="true"></i>
+		</a>
+		<a
+				title="Вікі"
+				class="head-menu__link _hide-mobile _collapse-text"
+				href="https://adm.tools/wiki/"
+				target="_blank"
+		>
+			<i class="icon wikipedia w" aria-hidden="true"></i>
+		</a>
+		
+				<button
+			class="head-menu__link js-head-bookmark-btn  _hide-mobile"
+			title="Закладки"
+			onclick="return ToolbarUser.switchBookmark();"
+			area-label="Закладки"
+		>
+			<i class="icon star" aria-hidden="true"></i>
+		</button>
+		
+					<button
+					title="Вибрати мову"
+					class="head-menu__link js-udd-open-btn"
+					data-width="65"
+					data-target="head-menu-language"
+					aria-expanded="false"
+					data-direction="n"
+			>
+				UA			</button>
+
+			<div
+					class="udd udd--payment js-udd-target"
+					data-id="head-menu-language"
+					aria-hidden="true"
+			>
+				<ul class="udd-menu">
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '1'});" href="#">ru</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '2'});" href="#">UA</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '3'});" href="#">en</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '11'});" href="#">pl</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '13'});" href="#">ro</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '14'});" href="#">cn</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '15'});" href="#">be</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '16'});" href="#">de</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '17'});" href="#">fr</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '18'});" href="#">es</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '20'});" href="#">ar</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '21'});" href="#">pt</a></li>
+											<li class="udd-menu__item ll-link"><a class="" onclick="return AjaxRequest.action('/action/user/switch_lang/', {lang_id: '22'});" href="#">ja</a></li>
+					
+				</ul>
+			</div>
+				<div class="head-menu__col head-menu__col--help">
+			<button
+				title="Допомога"
+				class="head-menu__link _hide-xs js-udd-open-btn"
+				data-target="head-menu-help"
+				data-width="210"
+				aria-expanded="false"
+			>
+				<i class="fa fa-question-circle _fs20 fa-fw" aria-hidden="true"></i>
+							</button>
+
+
+			<div
+				class="udd _hide-xs js-udd-target"
+				data-id="head-menu-help"
+				aria-hidden="true"
+			>
+				<ul class="udd-menu">
+					<li class="udd-menu__item">
+						<a onclick="UfoClient.openChat();return false;">
+							<span>Онлайн-чат</span>
+						</a>
+					</li>
+
+					<li class="udd-menu__item">
+						<a href="/support/">
+							<span>Техпідтримка</span>
+													</a>
+					</li>
+					<li class="udd-menu__item">
+						<a href="https://adm.tools/wiki/" target="_blank">
+							<span>Wiki</span>
+							<i class="fa fa--right fa-external-link" aria-hidden="true"></i>
+						</a>
+					</li>
+					<li class="udd-menu__item">
+						<a href="https://adm.tools/forum/" target="_blank">
+							<span>Форум</span>
+							<i class="fa fa--right fa-external-link" aria-hidden="true"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="head-menu__col">
+												<button
+						title="Оплата"
+						class="head-menu__link js-udd-open-btn"
+						data-target="head-menu-payment"
+						data-width="285"
+						aria-expanded="false"
+					>
+						<i class="icon credit card" aria-hidden="true"></i>
+													<span class="_hide-xxs">16.50 ₴</span>
+											</button>
+
+					<div
+						class="udd udd--payment js-udd-target"
+						data-id="head-menu-payment"
+						aria-hidden="true"
+					>
+												<ul class="udd-menu">
+							<li class="udd-menu__item"><a href="/invoice/servicecard/">Оплата</a></li>
+							<li class="udd-menu__item"><a href="/invoice/">Рахунки</a></li>
+							<li class="udd-menu__item"><a href="/invoice/balance/">Баланс</a></li>
+															<li class="udd-menu__item"><a href="/invoice/cards/">Банківські картки</a></li>
+								<li class="udd-menu__item"><a href="/invoice/serviceauto/">Автоподовження послуг</a></li>
+
+																<li class="udd-menu__item"><a href="/referralpartner/">Реферальна програма</a></li>
+																					</ul>
+						<hr class="ui-devider" />
+						<div class="udd-wr">
+							<span class="udd-menu__item">
+								<button
+									onclick="return AjaxRequest.action('/action/user/balance/form/', {amount:0, currency_id:'980'});"
+								>
+									<i class="fa fa-money" aria-hidden="true"></i>
+									<span>Поповнити баланс</span>
+								</button>
+							</span>
+						</div>
+					</div>
+				
+				<div class="head-menu__section user-id" title="Ідентифікатор користувача">
+										<span class="head-menu__id">ID: 786697</span>
+									</div>
+
+				<button
+					title="Профіль"
+					class="head-menu__link js-udd-open-btn"
+					data-target="head-menu-profile"
+					data-width="355"
+					aria-expanded="false"
+				>
+																<i class="c-avatar" style="background-image: url(https://cdn.adm.tools/~/thumbnail/128x128/auth_user/0000/0078/6697/avatar.jpeg); background-color: #3b6e93"></i>
+									</button>
+
+				<div
+					class="udd udd--profile js-udd-target"
+					data-id="head-menu-profile"
+					aria-hidden="true"
+				>
+					<div class="user-card">
+						<div class="user-card__profile">
+							<div class="user-card__av">
+																	<i class="c-avatar" style="background-image: url(https://cdn.adm.tools/~/thumbnail/128x128/auth_user/0000/0078/6697/avatar.jpeg)"></i>
+															</div>
+							<div class="user-card__info">
+								<div class="user-card__bio current">
+																		<h4 class="user-card__name">Піцик Євгеній Валерійович</h4>
+									<p class="user-card__email">daycomnews@gmail.com</p>
+																	</div>
+							</div>
+						</div>
+
+						<div class="additional-users">
+												</div>
+
+						<div class="user-card__profile add">
+							<a  href="https://auth.adm.tools/uk/?return_url=https%3A%2F%2Fadm.tools%2F" >Додати обліковий запис</a>
+						</div>
+
+						
+						<ul class="udd-menu udd-menu--profile">
+							<li class="udd-menu__item udd-menu__item--profile">
+								<a href="/user/info/" class="ui-link --fs-12">Персональні дані</a>
+							</li>
+							<li class="udd-menu__item udd-menu__item--profile">
+								<a href="/user/api/" class="ui-link">API</a>
+							</li>
+							<li class="udd-menu__item udd-menu__item--profile">
+								<a href="/services/">Список послуг  </a>
+							</li>
+							<li class="udd-menu__item udd-menu__item--profile">
+								<a href="/services/delegate-access/">Делегування доступу</a>
+							</li>
+							<li class="udd-menu__item udd-menu__item--profile">
+								<a href="/user/delegate/">Передача прав  </a>
+							</li>
+							<li class="udd-menu__item udd-menu__item--profile">
+								<a href="/hosting/accounts/#/tabs-deleted">Видалені хостинг-акаунти</a>
+							</li>
+						</ul>
+						<ul class="udd-menu udd-menu--profile">
+							<li class="udd-menu__item udd-menu__item--logout">
+								<a class="ui-link" onclick="return AjaxRequest.action('/action/user/pop/', {user_id: '786697'});">
+									<i class="fa fa-sign-out"></i>
+									<span>Вийти</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+					</div>
+	</nav>
+</div>
+<script nonce="180d9209">
+let serviceMenuElements = {
+	main: {},
+	dropdown: {},
+	width: {},
+	elements: [],
+};
+let headRightMenu, serviceMenuDropdown, serviceMenuDropdownWidth;
+
+$(document).ready(function () {
+	$('.userbar-service-dropdown').dropdown({
+		on: 'hover'
+	});
+
+	headRightMenu = document.querySelector('.head-menu__right');
+	for (let element of document.querySelectorAll('#top_service_menu > .head-menu__link')) {
+		if (element.classList.contains('dropdown')) {
+			serviceMenuDropdown = element;
+			serviceMenuDropdownWidth = element.offsetWidth;
+			continue;
+		}
+
+		serviceMenuElements.elements.push(element);
+		serviceMenuElements.main[element.dataset.uniqName] = element;
+	}
+	for (let element of document.querySelectorAll('#top_service_menu .userbar-service-dropdown .menu .item')) {
+		let uniqName = element.dataset.uniqName;
+		serviceMenuElements.dropdown[uniqName] = element;
+	}
+	// Переворачиваем список элементов чтобы первыми скрывать те элементы которые в конце меню
+	serviceMenuElements.elements = serviceMenuElements.elements.reverse();
+
+	resizeServiceMenu();
+});
+
+window.addEventListener('resize', resizeServiceMenu);
+
+function resizeServiceMenu() {
+	// Меньше этой ширины меню сворачивается в бургер
+	if (window.innerWidth <= 1200) {
+		return;
+	}
+
+	// Сбрасываем значения скрытия
+	for (let element of serviceMenuElements.elements) {
+		element.classList.remove('hide');
+	}
+	for (let uniq_name in serviceMenuElements.dropdown) {
+		serviceMenuElements.dropdown[uniq_name].classList.add('hide');
+	}
+
+	// Необходим расчёт ширины элементов
+	if (serviceMenuElements.width.hosting === undefined) {
+		calculateElementsWidth();
+	}
+
+	let menuStartPosition = serviceMenuElements.main.hosting.getBoundingClientRect();
+
+	// Расчёт оставшегося свободного места в меню
+	let leftEmptyWidth = window.innerWidth - headRightMenu.offsetWidth - menuStartPosition.x - 10;
+	for (let uniq_name in serviceMenuElements.width) {
+		// Вычитаем все элементы
+		leftEmptyWidth -= serviceMenuElements.width[uniq_name];
+	}
+
+	// Свободное место осталось - все блоки помещаются на экран
+	if (leftEmptyWidth >= 0) {
+		serviceMenuDropdown.style.display = 'none';
+		return;
+	}
+
+	// Не все элементы помещаются - нужно скрывать некоторые
+	serviceMenuDropdown.style.display = 'block';
+	leftEmptyWidth -= serviceMenuDropdownWidth;
+
+	// Пытаемся скрыть сервисы без услуг
+	for (let element of serviceMenuElements.elements) {
+		// Активный элемент меню не скрываем
+		if (element.classList.contains('_active')) {
+			continue;
+		}
+		// Если есть услуги - не скрываем
+		if (element.classList.contains('has-service')) {
+			continue;
+		}
+
+		// Элемент можно скрыть
+		let uniqName = element.dataset.uniqName;
+		leftEmptyWidth += serviceMenuElements.width[uniqName];
+		element.classList.add('hide');
+		serviceMenuElements.dropdown[uniqName].classList.remove('hide');
+
+		// Нужная ширина набрана - можно не продолжать
+		if (leftEmptyWidth >= 0) {
+			return;
+		}
+	}
+
+	// Пытаемся скрыть остальные сервисы
+	for (let element of serviceMenuElements.elements) {
+		// Активный элемент меню не скрываем
+		if (element.classList.contains('_active')) {
+			continue;
+		}
+		// Элемент уже скрыт
+		if (element.classList.contains('hide')) {
+			continue;
+		}
+
+		// Элемент можно скрыть
+		let uniqName = element.dataset.uniqName;
+		leftEmptyWidth += serviceMenuElements.width[uniqName];
+		element.classList.add('hide');
+		serviceMenuElements.dropdown[uniqName].classList.remove('hide');
+
+		// Нужная ширина набрана - можно не продолжать
+		if (leftEmptyWidth >= 0) {
+			return;
+		}
+	}
+}
+
+function calculateElementsWidth() {
+	for (let element of serviceMenuElements.elements) {
+		if (element.offsetWidth <= 0) {
+			continue;
+		}
+
+		// Ширину нужно сохранять сразу тк когда элемент скрыт - его offsetWidth = 0
+		serviceMenuElements.width[element.dataset.uniqName] = element.offsetWidth;
+	}
+}
+
+(ToolbarUser = {
+	isVisible: function(container) {
+		if (container.not(':hidden') && container.css('display') != 'none') {
+			return true
+		}
+
+		return false
+	},
+
+	adminbar: function() {
+		var adminbar = Cookie.get('toolbar_adminbar');
+
+		if (!adminbar || adminbar == 'null') {
+			$('#toolbar')
+				.find('.toolbar-admin')
+				.addClass('toolbar-admin--hide')
+			$('html').removeClass('_adminbar-show')
+			$('.js-head-adminbar-btn').removeClass('_active')
+			Cookie.set('toolbar_adminbar', true, 1, '/');
+		} else {
+			$('#toolbar')
+				.find('.toolbar-admin')
+				.removeClass('toolbar-admin--hide')
+			$('html').addClass('_adminbar-show')
+			$('.js-head-adminbar-btn').addClass('_active')
+			Cookie.delete('toolbar_adminbar');
+		}
+		return false
+	},
+
+	switchBookmark: function() {
+		AjaxRequest.action('/action/user/bookmark/switch/')
+		return false
+	},
+
+	bookmarkActivate: function() {
+		$('.js-head-bookmark-btn').addClass('_active')
+		DW.close()
+	},
+
+	bookmarkDeactivate: function() {
+		$('.js-head-bookmark-btn').removeClass('_active')
+	},
+
+	popupOpen: function(id, event) {
+		var $that = $('.js-tb-popup-btn').filter('[data-id='+ id +']')
+		var direction = $that.data('direction')
+		var width = $that.data('width')
+		var $target = $('.js-tb-popup').filter('[data-id='+ id +']')
+
+
+		if ($('.js-tb-popup').hasClass('_open')) {
+			if ($target.hasClass('_open')) {
+				this.openedPopDown()
+				return
+			} else {
+				this.openedPopDown()
+			}
+		}
+
+
+		$that.addClass('_open')
+
+		var top, right
+		var position = $that.position()
+
+		var e_width = $that.outerWidth(true)
+		var e_height = $that.outerHeight(true)
+
+		position.right = $that.parent().width() - (position.left + e_width)
+
+		if (direction == 'ne') {
+			right = position.right
+			top = parseInt(position.top) + parseInt(e_height)
+		} else if (direction == 'n') {
+			right = position.right - (width - e_width) / 2
+			top = parseInt(position.top) + parseInt(e_height)
+		}
+
+		$target
+			.css('width', width + 'px')
+			.css('top', top + 'px')
+			.css('right', right + 'px')
+			.addClass('_open')
+		return true
+	},
+
+	popdown: function() {
+		$('.js-tb-popup').removeClass('_open')
+		$('.js-tb-popup-btn').removeClass('_open')
+	},
+
+	openedPopDown: function() {
+		$('.js-tb-popup._open').removeClass('_open')
+		$('.js-tb-popup-btn._open').removeClass('_open')
+	},
+
+	setPhone: function(id) {
+		Cookie.set('toolbar_contact', id, 1, '/', 'adm.tools');
+		var contact = $('#toolbar_item_contact_' + id).html()
+
+		$('.js-phone-current').html(contact)
+
+		this.popdown()
+	},
+
+	setLightIcon(){
+		let container = document.querySelector(".switch-light"),
+			i = container.querySelector('i');
+		if(undefined !== i && i !== null){
+			let has_dark = document.body.classList.contains('_dark');
+
+			if(i.classList.contains('fa-lightbulb-on')){
+				i.classList.remove('fa-lightbulb-on');
+			}
+			if(i.classList.contains('fa-lightbulb')){
+				i.classList.remove('fa-lightbulb');
+			}
+
+			let icon = 'fa-lightbulb';
+			container.title = 'Lights on';
+			if(has_dark === false){
+				icon = 'fa-lightbulb-on';
+				container.title = 'Lights off';
+			}
+			i.classList.add(icon);
+		}
+	}
+});
+</script>	</div>
+
+
+							<aside class="l-sidebar js-sidebar " >
+											<div class="ui-select c-select-account">
+							<img src="/img/icon-account.svg" class="c-select-account__icon" width="16" alt="">
+							<select class="ui fluid search normal dropdown selection js-acc-menu-dropdown" onchange="accMenuDropdownChange(this.value);">
+																	<option value='gp503232' data-id="503232" data-url="/ufm/?account_id=503232"  selected >Газета Дейком</option>
+															</select>
+						</div>
+					
+					
+										<div class="side-nav-wr ">
+						<nav class="side-nav side-nav--search">
+							<ul class="side-menu">
+								<li class="side-menu__item">
+									<div class="ui small icon input side-menu__search-input">
+										<input type="text" id="global_search" placeholder="Пошук по сайту">
+										<i class="search icon"></i>
+									</div>
+								</li>
+							</ul>
+							<div id="search_result" class="c-search__result" style="display: none"></div>
+						</nav>
+						<ul class="side-menu  account-menu" >
+															<li class="side-menu__item">
+									<a href="https://adm.tools/?account_id=503232" class="side-menu__link side-menu__link--home">
+										<i class="home middle icon"></i>
+										Головна
+									</a>
+								</li>
+								<!-- li class="side-menu__item"><a class="side-menu__link" href="/hosting/?account_id=503232"><i class="fa-solid fa-house icon"></i> Панель керування</a></li -->
+								<li class="side-menu__item"><a class="side-menu__link" href="/hosting/accounts/">Хостинг-акаунти</a></li>
+													</ul>
+
+						<nav class="side-nav" id="bookmarkMenu">
+	</nav>
+
+
+						<nav class="side-nav side-nav--catalog">
+							<ul class="side-menu">
+								<li class="side-menu__title">
+									<h5>
+										<i class="sitemap icon"></i>
+										<span>Розділи</span>
+									</h5>
+								</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/hosting/">
+											<i class="fa fa-sitemap fa-fw" aria-hidden="true"></i>
+											Хостинг										</a>
+									</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/domains/">
+											<i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+											Домени										</a>
+									</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/vps/">
+											<i class="fa-regular fa-cloud" aria-hidden="true"></i>
+											VPS										</a>
+									</li>
+																	<li class="side-menu__item" title="Виділені сервера">
+										<a class="side-menu__link " href="/dedicated/">
+											<i class="icon hdd" aria-hidden="true"></i>
+											Dedicated										</a>
+									</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/storage/">
+											<i class="fa-regular fa-cabinet-filing" aria-hidden="true"></i>
+											Сховища										</a>
+									</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/mysql/">
+											<i class="icon database" aria-hidden="true"></i>
+											MySQL										</a>
+									</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/mongodb/">
+											<i class="icon leaf" aria-hidden="true"></i>
+											MongoDB										</a>
+									</li>
+																	<li class="side-menu__item" title="">
+										<a class="side-menu__link " href="/redis/">
+											<i class="fa-regular fa-cube" aria-hidden="true"></i>
+											Redis										</a>
+									</li>
+															</ul>
+							<hr class="ui-devider" />
+						</nav>
+
+						<nav class="side-nav">
+							<ul class="side-menu">
+																																			<li class="side-menu__title"><h5>
+											<i class="server ui icon" aria-hidden="true"></i><span>Хостинг  </span>
+										</h5></li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/virtual/" title="">
+																						Мої сайти																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/crontab/" title="">
+																						Розклад завдань (cron)																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/supervisor/" title="">
+																						Supervisor																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/serverstatus/" title="">
+																						Стан серверів																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/extraservices/" title="">
+																						Додаткові послуги																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/serverload/" title="">
+																						Навантаження на веб-сервер																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/antivirusprotection/" title="">
+																						Антивірус																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/backup/" title="">
+																						Резервні копії																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/ddosdefence/" title="">
+																						Захист від DDoS																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/firewall/" title="">
+																						Firewall																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/ssh/" title="">
+																						SSH-доступ																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/bashrc/" title="">
+																						Конфігурація Linux																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/memcache/" title="">
+																						Memcache(d)																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/redis/" title="">
+																						Redis																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/opcache/" title="">
+																						OPcache																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/sphinx/" title="">
+																						Sphinx																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/outgoing/" title="">
+																						Вихідні з'єднання																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/transfer/" title="">
+																						Перенесення сайту																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/transfertous/" title="">
+																						Перенесення сайту до нас																					</a>
+										</li>
+																																				<li class="side-menu__title"><h5>
+											<i class="folder ui icon" aria-hidden="true"></i><span>FTP</span>
+										</h5></li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link selected " href="/ufm/?account_id=503232" title="">
+																						Файл-менеджер																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/ftp/" title="">
+																						Користувачі FTP																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/ftplogs/" title="">
+																						Логи FTP																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " onclick="return ftp_restore(503232);">
+																						Відновити права доступу																					</a>
+										</li>
+																																				<li class="side-menu__title"><h5>
+											<i class="database ui icon" aria-hidden="true"></i><span>MySQL</span>
+										</h5></li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mysql/databases/" title="">
+																						Бази даних																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mysqlload/" title="">
+																						Навантаження на MySQL-сервер																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mysql/slowqueries/" title="">
+																						Повільні запити																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a target="_blank" title="Посилання на зовнішній сайт, буде відкрита в новому вікні" class="side-menu__link  " href="https://phpmyadmin.adm.tools">
+											<i class="external link icon" aria-hidden="true"></i>
+											phpMyAdmin										</a>
+										</li>
+																																				<li class="side-menu__title"><h5>
+											<i class="mail ui icon" aria-hidden="true"></i><span>Email</span>
+										</h5></li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/boxes/" title="">
+																						Поштові скриньки																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/rejected/" title="">
+																						Відхилені листи																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/unsent/" title="">
+																						Невідправлені листи																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/maillog/" title="">
+																						Пошта з сайту																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/whitelist/" title="">
+																						Білий список																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/blacklist/" title="">
+																						Чорний список																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a class="side-menu__link  " href="/hosting/account/503232/mail/web/" title="">
+																						Дизайн WebMail																					</a>
+										</li>
+																																				<li class="side-menu__item">
+										<a target="_blank" title="Посилання на зовнішній сайт, буде відкрита в новому вікні" class="side-menu__link  " href="https://webmail.online/?theme=light&amp;lang=uk">
+											<i class="external link icon" aria-hidden="true"></i>
+											WebMail.Online										</a>
+										</li>
+																								</ul>
+						</nav>
+
+						<nav class="side-nav side-nav--faq">
+							<ul class="side-menu">
+								<li class="side-menu__title">
+									<h5>
+										<i class="question circle icon"></i>
+										<span>Допомога</span>
+									</h5>
+								</li>
+                                <li class="side-menu__item">
+                                    <a class="side-menu__link" onclick="UfoClient.openChat();return false;">
+                                        <span>Онлайн-чат</span>
+                                    </a>
+                                </li>
+								<li class="side-menu__item">
+									<a
+										class="side-menu__link"
+										href="/support/"
+									>
+										Техпідтримка
+									</a>
+								</li>
+								<li class="side-menu__item">
+									<a
+										class="side-menu__link"
+										href="/wiki/"
+										target="_blank" title=" Посилання на зовнішній сайт, буде відкрита в новому вікні "
+									>
+										<i class="external link icon"></i> Wiki
+									</a>
+								</li>
+								<li class="side-menu__item">
+									<a
+										class="side-menu__link"
+										href="/forum/"
+										target="_blank" title=" Посилання на зовнішній сайт, буде відкрита в новому вікні "
+									>
+										<i class="external link icon"></i> Форум
+									</a>
+								</li>
+							</ul>
+						</nav>
+
+						<div class="menu">
+							<!-- #TODO: заверстать скрытие блоки -->
+													</div>
+					</div>
+				</aside>
+						<div class="l-main foot" role="main">
+
+				
+				
+				
+				<!-- Только для пользователей, что отмечены, как LIMITED -->
+				<!-- Вывод предупреждения о необходимости подтвердить электронный адрес. -->
+				
+				
+									<div class="p-content">
+						<div class="p-title">
+							<div class="p-title__left">
+								<h2 class="ui header">Файл-менеджер </h2>
+							</div>
+						</div>
+					</div>
+				
+				<link href="/css/stylus/ufm.css?v=1705581551" rel="stylesheet" type="text/css" />
+
+<div id="ufm">
+    <div class="screen">
+        <span class="expand" title="Розгорнути"><i class="fad fa-expand-wide" onclick="UFM.expand()"></i></span>
+        <span class="collapse example" title="Згорнути"><i class="fad fa-compress-arrows-alt" onclick="UFM.collapse()"></i></span>
+    </div>
+    
+    <div class="ufm-container">
+        <div class="ufm-panel left"></div>
+        <div class="ufm-panel-divider"></div>
+        <div class="ufm-panel right"></div>
+    </div>
+
+    <div class="ufm-panel-example example">
+        <div class="ufm-panel-path">
+            <div class="ufm-panel-path-input">
+                <div class="ufm-panel-path-icon" title="Вибрати джерело підключення" onclick="UFM.showSources(this)"></div>
+                <span type="text" class="name"></span>
+                <div class="ufm-panel-input-sources example">
+                    <div class="ufm-panel-input-sources-item example" data-type="account" onclick="return UFM.selectSourceItem(this)">
+                        <span class="ufm-item-name"></span>
+                    </div>
+                </div>
+                <div contenteditable="true" class="ufm-panel-input-path"></div>
+                <ul class="ufm-panel-input-help example">
+                    <li class="ufm-panel-help-item example">
+                        <span class="ufm-item-icon"><i class="fas fa-folder"></i></span>
+                        <span class="ufm-item-name"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="ufm-panel-path-update" onclick="UFM.updatePanel(this)">
+                <i class="fad fa-redo-alt"></i>
+            </div>
+        </div>
+        <div class="ufm-panel-control">
+            <div class="ufm-panel-control-l">
+                <div class="control-item files">
+                    <input type="file" name="files" multiple onchange="UFMActions.uploadFiles(this)">
+                    <i class="fad fa-upload" title="Завантажити файли" onclick="UFM.showUploadFiles(this);"></i>
+                </div>
+                <div class="control-item files">
+                    <input type="file" name="files" webkitdirectory mozdirectory multiple onchange="UFMActions.uploadFiles(this)">
+                    <i class="fad fa-folder-upload" title="Завантажити каталог" onclick="UFM.showUploadFiles(this);"></i>
+                </div>
+                <div class="control-item">
+                    <i class="fad fa-cloud-arrow-up" title="Завантажити файли за посиланням" onclick="UFM.showUploadFromSource();"></i>
+                </div>
+                <div class="control-item">
+                    <i class="fad fa-magnifying-glass" title="Пошук файлів  " onclick="UFM.showSearchModal(this);"></i>
+                </div>
+                <div class="control-item bookmark">
+                    <i class="fad fa-bookmark" title="Закладки  " onclick="UFM.openBookmarks(this);"></i>
+                </div>
+            </div>
+            <div class="ufm-panel-control-r">
+                <div class="control-item ssh">
+                    <i class="fad fa-terminal" title="Відкрити SSH" onclick="UFM.openSsh(this);"></i>
+                </div>
+                <div class="control-item size" title="Показувати розміри каталогів та кількість інодів" onclick="UFMActions.showDirSize(this)">
+                    <i class="fad fa-chart-pie"></i>
+                </div>
+                <div style="padding-right: 0" class="control-item show-hidden example" title="Показувати системні файли" onclick="UFMActions.showHidden(this, true)">
+                    <i class="fad fa-eye"></i>
+                </div>
+                <div style="color: green" class="control-item hide-hidden example" title="Не показувати системні файли" onclick="UFMActions.showHidden(this, false)">
+                    <i class="fad fa-eye"></i>
+                </div>
+            </div>
+        </div>
+        <div class="ufm-list-head">
+            <div class="ufm-list-row-head" data-sort-none="fas fa-sort" data-sort-up="fad fa-sort-up" data-sort-down="fad fa-sort-down">
+                <div class="ufm-list-row-item ui checkbox">
+                    <input type="checkbox" onchange="UFM.selectAllItems(this)">
+                </div>
+                <div class="ufm-list-row-item name" onclick="return UFM.sortBy(this, 'name')">
+                    Ім’я
+                    <i></i>
+                </div>
+                <div class="ufm-list-row-item type" onclick="return UFM.sortBy(this, 'type')">
+                    Тип
+                    <i></i>
+                </div>
+                <div class="ufm-list-row-item size" onclick="return UFM.sortBy(this, 'size')">
+                    Розмір
+                    <i></i>
+                </div>
+                <div class="ufm-list-row-item time" onclick="return UFM.sortBy(this, 'time')">
+                    Дата
+                    <i></i>
+                </div>
+                <div class="ufm-list-row-item permission">
+                    Права
+                </div>
+            </div>
+        </div>
+        <div class="ufm-panel-item-list">
+            <div class="ufm-list-body"></div>
+        </div>
+        <div class="ufm-list-footer">
+            <div>
+                <span class="ufm-info-all total">Всього елементів: <span></span></span>
+                <span class="ufm-info-all dir">Каталогів: <span></span></span>
+                <span class="ufm-info-all file">Файлів: <span></span></span>
+            </div>
+        </div>
+    </div>
+    <div id="ufm-row-options-empty" class="example">
+        <div class="ufm-option" onclick="UFMActions.createFile();" data-value="createFile">Створити файл</div>
+        <div class="ufm-option" onclick="UFMActions.createDir();" data-value="createDir">Створити каталог</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.pasteFilesConfirm();" data-value="pasteFiles">Вставити <span></span></div>
+        <div class="ufm-option disabled" onclick="UFMActions.pasteSymlink();" data-value="pasteSymlink">Вставити симлінк</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option" onclick="UFMActions.addBookmark();" data-value="addBookmark">Додати в закладки</div>
+    </div>
+    <div id="ufm-row-options" class="example" >
+        <div class="ufm-option disabled" onclick="UFMActions.openFile();" data-value="openFile">Відкрити</div>
+        <div class="ufm-option disabled" onclick="UFMActions.downloadFile();" data-value="downloadFile">Завантажити</div>
+        <div class="ufm-option disabled" onclick="UFMActions.renameFile();" data-value="renameFile">Перейменувати</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.addBookmark();" data-value="addBookmark">Додати в закладки</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.copyFiles();" data-value="copyFiles">Копіювати <span></span></div>
+        <div class="ufm-option disabled" onclick="UFMActions.cutFiles();" data-value="cutFiles">Вирізати <span></span></div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.createArchive();" data-value="createArchive">Створити архів</div>
+        <div class="ufm-option disabled" onclick="UFMActions.extractArchive();" data-value="extractArchive">Розпакувати архів</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.createSymlink();" data-value="createSymlink">Створити симлінк</div>
+        <div class="ufm-option disabled" onclick="UFMActions.fileAccess();" data-value="fileAccess">Права доступу</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.importDB();" data-value="importDB">Імпортувати базу</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled" onclick="UFMActions.setPassword();" data-value="setPassword">Встановити пароль</div>
+        <div class="ufm-option disabled" onclick="UFMActions.deletePassword();" data-value="deletePassword">Видалити пароль</div>
+        <div class="ufm-option divider"></div>
+        <div class="ufm-option disabled properties" onclick="UFMActions.showProperties();" data-value="properties">Властивості</div>
+        <div class="ufm-option delete" onclick="UFMActions.deleteFiles();" data-value="deleteFile">Видалити</div>
+    </div>
+
+    <div class="ui mini hotkeys">
+        <div>
+            <div class="ui label" data-action="show-properties" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Властивості <span class="desktop-keycode"> [ctrl + 1]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="download-file" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Завантажити <span class="desktop-keycode"> [ctrl + 2]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="open-file" onclick="UFMActions.action(this)" title="Enter">
+                <div class="content">
+                    <div class="title">Відкрити <span class="desktop-keycode"> [ctrl + 3]</span></div>
+                </div>
+            </div>
+            <div class="ui label disabled" data-action="rename-file" onclick="UFMActions.action(this)" title="F2">
+                <div class="content">
+                    <div class="title">Перейменувати <span class="desktop-keycode"> [ctrl + 4]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="copy-files" onclick="UFMActions.action(this)" title="Ctrl+C">
+                <div class="content">
+                    <div class="title">Копіювати <span class="desktop-keycode"> [ctrl + 5]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="cut-files" onclick="UFMActions.action(this)" title="Ctrl+X">
+                <div class="content">
+                    <div class="title">Вирізати <span class="desktop-keycode"> [shift + 5]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="paste-files" onclick="UFMActions.action(this)" title="Ctrl+V">
+                <div class="content">
+                    <div class="title">Вставити <span class="desktop-keycode"> [ctrl + 6]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="create-archive" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Створити архів <span class="desktop-keycode"> [ctrl + 7]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="extract-archive" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Розпакувати архів <span class="desktop-keycode"> [shift + 7]</span></div>
+                </div>
+            </div>
+            <div class="ui label" data-action="delete-files" onclick="UFMActions.action(this)" title="Delete">
+                <div class="content">
+                    <div class="title">Видалити <span class="desktop-keycode"> [ctrl + 8]</span></div>
+                </div>
+            </div>
+            <div class="ui label disabled" data-action="add-bookmark" onclick="UFMActions.action(this)" title="Ctrl+G">
+                <div class="content">
+                    <div class="title">Додати в закладки <span class="desktop-keycode"> [ctrl + 9]</span></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="ui label" data-action="create-symlink" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Створити симлінк</div>
+                </div>
+            </div>
+            <div class="ui label" data-action="paste-symlink" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Вставити симлінк</div>
+                </div>
+            </div>
+            <div class="ui label" data-action="file-access" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Права доступу</div>
+                </div>
+            </div>
+            <div class="ui label" data-action="import-db" onclick="UFMActions.action(this)">
+                <div class="content">
+                    <div class="title">Імпортувати базу</div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+    <div class="ufm-list-row example">
+        <div class="ufm-list-row-item ui checkbox">
+            <input type="checkbox">
+        </div>
+        <div class="ufm-list-row-item name">
+            <span class="ufm-item-icon"><i class="fas fa-folder"></i></span>
+            <span class="ufm-item-name"></span>
+            <span class="ufm-item-name-info hide">
+                <i class="fad fa-circle-info"></i>
+            </span>
+        </div>
+        <div class="ufm-list-row-item size"></div>
+        <div class="ufm-list-row-item time"></div>
+        <div class="ufm-list-row-item permission"></div>
+    </div>
+</div>
+
+<div id="ufm-drag-items"></div>
+
+<div id="ufm_editor" class="hide">
+    <div class="ufm-editor-container">
+        <div class="ufm-editor-panel">
+            <div>
+                <span title="Зберегти" onclick="UFMEditor.save()"><i class="fad fa-save"></i> Зберегти</span>
+                <span title="Зберегти та вийти" onclick="UFMEditor.save(true)"><i class="fad fa-save"></i> Зберегти та вийти</span>
+                <span title="Зберегти як"><i class="fas fa-file-plus" onclick="UFMEditor.saveAs()"></i></span>
+                <span class="divider"></span>
+                <span title="Скасувати"><i class="fas fa-undo-alt" onclick="UFMEditor.undo()"></i></span>
+                <span title="Повторити"><i class="fas fa-redo-alt" onclick="UFMEditor.redo()"></i></span>
+                <span class="divider"></span>
+                <span title="Пошук"><i class="fad fa-search" onclick="UFMEditor.search()"></i></span>
+                <span title="Автодоповнення"><i class="fad fa-code" onclick="UFMEditor.toggleAutoComplete()"></i></span>
+                <span title="Перенесення рядка"><i class="fad fa-paragraph" onclick="UFMEditor.toggleBreakLine()"></i></span>
+                <span class="divider"></span>
+                <span title="Тема"><i class="fab fa-ethereum" onclick="UFMEditor.toggleTheme()"></i></span>
+                <select class="ui dropdown ufm-editor-encoding">
+                    <option value="utf-8">UTF-8</option>
+                    <option value="cp-1251">CP-1251</option>
+                </select>
+            </div>
+            <div>
+                <span title="Розгорнути"><i class="fad fa-expand-wide" onclick="UFMEditor.expand()"></i></span>
+                <span class="hide" title="Згорнути"><i class="fad fa-compress-arrows-alt" onclick="UFMEditor.collapse()"></i></span>
+                <span title="Закрити"><i class="fad fa-times" onclick="UFMEditor.close()"></i></span>
+            </div>
+
+        </div>
+        <div class="ufm-editor-message">
+            <div id="ufm_virus_warning" class="ui hidden warning message">
+                <b>Поточний файл є шкідливим.</b><br>
+                Шкідливі файли потрібно видаляти повністю.
+            </div>
+        </div>
+        <div class="ufm-editor-content">
+            <div id="ufm_editor_content"></div>
+            <div class="ufm-editor-info">
+                <div class="ufm-editor-path"></div>
+                <div class="ufm-editor-cursor">
+                    <div id="ufm_editor_position_line">Рядок: <span>0</span></div>
+                    <div id="ufm_editor_position_column">Позиція: <span>0</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="ufm-editor-resize"><i class="fad fa-compress-arrows-alt"></i></div>
+    </div>
+</div>
+
+<div id="ufm_shadow"></div>
+
+<div id="ufm-queue">
+    <div class="ufm-q-title">
+        <div class="ufm-qt-message">
+            Операції
+        </div>
+        <div class="ufm-qt-actions">
+            <div class="ufm-q-clear" title="Очистити історію операцій" onclick="UFMQueue.clear()">
+                <i class="fad fa-trash"></i>
+            </div>
+        </div>
+    </div>
+    <div class="ufm-queue-items example">
+        <div class="ufm-queue-item example">
+            <div class="ufm-q-loader">
+                <div class="ufm-q-l-animation"></div>
+            </div>
+
+            <div class="ufm-q-info">
+                <div class="ufm-q-message"></div>
+                <div class="ufm-q-status">
+                    <i class="example init processing fas fa-spinner-third fa-spin"></i>
+                    <i class="example error fad fa-exclamation-circle"></i>
+                    <i class="example success fad fa-check-circle"></i>
+                    <i class="example stop fad fa-times-circle" title="Скасувати процес" data-variation="mini"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ufm_archive" class="example">
+    <div class="ufm-a-title">
+        <div class="ufm-title-l">
+            <div class="ufm-title-btn-back example" onclick="UFMArchive.back()">
+                <i class="fas fa-long-arrow-left"></i>
+            </div>
+            <div class="ufm-title-name">
+                dirname
+            </div>
+        </div>
+        <div class="ufm-title-r">
+            <i class="fad fa-times" onclick="UFMArchive.close()"></i>
+        </div>
+    </div>
+    <div class="ufm-a-body">
+        <div class="ufm-body-item example">
+            <div class="ufm-item-icon"><i class="fad fa-folder"></i></div>
+            <div class="ufm-item-name">name</div>
+            <div class="ufm-item-size">0</div>
+        </div>
+    </div>
+</div>
+
+<script src="/external_libs/moment/moment.min.js?v=1675876141"></script>
+
+<script src="/js/hosting/ufm/ufm.min.js?v=1710859676"></script>
+<script src="/js/hosting/ufm/ufm_queue.min.js?v=1705581551"></script>
+<script src="/js/hosting/ufm/ufm_archive.min.js?v=1705581551"></script>
+<script src="/js/hosting/ufm/ufm_actions.min.js?v=1705590783"></script>
+<script src="/js/hosting/ufm/ufm_requests.min.js?v=1705581551"></script>
+<script src="/js/hosting/ufm/ufm_editor.min.js?v=1705581551"></script>
+<script src="/js/shared/webssh.min.js?v=1705922861"></script>
+
+<script src="/external_libs/ace/ace.js?v=1675876141"></script>
+<script src="/external_libs/ace/ext-language_tools.min.js?v=1675876141"></script>
+<script nonce="180d9209">
+let UFMLanguages = {
+  types: {
+    directory: 'каталог',
+    file: 'файл',
+    link: 'посилання',
+    undefined: 'не визначено',
+    symlink: 'Символічне посилання (сімлінк)',
+  },
+  control: {
+    deleteFile: 'Видалити вибраний файл/каталог?',
+    deleteFiles: 'Видалити вибрані файли/каталоги? %s шт.',
+    extractArchive: 'Вкажіть каталог, до якого буде розпаковано архів',
+    packName: 'Вкажіть ім’я нового архіву',
+    dirSize: 'Увімкнення цієї функції уповільнить відображення списку файлів',
+    transferFiles: 'Виберіть дію',
+    transferFilesPath: 'Цільовий каталог',
+    transferFilesOverwrite: 'Перезаписати існуючі файли',
+    transferFilesOverwriteTitle: 'Що робити з наявними файлами під час збігу імен?',
+    transferFilesOverwriteButton: 'Перезаписувати',
+    transferFilesOverwriteSkipButton: 'Пропускати',
+    uploadTitle: 'Завантаження файла за посиланням',
+    uploadPlaceholder: 'Вкажіть посилання на файл, який необхідно завантажити',
+    createSymlink: 'Для створення посилання перейдіть до потрібного каталогу та в контекстному меню виберіть "Вставити симлінк".',
+    pasteSymlinkTitle: 'Створення символьного посилання',
+    pasteSymlinkPlaceholder: 'Введіть назву символьного посилання',
+    maxFileSize: 'Максимальний розмір файлів, що завантажуються 5 ГБ.',
+    slowUpload: 'Завантаження великого файлу може тривати багато часу, не перезавантажуйте сторінку',
+    copyText: 'Скопіювати',
+    moveText: 'Перемістити',
+    noResult: 'Пошук не дав результатів',
+    deletePassword: 'Підтвердьте видалення пароля з каталогу',
+    openPath: 'Відкрити каталог із файлом',
+    uploadProcessTitle: 'Процес завантаження файлу',
+    deleteProcessTitle: 'Процес видалення файлу',
+    uploadProcessError: 'Ви вже завантажуєте файли, дочекайтеся завершення завантаження.',
+    optionHelperDesktop: 'Щоб зробити маніпуляції з вибраним об’єктом, натисніть праву кнопку миші.',
+    optionHelperMobile: 'Щоб діяти над вибраним об’єктом, доторкніться до нього та потримайте.',
+    killConfirmTitle: 'Підтвердіть операцію',
+    killConfirm: 'При скасуванні операції вона буде виконана не повністю, скасувати?',
+    unsupportedFileName: 'Кодування назви файлу/каталогу відрізняється від UTF-8, взаємодія з ним неможлива. Спробуйте скористатися консоллю, підключившись по SSH.',
+    copySuccess: 'Файли скопійовані в буфер.',
+    cutSuccess: 'Файли скопійовані в буфер і будуть видалені при вставці.',
+    pasteError: 'У буфері немає файлів для вставки.',
+    pasteReserveError: 'Файли в резервну копію копіювати не можна.',
+    yetFiles: 'ще файлів/каталогів: %s шт.',
+    inodeTitle: 'Іноди',
+    toBackground: 'Виконувати у фоні',
+    cancel: 'Скасувати',
+    beforeUnload: 'В даний момент йде завантаження файлів, якщо ви залишите сторінку – файли не завантажить.',
+    beforeDelete: 'На даний момент йде видалення файлів, якщо ви залишите сторінку – файли не видалить.',
+    createDirTitle: 'Вкажіть ім’я директорії',
+    createFileTitle: 'Вкажіть ім’я файлу',
+    createAndOpen: 'Створити та відкрити',
+    emptyValue: 'Ви не вказали ім’я',
+    renameTitle: 'Вкажіть нове ім’я',
+    addBookmarkTitle: 'Вкажіть назву закладки',
+    uploadFileTitle: 'Завантажено файлів:'
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  UFM.init('199');
+  $('#ufm .js-popup').popup();
+  $('#ufm_editor .js-popup').popup();
+  pubSub.subscribe('db_import', data => {
+    WebSsh.open(data.token);
+    delete localStorage.ufm_webssh_hide;
+  });
+
+  if (+'' > 0) {
+    UFMRequests.openFileVirus(+'');
+  }
+});
+</script>			</div>
+		</div>
+        <div id="ajaxPreloader" class="admin-loader"></div>
+	</div>
+		<div id="help_menu" class="">
+		<div class="ui fill icon bottom blue right pointing dropdown tiny compact icon pr-5 button">
+			<i class="chat icon"></i>
+			<div class="menu">
+				<div class="item ufo-button-state" onclick="return UfoClient.openChat();">
+					<span>Онлайн-чат</span>
+				</div>
+				<div class="item" onclick="return AjaxRequest.action('/action/suggestion/form/')">
+					<span>Відгуки та пропозиції</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+			<!-- BACKGROUND FINGERPRINT COLLECT -->
+		<script src="/external_libs/fingerprint/fingerprint.min.js?v=1675876141"></script>
+		<script src="/js/fingerprint/client.js?v=1698932313"></script>
+		<!-- BACKGROUND FINGERPRINT COLLECT END -->
+			<script src="/external_libs/jquery/address/address.min.js?v=1702991546"></script>
+<script nonce="180d9209">
+'';
+
+$(document).ready(() => {
+    $('#help_menu')
+        .popup({
+            letiation: 'mini inverted'
+        })
+        .find('.dropdown')
+        .dropdown({
+            allowReselection: true,
+            action: 'hide',
+            transition: 'scale'
+        });
+
+
+    // перенес с main.js, который удалил
+    $('.js-dropdown').dropdown({showOnFocus:false });
+    $('.js-checkbox').checkbox();
+});
+
+try {
+    $.fn.calendar.settings.text = {
+        dayNames: ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П’ятниці', 'Субота'],
+        dayNamesShort: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        days: ['Нд', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        months: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+        monthsShort: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+        today: 'Сьогодні',
+        now: 'Зараз',
+        weekNo: 'Тиждень',
+        am: 'AM',
+        pm: 'PM'
+    };
+} catch (e){}
+
+(function() {
+    var $d = $(document)
+
+    var openBtnEl = '.js-udd-open-btn'
+    var targetEl = '.js-udd-target'
+
+    var showClass = '_show'
+
+    var showTarget = function($target) {
+        $target
+            .addClass(showClass)
+            .attr('aria-hidden', false)
+    }
+
+    var closeOpenedTargets = function() {
+        $(targetEl)
+            .removeClass(showClass)
+            .attr('aria-hidden', true)
+    }
+
+    var openBtnClick = function(e) {
+        var $that = $(this)
+        var targetId = $that.data('target')
+        var direction = $that.data('direction') || 'ne'
+        var targetWidth = $that.data('width')
+        var $target = $(targetEl + '[data-id="' + targetId + '"]')
+        var btnPos = $that.position()
+        var btnWidth = $that.outerWidth()
+
+        // Закрываем дропдаун если нажимает на открытый
+        if ($target.hasClass(showClass)) {
+            closeOpenedTargets()
+            return
+        }
+
+        if (direction === 'ne') {
+            $target.css({
+                left: btnPos.left + btnWidth - targetWidth - 10,
+                transformOrigin: 'right top 0',
+            })
+        } else if (direction === 'n') {
+            $target.css({
+                left: btnPos.left + (btnWidth / 2) - (targetWidth / 2),
+                transformOrigin: 'center top 0',
+            })
+        }
+
+        $target.css({width: targetWidth})
+
+        // Закрываем все дропдаун, показываем текущий
+        closeOpenedTargets()
+        showTarget($target)
+    }
+
+    var docClick = function(e) {
+        var $t = $(e.target)
+        var isOpenBtn = $t.closest(openBtnEl).length
+        var isDropDownTarget = $t.closest(targetEl).length
+
+        if (!isOpenBtn && !isDropDownTarget) {
+            closeOpenedTargets()
+        }
+    }
+
+    $d.on('click', openBtnEl, openBtnClick)
+    $d.on('click', docClick)
+
+    "";
+    initAccLeftMenu();
+    "";
+})();
+
+function accMenuDropdownChange(value) {
+    if(value === 'add_new') {
+        return;
+    }
+
+    const option = document.querySelector(`.js-acc-menu-dropdown select option[value='${value}']`);
+
+    localStorage.tabId = option.dataset.id;
+    document.location.href = option.dataset.url;
+}
+
+function protectionMenuChange(value) {
+    const selectedItem = value.selectedOptions[0];
+
+    if(!selectedItem) {
+        return;
+    }
+
+    location.href = location.href.replace(`/${selectedItem.dataset.currentId}/`, `/${selectedItem.dataset.id}/`)
+}
+
+function changeServicesUrls(accountId) {
+    $('.side-menu__link:not(.side-menu__link--bookmark)').each(function() {
+        let link = $(this);
+        if(!link.attr('href')) {
+            return;
+        }
+
+        let newHref = link.attr('href').replace(/^(.*\?account_id=)(\d+)/g, '$1' + accountId);
+        newHref = newHref.replace(/^(.*\/hosting\/account\/)\d+(\/.*)/g, '$1' + accountId + '$2');
+        link.attr('href', newHref);
+    });
+}
+
+function initAccLeftMenu() {
+    let menuDropdown = $('.js-acc-menu-dropdown');
+    menuDropdown.dropdown({
+        fullTextSearch: true,
+        allowReselection: false,
+        match: 'both'
+    });
+
+    /**
+     * Показывать меню реселлера
+     * @type {jQuery}
+     */
+    let selected = menuDropdown.find(':selected');
+    if(selected.length > 0) {
+        changeServicesUrls(selected.data('id'));
+    }
+
+    if(!selected.length) {
+        let firstOption = menuDropdown.find('select > option[value!=0]:first-child');
+        if(firstOption.length > 0) {
+            menuDropdown.dropdown('set selected', firstOption.value);
+        }
+    }
+
+    ToolbarUser.setLightIcon();
+
+    let menu = document.querySelector('.c-select-account div.dropdown');
+    if(menu){
+        let node = document.createElement('div'),
+            node_icon = document.createElement('i');
+
+        node_icon.classList.add('fad', 'fa-plus-circle', 'ficon');
+        node.classList.add('ui', 'show-order-form');
+        node.innerText = "Замовити новий";
+        node.setAttribute("onclick", "return AjaxRequest.action('/action/hosting/account/order_form/');");
+        node.insertBefore(node_icon, node.firstChild);
+        menu.querySelector('.menu').appendChild(node);
+    }
+}
+
+function ftp_restore(account_id){
+    return AjaxRequest.confirm('Відновити права доступу до всіх файлів і папок?').action('/action/hosting/service/chmod/', {account_id})
+}
+</script>
+</body>
+</html>
