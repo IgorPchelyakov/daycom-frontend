@@ -2,6 +2,8 @@
 @section('news_city')
     @php
         $newsUrl = 'https://sside.daycom.com.ua/api/news-post';
+        $SERVER_BANNERS = 'https://sside.daycom.com.ua/api/banners';
+
         $newsCh = curl_init();
         curl_setopt($newsCh, CURLOPT_URL, $newsUrl);
         curl_setopt($newsCh, CURLOPT_RETURNTRANSFER, 1);
@@ -135,7 +137,32 @@
             </div>
         </div>
     </div>
+    @if (!function_exists('filterPosts'))
+        @php
+            function filterPosts($posts, $currentDate, $limit)
+            {
+                $filteredPosts = [];
+                foreach ($posts as $post) {
+                    $postDate = new DateTime($post['publishedAt']);
+                    if ($postDate <= $currentDate && count($filteredPosts) < $limit) {
+                        $filteredPosts[] = $post;
+                    }
+                }
+                return $filteredPosts;
+            }
+        @endphp
+    @endif
+
     @php
+        $currentDate = new DateTime('now', new DateTimeZone('Europe/Kiev'));
+        $currentDate->modify('+2 hour');
+
+        $filteredWarPosts = filterPosts($newsData['warSectionPosts'], $currentDate, 3);
+        $filteredEuropePosts = filterPosts($newsData['europePosts'], $currentDate, 3);
+        $filteredSocietyPosts = filterPosts($newsData['societyPosts'], $currentDate, 3);
+        $filteredFreeLinePosts = filterPosts($newsData['freeLinePosts'], $currentDate, 10);
+    @endphp
+    {{-- @php
         function filterPosts($posts, $currentDate, $limit)
         {
             $filteredPosts = [];
@@ -155,7 +182,7 @@
         $filteredEuropePosts = filterPosts($newsData['europePosts'], $currentDate, 3);
         $filteredSocietyPosts = filterPosts($newsData['societyPosts'], $currentDate, 3);
         $filteredFreeLinePosts = filterPosts($newsData['freeLinePosts'], $currentDate, 10);
-    @endphp
+    @endphp --}}
     <div class="content-preview-mini__container mx-auto py-4" style="background-color: #2b2a2a; color: white;">
         <div class="container d-xl-flex px-xl-0" style="padding: 0 20px;">
             <div class="other-title border-r pe-xl-3">

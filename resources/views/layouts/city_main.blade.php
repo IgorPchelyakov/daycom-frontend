@@ -713,6 +713,131 @@
                 max-width: 100%;
             }
         }
+
+        .white-banner__link {
+            padding: 4px 27px;
+            border: 1px solid #5a5a5a;
+            transition: all 0.3s ease;
+            border-radius: 20px;
+            background-color: white;
+        }
+
+        .white-banner__link:hover {
+            color: white;
+            background: black;
+        }
+
+        .glassmorphism-parent {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-contol {
+            width: 4%;
+        }
+
+        @media (max-width: 700px) {
+            .banner-contol {
+                width: 8%;
+            }
+        }
+
+        .lim-content {
+            padding: 20px 0;
+        }
+
+        @media (min-width: 768px) {
+            .limiting-container {
+                max-height: 300px;
+            }
+
+            .lim-content {
+                min-height: 300px;
+                padding: 0 20px;
+            }
+
+            .lim-img img {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lim-content {
+                padding: 20px 40px;
+            }
+
+            .lim-img img {
+                max-height: 200px;
+            }
+        }
+
+        .glassmorphism-b-parent {
+            background-color: rgba(255, 255, 255, 0.125);
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .black-banner__link {
+                padding: 4px 27px;
+                border: 1px solid #fff;
+                transition: all 0.3s ease;
+                border-radius: 20px;
+                background-color: black;
+            }
+
+            .black-banner__link:hover {
+                color: black;
+                background: white;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .black-banner__link {
+                padding: 4px 27px;
+                border: 1px solid #fff;
+                transition: all 0.3s ease;
+                border-radius: 20px;
+                color: white;
+                background-color: black;
+            }
+
+            .black-banner__link:hover {
+                color: black;
+                background-color: white;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .black-m-banner__link {
+                padding: 4px 27px;
+                border: 1px solid #fff;
+                transition: all 0.3s ease;
+                border-radius: 20px;
+                color: #fff;
+                background-color: black;
+            }
+
+            .black-m-banner__link:hover {
+                color: black;
+                background: white;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .black-m-banner__link {
+                padding: 4px 27px;
+                border: 1px solid #fff;
+                transition: all 0.3s ease;
+                border-radius: 20px;
+                color: black;
+                background-color: white;
+            }
+
+            .black-m-banner__link:hover {
+                color: white;
+                background-color: black;
+            }
+        }
     </style>
 </head>
 
@@ -761,6 +886,7 @@ line-height: 16px;">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
     </script>
+
     <script>
         function acceptCookies() {
             fetch('/accept-cookies', {
