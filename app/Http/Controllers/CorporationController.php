@@ -46,10 +46,10 @@ class CorporationController extends Controller
     public function editorship()
     {
         $LOCAL_NEWS = 'http://localhost:4444/api/newsattr';
-        $SERVER_NEWS = 'https://sside.daycom.com.ua/api/newsattr';
+        $SERVER_NEWS = 'https://sside.daycom.com.ua/api/authors';
         // $url = 'https://sside.daycom.com.ua/api/authors';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $LOCAL_NEWS);
+        curl_setopt($ch, CURLOPT_URL, $SERVER_NEWS);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($ch);
 

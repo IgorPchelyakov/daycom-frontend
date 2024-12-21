@@ -1,0 +1,12 @@
+.slide-in-logo {
+    position: fixed;
+    top: 10px;
+    left: -100px;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 1000;
+}
+
+.slide-in-logo.visible {
+    transform: translateX(150px);
+}

@@ -761,6 +761,77 @@
             }
         }
     </style>
+    <style>
+        .slide-in-logo {
+            position: fixed;
+            /* position: absolute; */
+            top: 10px;
+            /* left: 0; */
+            /* left: 20px; */
+            left: calc(20px + 50% - 840px);
+            /* transform: translateX(-101%); */
+            /* transform: translateX(-101%) scale(0.8) rotate(-90deg); */
+            /* transition: transform 0.5s ease-in-out, left 0.5s ease-in-out; */
+            /* transition: transform 0.5s ease-in-out, left 0.5s ease-in-out, transform 0.5s ease-out; */
+            opacity: 0;
+            transform: scale(0.8) translateY(-30px);
+            transition: opacity 0.5s ease-out, transform 0.8s ease-out;
+            /* Логотип изначально невидим */
+            /* transition: transform 0.5s ease-in-out, left 0.5s ease-in-out, opacity 0.5s ease-out; */
+            /* transition: opacity 0.5s ease-out; */
+
+            /* Появление вращение + фейд */
+            /* transform: rotate(-180deg) translateX(-100%);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; */
+
+            /* transform: scale(0.5) translateX(-100%);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out; */
+            z-index: 1000;
+        }
+
+        .slide-in-logo.visible {
+            /* transform: translateX(0); */
+            /* transform: translateX(0) scale(1) rotate(0deg); */
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            /* Появление вращение + фейд */
+            /* transform: rotate(0) translateX(0); */
+
+            /* transform: scale(1) translateX(0); */
+        }
+
+        @media (min-width: 1480px) and (max-width: 1600px) {
+            .slide-in-logo {
+                left: 20px;
+                /* left: calc(20px + 50% - 840px); */
+                /* transform: translateX(calc(-100% - 20px)); */
+                /* transform: translateX(calc(-100% - 20px)) scale(0.8) rotate(-90deg); */
+                opacity: 0;
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .slide-in-logo {
+                /* left: 0; */
+                left: calc(20px + 50% - 840px);
+                /* transform: translateX(-100%) scale(0.8) rotate(-90deg); */
+                opacity: 0;
+            }
+
+            .slide-in-logo.visible {
+                left: calc(20px + 50% - 840px);
+                /* transform: translateX(0); */
+                /* transform: translateX(0) scale(1) rotate(0deg); */
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1479px) {
+            .slide-in-logo {
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body
@@ -848,6 +919,16 @@ line-height: 16px;">
                 var minHeight = Math.max(textContentHeight + 20, 400);
                 $(this).find('.d-md-none').css('min-height', minHeight);
             });
+        });
+    </script>
+    <script>
+        window.addEventListener("scroll", function() {
+            const logo = document.querySelector(".slide-in-logo");
+            if (window.scrollY > 100) { // Например, при прокрутке больше 100px
+                logo.classList.add("visible");
+            } else {
+                logo.classList.remove("visible");
+            }
         });
     </script>
 </body>

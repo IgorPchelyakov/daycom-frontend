@@ -635,7 +635,8 @@
                                                             style="height: 110px; bottom: 0;">
                                                             <div class="d-md-flex align-items-center justify-content-between gap-4 w-100 h-100"
                                                                 style="padding: 10px 30px; position: absolute; bottom: 0; max-width: 1200px; max-height: 110px;">
-                                                                <div class="d-flex flex-column text-start text-white w-100">
+                                                                <div
+                                                                    class="d-flex flex-column text-start text-white w-100">
                                                                     @if (isset($headlines[$key]))
                                                                         <h3 style="font-weight: 500; font-size: 20px; line-height: 24px;"
                                                                             class="w-100">
@@ -1082,7 +1083,8 @@
                                                             style="height: 110px; bottom: 0;">
                                                             <div class="d-md-flex align-items-center justify-content-between gap-4 w-100 h-100"
                                                                 style="padding: 10px 30px; position: absolute; bottom: 0; max-width: 1200px; max-height: 110px;">
-                                                                <div class="d-flex flex-column text-start text-white w-100">
+                                                                <div
+                                                                    class="d-flex flex-column text-start text-white w-100">
                                                                     @if (isset($headlines[$key]))
                                                                         <h3 style="font-weight: 500; font-size: 20px; line-height: 24px;"
                                                                             class="w-100">

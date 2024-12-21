@@ -25,9 +25,12 @@
 
         if (isset($data['topicId'])) {
             $topicId = $data['topicId'];
+            $page = 1;
+            $limit = 30;
 
             if ($topicId !== null && $topicId !== '') {
-                $topicUrl = "https://sside.daycom.com.ua/api/themes/{$topicId}/{$data['id']}";
+                // $topicUrl = "https://sside.daycom.com.ua/api/themes/{$topicId}/{$data['id']}";
+                $topicUrl = "http://sside.daycom.com.ua/api/get-topics-pg?topicId={$topicId}&newsId={$data['id']}&page={$page}&limit={$limit}";
                 $topicCh = curl_init();
                 curl_setopt($topicCh, CURLOPT_URL, $topicUrl);
                 curl_setopt($topicCh, CURLOPT_RETURNTRANSFER, 1);
@@ -38,7 +41,10 @@
 
                     if ($topicData !== null) {
                         $topicData;
+
+                        $articlesData = $topicData['data'];
                         $topicNameUrl = "https://sside.daycom.com.ua/api/theme/{$topicId}";
+                        // $topicNameUrl = "http://localhost:4444/api/theme/{$topicId}";
                         $topicNameCh = curl_init();
                         curl_setopt($topicNameCh, CURLOPT_URL, $topicNameUrl);
                         curl_setopt($topicNameCh, CURLOPT_RETURNTRANSFER, 1);
@@ -1066,7 +1072,7 @@
         </div>
         <div class="content__container mx-auto mt-4">
             <div class="articles">
-                @foreach ($topicData as $index => $article)
+                @foreach ($articlesData as $index => $article)
                     <div class="avatar__container pt-4" style="margin: 0 20px;">
                         <div class="d-flex gap-4 align-items-center">
                             <div class="avatar-container">
@@ -1093,11 +1099,13 @@
                             {!! $article['content'] !!}
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
-                            <button id="showMoreButton{{ $index }}" class="btn show-more-btn" onclick="toggleContent('{{ $index }}')">ПОКАЗАТИ
+                            <button id="showMoreButton{{ $index }}" class="btn show-more-btn"
+                                onclick="toggleContent('{{ $index }}')">ПОКАЗАТИ
                                 БІЛЬШЕ</button>
                         </div>
                     </article>
                 @endforeach
+                <div id="articles-container"></div>
             </div>
         </div>
         <div class="content__container mx-auto mt-4">
@@ -2496,6 +2504,16 @@
                     $createdDate = \Carbon\Carbon::parse($data['createdAt']);
                     $updatedDate = \Carbon\Carbon::parse($data['updatedAt']);
                 @endphp
+                @if ($data['topicId'] !== null)
+                    <h4>Цей матеріал є частиною розгорнутої теми:
+                        <a
+                            href="{{ route('news.index', ['url' => $data['mainArticle']['url']]) }}">{{ $data['topicTitle'] }}</a>,
+                        яка охоплює
+                        численні цікаві аспекти цієї події. Газета Дейком ретельно відстежує події, проводячи
+                        перевірку джерел та інформації, щоб забезпечити нашим читачам найбільш точне та
+                        актуальне інформування.
+                    </h4>
+                @endif
                 <h4>
                     Цей матеріал опубліковано
                     {{ \Carbon\Carbon::parse($data['publishedAt'])->locale('uk')->isoFormat('D.MM.YYYY') }} року,

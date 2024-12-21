@@ -19,6 +19,7 @@ use App\Http\Controllers\MykolayivNewsController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NewsTodayController;
 use App\Http\Controllers\OdesaNewsController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\PoltavaNewsController;
 use App\Http\Controllers\RivneNewsController;
 use App\Http\Controllers\SearchController;
@@ -44,288 +45,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage.index');
+
 Route::post('/accept-cookies', [CookieConsentController::class, 'setCookieAndAccept'])->name('accept-cookies');
 Route::post('/cookie/revoke', 'CookieConsentController@revokeCookie')->name('cookie.revoke');
+
+Route::get('/subscription/year', [PaymentController::class, 'createYearSubsciption'])->name('subscription.year');
+Route::get('/subscription/month', [PaymentController::class, 'createMonthSubsciption'])->name('subscription.month');
 
 Route::get('/news/{url}', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news-today', [NewsTodayController::class, 'index'])->name('news-today.index');
 Route::get('/news', [LineNewsController::class, 'index'])->name('news.line');
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
-
-// Vinnytsa
-Route::get('/vinnytsa', [VinnytsaNewsController::class, 'vinnytsaHome'])->name('vinnytsa.index');
-Route::get('/zhmerynka', [VinnytsaNewsController::class, 'zhmerynkaHome'])->name('zhmerynka.index');
-Route::get('/mohyliv-podilskyi', [VinnytsaNewsController::class, 'mohylivPodilskyiHome'])->name('mohyliv-podilskyi.index');
-Route::get('/hmilnyk', [VinnytsaNewsController::class, 'hmilnykHome'])->name('hmilnyk.index');
-Route::get('/gaysin', [VinnytsaNewsController::class, 'gaysinHome'])->name('gaysin.index');
-Route::get('/kozyatyn', [VinnytsaNewsController::class, 'koziatynHome'])->name('kozyatyn.index');
-Route::get('/ladyzhin', [VinnytsaNewsController::class, 'ladyzhynHome'])->name('ladyzhin.index');
-
-// Kyiv
-Route::get('/kyiv', [KyivNewsController::class, 'kyivHome'])->name('kyiv.index');
-Route::get('/berezan', [KyivNewsController::class, 'berezanHome'])->name('berezan.index');
-Route::get('/bilacerkva', [KyivNewsController::class, 'bilacerkvaHome'])->name('bilacerkva.index');
-Route::get('/boryspil', [KyivNewsController::class, 'boryspilHome'])->name('boryspil.index');
-Route::get('/boyarka', [KyivNewsController::class, 'boyarkaHome'])->name('boyarka.index');
-Route::get('/brovary', [KyivNewsController::class, 'brovaryHome'])->name('brovary.index');
-Route::get('/bucha', [KyivNewsController::class, 'buchaHome'])->name('bucha.index');
-Route::get('/fastiv', [KyivNewsController::class, 'fastivHome'])->name('fastiv.index');
-Route::get('/irpin', [KyivNewsController::class, 'irpinHome'])->name('irpin.index');
-Route::get('/obukhiv', [KyivNewsController::class, 'obukhivHome'])->name('obukhiv.index');
-Route::get('/pereyaslav', [KyivNewsController::class, 'pereyaslavHome'])->name('pereyaslav.index');
-Route::get('/skvyra', [KyivNewsController::class, 'skvyraHome'])->name('skvyra.index');
-Route::get('/slavutych', [KyivNewsController::class, 'slavutychHome'])->name('slavutych.index');
-Route::get('/vasylkiv', [KyivNewsController::class, 'vasylkivHome'])->name('vasylkiv.index');
-Route::get('/vyshhorod', [KyivNewsController::class, 'vyshhorodHome'])->name('vyshhorod.index');
-Route::get('/vyshneve', [KyivNewsController::class, 'vyshneveHome'])->name('vyshneve.index');
-Route::get('/yagotyn', [KyivNewsController::class, 'yagotynHome'])->name('yagotyn.index');
-
-Route::get('/kyiv/news/', [KyivNewsController::class, 'kyivLine'])->name('kyiv.line');
-Route::get('/kyiv/news/{url}', [KyivNewsController::class, 'News'])->name('kyiv.news');
-Route::get('/kyiv/news/', [KyivNewsController::class, 'kyivLine'])->name('kyiv.line');
-Route::get('/berezan/news/{url}', [KyivNewsController::class, 'kyivNews'])->name('kyiv.news');
-Route::get('/bilacerkva/news/', [KyivNewsController::class, 'bilacerkvaLine'])->name('bilacerkva.line');
-Route::get('/bilacerkva/news/{url}', [KyivNewsController::class, 'bilacerkvaNews'])->name('bilacerkva.news');
-Route::get('/boryspil/news/', [KyivNewsController::class, 'boryspilLine'])->name('boryspil.line');
-Route::get('/boryspil/news/{url}', [KyivNewsController::class, 'boryspilNews'])->name('boryspil.news');
-Route::get('/boyarka/news/', [KyivNewsController::class, 'boyarkaLine'])->name('boyarka.line');
-Route::get('/boyarka/news/{url}', [KyivNewsController::class, 'boyarkaNews'])->name('boyarka.news');
-Route::get('/brovary/news/', [KyivNewsController::class, 'brovaryLine'])->name('brovary.line');
-Route::get('/brovary/news/{url}', [KyivNewsController::class, 'brovaryNews'])->name('brovary.news');
-Route::get('/bucha/news/', [KyivNewsController::class, 'buchaLine'])->name('bucha.line');
-Route::get('/bucha/news/{url}', [KyivNewsController::class, 'buchaNews'])->name('bucha.news');
-Route::get('/fastiv/news/', [KyivNewsController::class, 'fastivLine'])->name('fastiv.line');
-Route::get('/fastiv/news/{url}', [KyivNewsController::class, 'fastivNews'])->name('fastiv.news');
-Route::get('/irpin/news/', [KyivNewsController::class, 'irpinLine'])->name('irpin.line');
-Route::get('/irpin/news/{url}', [KyivNewsController::class, 'irpinNews'])->name('irpin.news');
-Route::get('/obukhiv/news/', [KyivNewsController::class, 'obukhivLine'])->name('obukhiv.line');
-Route::get('/obukhiv/news/{url}', [KyivNewsController::class, 'obukhivNews'])->name('obukhiv.news');
-Route::get('/pereyaslav/news/', [KyivNewsController::class, 'pereyaslavLine'])->name('pereyaslav.line');
-Route::get('/pereyaslav/news/{url}', [KyivNewsController::class, 'pereyaslavNews'])->name('pereyaslav.news');
-Route::get('/skvyra/news/', [KyivNewsController::class, 'skvyraLine'])->name('skvyra.line');
-Route::get('/skvyra/news/{url}', [KyivNewsController::class, 'skvyraNews'])->name('skvyra.news');
-Route::get('/slavutych/news/', [KyivNewsController::class, 'slavutychLine'])->name('slavutych.line');
-Route::get('/slavutych/news/{url}', [KyivNewsController::class, 'slavutychNews'])->name('slavutych.news');
-Route::get('/vasylkiv/news/', [KyivNewsController::class, 'vasylkivLine'])->name('vasylkiv.line');
-Route::get('/vasylkiv/news/{url}', [KyivNewsController::class, 'vasylkivNews'])->name('vasylkiv.news');
-Route::get('/vyshhorod/news/', [KyivNewsController::class, 'vyshhorodLine'])->name('vyshhorod.line');
-Route::get('/vyshhorod/news/{url}', [KyivNewsController::class, 'vyshhorodNews'])->name('vyshhorod.news');
-Route::get('/vyshneve/news/', [KyivNewsController::class, 'vyshneveLine'])->name('vyshneve.line');
-Route::get('/vyshneve/news/{url}', [KyivNewsController::class, 'vyshneveNews'])->name('vyshneve.news');
-Route::get('/yagotyn/news/', [KyivNewsController::class, 'yagotynLine'])->name('yagotyn.line');
-Route::get('/yagotyn/news/{url}', [KyivNewsController::class, 'yagotynNews'])->name('yagotyn.news');
-
-
-// Cherkasy
-Route::get('/cherkasy', [CherkasyNewsController::class, 'cherkasyHome'])->name('cherkasy.index');
-Route::get('/kaniv', [CherkasyNewsController::class, 'kanivHome'])->name('kaniv.index');
-Route::get('/smila', [CherkasyNewsController::class, 'smilaHome'])->name('smila.index');
-Route::get('/uman', [CherkasyNewsController::class, 'umanHome'])->name('uman.index');
-Route::get('/vatutine', [CherkasyNewsController::class, 'vatutineHome'])->name('vatutine.index');
-Route::get('/zolotonosha', [CherkasyNewsController::class, 'zolotonoshaHome'])->name('zolotonosha.index');
-Route::get('/zvenyhorodka', [CherkasyNewsController::class, 'zvenyhorodkaHome'])->name('zvenyhorodka.index');
-// Chernihiv
-Route::get('/bahmach', [ChernihivNewsController::class, 'bahmachHome'])->name('bahmach.index');
-Route::get('/chernihiv', [ChernihivNewsController::class, 'chernihivHome'])->name('chernihiv.index');
-Route::get('/nizhin', [ChernihivNewsController::class, 'nizhinHome'])->name('nizhin.index');
-Route::get('/pryluki', [ChernihivNewsController::class, 'prylukiHome'])->name('pryluki.index');
-// Chernivtsi
-Route::get('/chernivtsi', [ChernivtsiNewsController::class, 'chernivtsiHome'])->name('chernivtsi.index');
-// Harkiv
-Route::get('/balaklia', [HarkivNewsController::class, 'balakliaHome'])->name('balaklia.index');
-Route::get('/chuguyiv', [HarkivNewsController::class, 'chuguyivHome'])->name('chuguyiv.index');
-Route::get('/dergachi', [HarkivNewsController::class, 'dergachiHome'])->name('dergachi.index');
-Route::get('/harkiv', [HarkivNewsController::class, 'harkivHome'])->name('harkiv.index');
-Route::get('/izum', [HarkivNewsController::class, 'izumHome'])->name('izum.index');
-Route::get('/krasnograd', [HarkivNewsController::class, 'krasnogradHome'])->name('krasnograd.index');
-Route::get('/kupyansk', [HarkivNewsController::class, 'kupyanskHome'])->name('kupyansk.index');
-Route::get('/lozova', [HarkivNewsController::class, 'lozovaHome'])->name('lozova.index');
-Route::get('/lubotin', [HarkivNewsController::class, 'lubotinHome'])->name('lubotin.index');
-Route::get('/merefa', [HarkivNewsController::class, 'merefaHome'])->name('merefa.index');
-Route::get('/pervomayskiy', [HarkivNewsController::class, 'pervomayskiyHome'])->name('pervomayskiy.index');
-Route::get('/vovchansk', [HarkivNewsController::class, 'vovchanskHome'])->name('vovchansk.index');
-// Volynsk
-Route::get('/kovel', [VolynskNewsController::class, 'kovelHome'])->name('kovel.index');
-Route::get('/lutsk', [VolynskNewsController::class, 'lutskHome'])->name('lutsk.index');
-Route::get('/novovolynsk', [VolynskNewsController::class, 'novovolynskHome'])->name('novovolynsk.index');
-Route::get('/volodymyr-volynskiy', [VolynskNewsController::class, 'volodymyrVolynskiyHome'])->name('volodymyr-volynskiy.index');
-// Zhytomyr
-Route::get('/berdychiv', [ZhytomyrNewsController::class, 'berdychivHome'])->name('berdychiv.index');
-Route::get('/korosten', [ZhytomyrNewsController::class, 'korostenHome'])->name('korosten.index');
-Route::get('/korostyshiv', [ZhytomyrNewsController::class, 'korostyshivHome'])->name('korostyshiv.index');
-Route::get('/malyn', [ZhytomyrNewsController::class, 'malynHome'])->name('malyn.index');
-Route::get('/novohrad-volynskiy', [ZhytomyrNewsController::class, 'novohradVolynskiyHome'])->name('novohrad-volynskiy.index');
-Route::get('/zhytomyr', [ZhytomyrNewsController::class, 'zhytomyrHome'])->name('zhytomyr.index');
-// Zakarpatsk
-Route::get('/beregove', [ZakarpatskNewsController::class, 'beregoveHome'])->name('beregove.index');
-Route::get('/hust', [ZakarpatskNewsController::class, 'hustHome'])->name('hust.index');
-Route::get('/mukachevo', [ZakarpatskNewsController::class, 'mukachevoHome'])->name('mukachevo.index');
-Route::get('/uzhhorod', [ZakarpatskNewsController::class, 'uzhhorodHome'])->name('uzhhorod.index');
-Route::get('/vinohradiv', [ZakarpatskNewsController::class, 'vinohradivHome'])->name('vinohradiv.index');
-// Zaporizhzhia
-Route::get('/berdyansk', [ZaporizhzhiaNewsController::class, 'berdyanskHome'])->name('berdyansk.index');
-Route::get('/dniprorudne', [ZaporizhzhiaNewsController::class, 'dniprorudneHome'])->name('dniprorudne.index');
-Route::get('/energodar', [ZaporizhzhiaNewsController::class, 'energodarHome'])->name('energodar.index');
-Route::get('/melitopol', [ZaporizhzhiaNewsController::class, 'melitopolHome'])->name('melitopol.index');
-Route::get('/pology', [ZaporizhzhiaNewsController::class, 'pologyHome'])->name('pology.index');
-Route::get('/tokmak', [ZaporizhzhiaNewsController::class, 'tokmakHome'])->name('tokmak.index');
-Route::get('/zaporizhzhia', [ZaporizhzhiaNewsController::class, 'zaporizhzhiaHome'])->name('zaporizhzhia.index');
-// Ivano-Frankivsk
-Route::get('/dolyna', [IvanoFrankivskNewsController::class, 'dolynaHome'])->name('dolyna.index');
-Route::get('/ivano-frankivsk', [IvanoFrankivskNewsController::class, 'ivanoFrankivskHome'])->name('ivano-frankivsk.index');
-Route::get('/kalush', [IvanoFrankivskNewsController::class, 'kalushHome'])->name('kalush.index');
-Route::get('/kolomya', [IvanoFrankivskNewsController::class, 'kolomyaHome'])->name('kolomya.index');
-Route::get('/nadvirna', [IvanoFrankivskNewsController::class, 'nadvirnaHome'])->name('nadvirna.index');
-// Kirovograd
-Route::get('/kropyvnytskiy', [KirovogradNewsController::class, 'kropyvnytskiyHome'])->name('kropyvnytskiy.index');
-Route::get('/olexandriya', [KirovogradNewsController::class, 'olexandriyaHome'])->name('olexandriya.index');
-Route::get('/svitlovodsk', [KirovogradNewsController::class, 'svitlovodskHome'])->name('svitlovodsk.index');
-Route::get('/znamyanka', [KirovogradNewsController::class, 'znamyankaHome'])->name('znamyanka.index');
-// Lviv
-Route::get('/boryslav', [LvivNewsController::class, 'boryslavHome'])->name('boryslav.index');
-Route::get('/brody', [LvivNewsController::class, 'brodyHome'])->name('brody.index');
-Route::get('/chervonograd', [LvivNewsController::class, 'chervonogradHome'])->name('chervonograd.index');
-Route::get('/drohobych', [LvivNewsController::class, 'drohobychHome'])->name('drohobych.index');
-Route::get('/lviv', [LvivNewsController::class, 'lvivHome'])->name('lviv.index');
-Route::get('/novoyavorivsk', [LvivNewsController::class, 'novoyavorivskHome'])->name('novoyavorivsk.index');
-Route::get('/noviy-rozdil', [LvivNewsController::class, 'noviyRozdilHome'])->name('noviy-rozdil.index');
-Route::get('/sambir', [LvivNewsController::class, 'sambirHome'])->name('sambir.index');
-Route::get('/sokal', [LvivNewsController::class, 'sokalHome'])->name('sokal.index');
-Route::get('/stebnyk', [LvivNewsController::class, 'stebnykHome'])->name('stebnyk.index');
-Route::get('/striy', [LvivNewsController::class, 'striyHome'])->name('striy.index');
-Route::get('/truskavets', [LvivNewsController::class, 'truskavetsHome'])->name('truskavets.index');
-Route::get('/zolochiv', [LvivNewsController::class, 'zolochivHome'])->name('zolochiv.index');
-// Mykolayiv
-Route::get('/mykolayiv', [MykolayivNewsController::class, 'mykolayivHome'])->name('mykolayiv.index');
-Route::get('/pervomaisk', [MykolayivNewsController::class, 'pervomaiskHome'])->name('pervomaisk.index');
-Route::get('/voznesensk', [MykolayivNewsController::class, 'voznesenskHome'])->name('voznesensk.index');
-Route::get('/yuzhnoukrainsk', [MykolayivNewsController::class, 'yuzhnoukrainskHome'])->name('yuzhnoukrainsk.index');
-// Poltava
-Route::get('/hadiach', [PoltavaNewsController::class, 'hadiachHome'])->name('hadiach.index');
-Route::get('/horishni-plavni', [PoltavaNewsController::class, 'horishniPlavniHome'])->name('horishni-plavni.index');
-Route::get('/kremenchuk', [PoltavaNewsController::class, 'kremenchukHome'])->name('kremenchuk.index');
-Route::get('/lubny', [PoltavaNewsController::class, 'lubnyHome'])->name('lubny.index');
-Route::get('/myrhorod', [PoltavaNewsController::class, 'myrhorodHome'])->name('myrhorod.index');
-Route::get('/poltava', [PoltavaNewsController::class, 'poltavaHome'])->name('poltava.index');
-// Rivne
-Route::get('/dubno', [RivneNewsController::class, 'dubnoHome'])->name('dubno.index');
-Route::get('/kostopil', [RivneNewsController::class, 'kostopilHome'])->name('kostopil.index');
-Route::get('/rivne', [RivneNewsController::class, 'rivneHome'])->name('rivne.index');
-Route::get('/sarny', [RivneNewsController::class, 'sarnyHome'])->name('sarny.index');
-Route::get('/varash', [RivneNewsController::class, 'varashHome'])->name('varash.index');
-Route::get('/zdolbuniv', [RivneNewsController::class, 'zdolbunivHome'])->name('zdolbuniv.index');
-// Sumy
-Route::get('/gluhiv', [SumyNewsController::class, 'gluhivHome'])->name('gluhiv.index');
-Route::get('/konotop', [SumyNewsController::class, 'konotopHome'])->name('konotop.index');
-Route::get('/krolevets', [SumyNewsController::class, 'krolevetsHome'])->name('krolevets.index');
-Route::get('/lebedyn', [SumyNewsController::class, 'lebedynHome'])->name('lebedyn.index');
-Route::get('/ohtyrka', [SumyNewsController::class, 'ohtyrkaHome'])->name('ohtyrka.index');
-Route::get('/romny', [SumyNewsController::class, 'romnyHome'])->name('romny.index');
-Route::get('/shostka', [SumyNewsController::class, 'shostkaHome'])->name('shostka.index');
-Route::get('/sumy', [SumyNewsController::class, 'sumyHome'])->name('sumy.index');
-Route::get('/trostyanets', [SumyNewsController::class, 'trostyanetsHome'])->name('trostyanets.index');
-// Ternopil
-Route::get('/chortkiv', [TernopilNewsController::class, 'chortkivHome'])->name('chortkiv.index');
-Route::get('/kremenets', [TernopilNewsController::class, 'kremenetsHome'])->name('kremenets.index');
-Route::get('/ternopil', [TernopilNewsController::class, 'ternopilHome'])->name('ternopil.index');
-// Kherson
-Route::get('/henichesk', [KhersonNewsController::class, 'henicheskHome'])->name('henichesk.index');
-Route::get('/kahovka', [KhersonNewsController::class, 'kahovkaHome'])->name('kahovka.index');
-Route::get('/kherson', [KhersonNewsController::class, 'khersonHome'])->name('kherson.index');
-Route::get('/nova-kakhovka', [KhersonNewsController::class, 'novaKakhovkaHome'])->name('nova-kakhovka.index');
-Route::get('/oleshki', [KhersonNewsController::class, 'oleshkiHome'])->name('oleshki.index');
-Route::get('/skadovsk', [KhersonNewsController::class, 'skadovskHome'])->name('skadovsk.index');
-// Hmelnytskiy
-Route::get('/hmelnytskiy', [HmelnytskiyNewsController::class, 'hmelnytskiyHome'])->name('hmelnytskiy.index');
-Route::get('/kamyanets-podilsky', [HmelnytskiyNewsController::class, 'kamyanetsPodilskyHome'])->name('kamyanets-podilsky.index');
-Route::get('/krasyliv', [HmelnytskiyNewsController::class, 'krasylivHome'])->name('krasyliv.index');
-Route::get('/netishin', [HmelnytskiyNewsController::class, 'netishinHome'])->name('netishin.index');
-Route::get('/polonne', [HmelnytskiyNewsController::class, 'polonneHome'])->name('polonne.index');
-Route::get('/shepetivka', [HmelnytskiyNewsController::class, 'shepetivkaHome'])->name('shepetivka.index');
-Route::get('/slavuta', [HmelnytskiyNewsController::class, 'slavutaHome'])->name('slavuta.index');
-Route::get('/starokostyntynivka', [HmelnytskiyNewsController::class, 'starokostyntynivkaHome'])->name('starokostyntynivka.index');
-Route::get('/volochysk', [HmelnytskiyNewsController::class, 'volochyskHome'])->name('volochysk.index');
-// Route::get('')
-
-// Dnipro
-Route::get('/dnipro', [DniproNewsController::class, 'dniproHome'])->name('dnipro.index');
-Route::get('/kamianske', [DniproNewsController::class, 'kamianskeHome'])->name('kamianske.index');
-Route::get('/kryvyi-rih', [DniproNewsController::class, 'kryvyiRihHome'])->name('kryvyi-rih.index');
-Route::get('/marganets', [DniproNewsController::class, 'marganetsHome'])->name('marganets.index');
-Route::get('/nikopol', [DniproNewsController::class, 'nikopolHome'])->name('nikopol.index');
-Route::get('/novomoskovsk', [DniproNewsController::class, 'novomoskovskHome'])->name('novomoskovsk.index');
-Route::get('/pavlograd', [DniproNewsController::class, 'pavlogradHome'])->name('pavlograd.index');
-Route::get('/pershotravensk', [DniproNewsController::class, 'pershotravenskHome'])->name('pershotravensk.index');
-Route::get('/pokrov', [DniproNewsController::class, 'pokrovHome'])->name('pokrov.index');
-Route::get('/pyatihatky', [DniproNewsController::class, 'pyatihatkyHome'])->name('pyatihatky.index');
-Route::get('/sinelnikovo', [DniproNewsController::class, 'sinelnikovoHome'])->name('sinelnikovo.index');
-Route::get('/ternivka', [DniproNewsController::class, 'ternivkaHome'])->name('ternivka.index');
-Route::get('/vilnohorsk', [DniproNewsController::class, 'vilnohorskHome'])->name('vilnohorsk.index');
-Route::get('/zhovti-vody', [DniproNewsController::class, 'zhovtiVodyHome'])->name('zhovti-vody.index');
-
-Route::get('/dnipro/news/', [DniproNewsController::class, 'dniproLine'])->name('dnipro.line');
-Route::get('/kamianske/news/', [DniproNewsController::class, 'kamianskeLine'])->name('kamianske.line');
-Route::get('/kryvyi-rih/news/', [DniproNewsController::class, 'kryvyiRihLine'])->name('kryvyi-rih.line');
-Route::get('/marganets/news/', [DniproNewsController::class, 'marganetsLine'])->name('marganets.line');
-Route::get('/nikopol/news/', [DniproNewsController::class, 'nikopolLine'])->name('nikopol.line');
-Route::get('/novomoskovsk/news/', [DniproNewsController::class, 'novomoskovskLine'])->name('novomoskovsk.line');
-Route::get('/pavlograd/news/', [DniproNewsController::class, 'pavlogradLine'])->name('pavlograd.line');
-Route::get('/pershotravensk/news/', [DniproNewsController::class, 'pershotravenskLine'])->name('pershotravensk.line');
-Route::get('/pokrov/news/', [DniproNewsController::class, 'pokrovLine'])->name('pokrov.line');
-Route::get('/pyatihatky/news/', [DniproNewsController::class, 'pyatihatkyLine'])->name('pyatihatky.line');
-Route::get('/sinelnikovo/news/', [DniproNewsController::class, 'sinelnikovoLine'])->name('sinelnikovo.line');
-Route::get('/ternivka/news/', [DniproNewsController::class, 'ternivkaLine'])->name('ternivka.line');
-Route::get('/vilnohorsk/news/', [DniproNewsController::class, 'vilnohorskLine'])->name('vilnohorsk.line');
-Route::get('/zhovti-vody/news/', [DniproNewsController::class, 'zhovtiVodyLine'])->name('zhovti-vody.line');
-
-Route::get('/dnipro/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('dnipro.news');
-Route::get('/kamianske/news/{url}', [DniproNewsController::class, 'kamianskeNews'])->name('kamianske.news');
-Route::get('/kryvyi-rih/news/{url}', [DniproNewsController::class, 'kryvyiRihNews'])->name('kryvyi-rih.news');
-Route::get('/marganets/news/{url}', [DniproNewsController::class, 'marganetsNews'])->name('marganets.news');
-Route::get('/nikopol/news/{url}', [DniproNewsController::class, 'nikopolNews'])->name('nikopol.news');
-Route::get('/novomoskovsk/news/{url}', [DniproNewsController::class, 'novomoskovskNews'])->name('novomoskovsk.news');
-Route::get('/pavlograd/news/{url}', [DniproNewsController::class, 'pavlogradNews'])->name('pavlograd.news');
-Route::get('/pershotravensk/news/{url}', [DniproNewsController::class, 'pershotravenskNews'])->name('pershotravensk.news');
-Route::get('/pokrov/news/{url}', [DniproNewsController::class, 'pokrovNews'])->name('pokrov.news');
-Route::get('/pyatihatky/news/{url}', [DniproNewsController::class, 'pyatihatkyNews'])->name('pyatihatky.news');
-Route::get('/sinelnikovo/news/{url}', [DniproNewsController::class, 'sinelnikovoNews'])->name('sinelnikovo.news');
-Route::get('/ternivka/news/{url}', [DniproNewsController::class, 'ternivkaNews'])->name('ternivka.news');
-Route::get('/vilnohorsk/news/{url}', [DniproNewsController::class, 'vilnohorskNews'])->name('vilnohorsk.news');
-Route::get('/zhovti-vody/news/{url}', [DniproNewsController::class, 'zhovtiVodyNews'])->name('zhovti-vody.news');
-
-// Odessa
-Route::get('/bilgorod-dnistrovsky', [OdesaNewsController::class, 'bilgorodDnistrovskyHome'])->name('bilgorod.index');
-Route::get('/chornomorsk', [OdesaNewsController::class, 'chornomorskHome'])->name('chornomorsk.index');
-Route::get('/izmail', [OdesaNewsController::class, 'izmailHome'])->name('izmail.index');
-Route::get('/kiliya', [OdesaNewsController::class, 'kiliyaHome'])->name('kiliya.index');
-Route::get('/odesa', [OdesaNewsController::class, 'odesaHome'])->name('odesa.index');
-Route::get('/podilsk', [OdesaNewsController::class, 'podilskHome'])->name('podilsk.index');
-Route::get('/podilsk/search', [SearchController::class, 'podilskSearch'])->name('podilsk.search');
-Route::get('/teplodar', [OdesaNewsController::class, 'teplodarHome'])->name('teplodar.index');
-Route::get('/youzhne', [OdesaNewsController::class, 'youzhneHome'])->name('youzhne.index');
-
-Route::get('/bilgorod-dnistrovsky/news/', [OdesaNewsController::class, 'bilgorodDnistrovskyLine'])->name('bilgorod.line');
-Route::get('/chornomorsk/news/', [OdesaNewsController::class, 'chornomorskLine'])->name('chornomorsk.line');
-Route::get('/izmail/news/', [OdesaNewsController::class, 'izmailLine'])->name('izmail.line');
-Route::get('/kiliya/news/', [OdesaNewsController::class, 'kiliyaLine'])->name('kiliya.line');
-Route::get('/odesa/news/', [OdesaNewsController::class, 'odesaLine'])->name('odesa.line');
-Route::get('/podilsk/news/', [OdesaNewsController::class, 'podilskLine'])->name('podilsk.line');
-Route::get('/teplodar/news/', [OdesaNewsController::class, 'teplodarLine'])->name('teplodar.line');
-Route::get('/youzhne/news/', [OdesaNewsController::class, 'youzhneLine'])->name('youzhne.line');
-
-// Route::get('//news/', [OdesaNewsController::class, 'Line'])->name('.line');
-
-Route::get('/bilgorod-dnistrovsky/news/{url}', [OdesaNewsController::class, 'bilgorodDnistrovskyNews'])->name('bilgorod.news');
-Route::get('/chornomorsk/news/{url}', [OdesaNewsController::class, 'chornomorskNews'])->name('chornomorsk.news');
-Route::get('/izmail/news/{url}', [OdesaNewsController::class, 'izmailNews'])->name('izmail.news');
-Route::get('/kiliya/news/{url}', [OdesaNewsController::class, 'kiliyaNews'])->name('kiliya.news');
-Route::get('/odesa/news/{url}', [OdesaNewsController::class, 'odesaNews'])->name('odesa.news');
-Route::get('/podilsk/news/{url}', [OdesaNewsController::class, 'podilskNews'])->name('podilsk.news');
-Route::get('/teplodar/news/{url}', [OdesaNewsController::class, 'teplodarNews'])->name('teplodar.news');
-Route::get('/youzhne/news/{url}', [OdesaNewsController::class, 'youzhneNews'])->name('youzhne.news');
-// Route::get('//news/{url}', [OdesaNewsController::class, 'News'])->name('.news');
-
-Route::get('/teplodar/search', [SearchController::class, 'teplodarSearch'])->name('teplodar.search');
 
 // Sections
 Route::get('/usa', [SectionsController::class, 'usa'])->name('usa.index');
@@ -390,3 +120,490 @@ Route::get('/content', [CorporationController::class, 'content'])->name('content
 Route::get('/terms-of-sale', [CorporationController::class, 'terms_of_sale'])->name('terms_of_sale.index');
 Route::get('/comments-section', [CorporationController::class, 'comments_section'])->name('comments_section.index');
 Route::get('/presentation-for-readers', [CorporationController::class, 'presentation_for_readers'])->name('presentation_for_readers.index');
+
+
+Route::get('/{city}', [HomepageController::class, 'feed'])->name('city.feed');
+Route::get('/{city}/news', [LineNewsController::class, 'index']);
+Route::get('/{city}/news/{url}', [NewsController::class, 'getFeedNews']);
+
+// Vinnytsa
+Route::get('/vinnytsa', [VinnytsaNewsController::class, 'vinnytsaHome'])->name('vinnytsa.news');
+Route::get('/vinnytsa/news', [VinnytsaNewsController::class, 'vinnytsaHome'])->name('vinnytsa.line');
+Route::get('/vinnytsa/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vinnytsa.news');
+Route::get('/zhmerynka', [VinnytsaNewsController::class, 'zhmerynkaHome'])->name('zhmerynka.news');
+Route::get('/zhmerynka/news', [LineNewsController::class, 'zhmerynkaHome'])->name('zhmerynka.line');
+Route::get('/zhmerynka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zhmerynka.news');
+Route::get('/mohyliv-podilskyi', [VinnytsaNewsController::class, 'mohylivPodilskyiHome'])->name('mohyliv-podilskyi.news');
+Route::get('/mohyliv-podilskyi/news', [VinnytsaNewsController::class, 'mohylivPodilskyiHome'])->name('mohyliv-podilskyi.line');
+Route::get('/mohyliv-podilskyi/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('mohyliv-podilskyi.news');
+Route::get('/hmilnyk', [VinnytsaNewsController::class, 'hmilnykHome'])->name('hmilnyk.news');
+Route::get('/hmilnyk/news', [VinnytsaNewsController::class, 'hmilnykHome'])->name('hmilnyk.line');
+Route::get('/hmilnyk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('hmilnyk.news');
+Route::get('/gaysin', [VinnytsaNewsController::class, 'gaysinHome'])->name('gaysin.news');
+Route::get('/gaysin/news', [VinnytsaNewsController::class, 'gaysinHome'])->name('gaysin.line');
+Route::get('/gaysin/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('gaysin.news');
+Route::get('/kozyatyn', [VinnytsaNewsController::class, 'koziatynHome'])->name('kozyatyn.news');
+Route::get('/kozyatyn/news', [VinnytsaNewsController::class, 'koziatynHome'])->name('kozyatyn.line');
+Route::get('/kozyatyn/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kozyatyn.news');
+Route::get('/ladyzhin', [VinnytsaNewsController::class, 'ladyzhynHome'])->name('ladyzhin.news');
+Route::get('/ladyzhin/news', [VinnytsaNewsController::class, 'ladyzhynHome'])->name('ladyzhin.line');
+Route::get('/ladyzhin/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('ladyzhin.news');
+
+//Kyiv
+Route::get('/kyiv/news/', [KyivNewsController::class, 'kyivLine'])->name('kyiv.line');
+Route::get('/kyiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kyiv.news');
+Route::get('/berezan/news', [DniproNewsController::class, 'dniproNews'])->name('berezan.line');
+Route::get('/berezan/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('berezan.news');
+Route::get('/bilacerkva/news/', [KyivNewsController::class, 'bilacerkvaLine'])->name('bilacerkva.line');
+Route::get('/bilacerkva/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('bilacerkva.news');
+Route::get('/boryspil/news/', [KyivNewsController::class, 'boryspilLine'])->name('boryspil.line');
+Route::get('/boryspil/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('boryspil.news');
+Route::get('/boyarka/news/', [KyivNewsController::class, 'boyarkaLine'])->name('boyarka.line');
+Route::get('/boyarka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('boyarka.news');
+Route::get('/brovary/news/', [KyivNewsController::class, 'brovaryLine'])->name('brovary.line');
+Route::get('/brovary/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('brovary.news');
+Route::get('/bucha/news/', [KyivNewsController::class, 'buchaLine'])->name('bucha.line');
+Route::get('/bucha/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('bucha.news');
+Route::get('/fastiv/news/', [KyivNewsController::class, 'fastivLine'])->name('fastiv.line');
+Route::get('/fastiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('fastiv.news');
+Route::get('/irpin/news/', [KyivNewsController::class, 'irpinLine'])->name('irpin.line');
+Route::get('/irpin/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('irpin.news');
+Route::get('/obukhiv/news/', [KyivNewsController::class, 'obukhivLine'])->name('obukhiv.line');
+Route::get('/obukhiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('obukhiv.news');
+Route::get('/pereyaslav/news/', [KyivNewsController::class, 'pereyaslavLine'])->name('pereyaslav.line');
+Route::get('/pereyaslav/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('pereyaslav.news');
+Route::get('/skvyra/news/', [KyivNewsController::class, 'skvyraLine'])->name('skvyra.line');
+Route::get('/skvyra/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('skvyra.news');
+Route::get('/slavutych/news/', [KyivNewsController::class, 'slavutychLine'])->name('slavutych.line');
+Route::get('/slavutych/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('slavutych.news');
+Route::get('/vasylkiv/news/', [KyivNewsController::class, 'vasylkivLine'])->name('vasylkiv.line');
+Route::get('/vasylkiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vasylkiv.news');
+Route::get('/vyshhorod/news/', [KyivNewsController::class, 'vyshhorodLine'])->name('vyshhorod.line');
+Route::get('/vyshhorod/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vyshhorod.news');
+Route::get('/vyshneve/news/', [KyivNewsController::class, 'vyshneveLine'])->name('vyshneve.line');
+Route::get('/vyshneve/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vyshneve.news');
+Route::get('/yagotyn/news/', [KyivNewsController::class, 'yagotynLine'])->name('yagotyn.line');
+Route::get('/yagotyn/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('yagotyn.news');
+
+// Cherkasy
+Route::get('/cherkasy', [CherkasyNewsController::class, 'cherkasyHome'])->name('cherkasy.news');
+Route::get('/cherkasy/news', [CherkasyNewsController::class, 'cherkasyHome'])->name('cherkasy.line');
+Route::get('/cherkasy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('cherkasy.news');
+Route::get('/kaniv', [CherkasyNewsController::class, 'kanivHome'])->name('kaniv.news');
+Route::get('/kaniv/news', [CherkasyNewsController::class, 'kanivHome'])->name('kaniv.line');
+Route::get('/kaniv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kaniv.news');
+Route::get('/smila', [CherkasyNewsController::class, 'smilaHome'])->name('smila.news');
+Route::get('/smila/news', [CherkasyNewsController::class, 'smilaHome'])->name('smila.line');
+Route::get('/smila/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('smila.news');
+Route::get('/uman', [CherkasyNewsController::class, 'umanHome'])->name('uman.news');
+Route::get('/uman/news', [CherkasyNewsController::class, 'umanHome'])->name('uman.line');
+Route::get('/uman/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('uman.news');
+Route::get('/vatutine', [CherkasyNewsController::class, 'vatutineHome'])->name('vatutine.news');
+Route::get('/vatutine/news', [CherkasyNewsController::class, 'vatutineHome'])->name('vatutine.line');
+Route::get('/vatutine/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vatutine.news');
+Route::get('/zolotonosha', [CherkasyNewsController::class, 'zolotonoshaHome'])->name('zolotonosha.news');
+Route::get('/zolotonosha/news', [CherkasyNewsController::class, 'zolotonoshaHome'])->name('zolotonosha.line');
+Route::get('/zolotonosha/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zolotonosha.news');
+Route::get('/zvenyhorodka', [CherkasyNewsController::class, 'zvenyhorodkaHome'])->name('zvenyhorodka.news');
+Route::get('/zvenyhorodka/news', [CherkasyNewsController::class, 'zvenyhorodkaHome'])->name('zvenyhorodka.line');
+Route::get('/zvenyhorodka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zvenyhorodka.news');
+// Chernihiv
+Route::get('/bahmach', [ChernihivNewsController::class, 'bahmachHome'])->name('bahmach.news');
+Route::get('/bahmach/news', [ChernihivNewsController::class, 'bahmachHome'])->name('bahmach.line');
+Route::get('/bahmach/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('bahmach.news');
+Route::get('/chernihiv', [ChernihivNewsController::class, 'chernihivHome'])->name('chernihiv.news');
+Route::get('/chernihiv/news', [ChernihivNewsController::class, 'chernihivHome'])->name('chernihiv.line');
+Route::get('/chernihiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('chernihiv.news');
+Route::get('/nizhin', [ChernihivNewsController::class, 'nizhinHome'])->name('nizhin.news');
+Route::get('/nizhin/news', [ChernihivNewsController::class, 'nizhinHome'])->name('nizhin.line');
+Route::get('/nizhin/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('nizhin.news');
+Route::get('/pryluki', [ChernihivNewsController::class, 'prylukiHome'])->name('pryluki.news');
+Route::get('/pryluki/news', [ChernihivNewsController::class, 'prylukiHome'])->name('pryluki.line');
+Route::get('/pryluki/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('pryluki.news');
+// Chernivtsi
+Route::get('/chernivtsi', [ChernivtsiNewsController::class, 'chernivtsiHome'])->name('chernivtsi.news');
+Route::get('/chernivtsi/news', [ChernivtsiNewsController::class, 'chernivtsiHome'])->name('chernivtsi.line');
+Route::get('/chernivtsi/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('chernivtsi.news');
+// Harkiv
+Route::get('/balaklia', [HarkivNewsController::class, 'balakliaHome'])->name('balaklia.news');
+Route::get('/balaklia/news', [HarkivNewsController::class, 'balakliaHome'])->name('balaklia.line');
+Route::get('/balaklia/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('balaklia.news');
+Route::get('/chuguyiv', [HarkivNewsController::class, 'chuguyivHome'])->name('chuguyiv.news');
+Route::get('/chuguyiv/news', [HarkivNewsController::class, 'chuguyivHome'])->name('chuguyiv.line');
+Route::get('/chuguyiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('chuguyiv.news');
+Route::get('/dergachi', [HarkivNewsController::class, 'dergachiHome'])->name('dergachi.news');
+Route::get('/dergachi/news', [HarkivNewsController::class, 'dergachiHome'])->name('dergachi.line');
+Route::get('/dergachi/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('dergachi.news');
+Route::get('/harkiv', [HarkivNewsController::class, 'harkivHome'])->name('harkiv.news');
+Route::get('/harkiv/news', [HarkivNewsController::class, 'harkivHome'])->name('harkiv.line');
+Route::get('/harkiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('harkiv.news');
+Route::get('/izum', [HarkivNewsController::class, 'izumHome'])->name('izum.news');
+Route::get('/izum/news', [HarkivNewsController::class, 'izumHome'])->name('izum.line');
+Route::get('/izum/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('izum.news');
+Route::get('/krasnograd', [HarkivNewsController::class, 'krasnogradHome'])->name('krasnograd.news');
+Route::get('/krasnograd/news', [HarkivNewsController::class, 'krasnogradHome'])->name('krasnograd.line');
+Route::get('/krasnograd/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('krasnograd.news');
+Route::get('/kupyansk', [HarkivNewsController::class, 'kupyanskHome'])->name('kupyansk.news');
+Route::get('/kupyansk/news', [HarkivNewsController::class, 'kupyanskHome'])->name('kupyansk.line');
+Route::get('/kupyansk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kupyansk.news');
+Route::get('/lozova', [HarkivNewsController::class, 'lozovaHome'])->name('lozova.news');
+Route::get('/lozova/news', [HarkivNewsController::class, 'lozovaHome'])->name('lozova.line');
+Route::get('/lozova/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('lozova.news');
+Route::get('/lubotin', [HarkivNewsController::class, 'lubotinHome'])->name('lubotin.news');
+Route::get('/lubotin/news', [HarkivNewsController::class, 'lubotinHome'])->name('lubotin.line');
+Route::get('/lubotin/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('lubotin.news');
+Route::get('/merefa', [HarkivNewsController::class, 'merefaHome'])->name('merefa.news');
+Route::get('/merefa/news', [HarkivNewsController::class, 'merefaHome'])->name('merefa.line');
+Route::get('/merefa/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('merefa.news');
+Route::get('/pervomayskiy', [HarkivNewsController::class, 'pervomayskiyHome'])->name('pervomayskiy.news');
+Route::get('/pervomayskiy/news', [HarkivNewsController::class, 'pervomayskiyHome'])->name('pervomayskiy.line');
+Route::get('/pervomayskiy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('pervomayskiy.news');
+Route::get('/vovchansk', [HarkivNewsController::class, 'vovchanskHome'])->name('vovchansk.news');
+Route::get('/vovchansk/news', [HarkivNewsController::class, 'vovchanskHome'])->name('vovchansk.line');
+Route::get('/vovchansk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vovchansk.news');
+// Volynsk
+Route::get('/kovel', [VolynskNewsController::class, 'kovelHome'])->name('kovel.news');
+Route::get('/kovel/news', [VolynskNewsController::class, 'kovelHome'])->name('kovel.line');
+Route::get('/kovel/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kovel.news');
+Route::get('/lutsk', [VolynskNewsController::class, 'lutskHome'])->name('lutsk.news');
+Route::get('/lutsk/news', [VolynskNewsController::class, 'lutskHome'])->name('lutsk.line');
+Route::get('/lutsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('lutsk.news');
+Route::get('/novovolynsk', [VolynskNewsController::class, 'novovolynskHome'])->name('novovolynsk.news');
+Route::get('/novovolynsk/news', [VolynskNewsController::class, 'novovolynskHome'])->name('novovolynsk.line');
+Route::get('/novovolynsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('novovolynsk.news');
+Route::get('/volodymyr-volynskiy', [VolynskNewsController::class, 'volodymyrVolynskiyHome'])->name('volodymyr-volynskiy.news');
+Route::get('/volodymyr-volynskiy/news', [VolynskNewsController::class, 'volodymyrVolynskiyHome'])->name('volodymyr-volynskiy.line');
+Route::get('/volodymyr-volynskiy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('volodymyr-volynskiy.news');
+// Zhytomyr
+Route::get('/berdychiv', [ZhytomyrNewsController::class, 'berdychivHome'])->name('berdychiv.news');
+Route::get('/berdychiv/news', [ZhytomyrNewsController::class, 'berdychivHome'])->name('berdychiv.line');
+Route::get('/berdychiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('berdychiv.news');
+Route::get('/korosten', [ZhytomyrNewsController::class, 'korostenHome'])->name('korosten.news');
+Route::get('/korosten/news', [ZhytomyrNewsController::class, 'korostenHome'])->name('korosten.line');
+Route::get('/korosten/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('korosten.news');
+Route::get('/korostyshiv', [ZhytomyrNewsController::class, 'korostyshivHome'])->name('korostyshiv.news');
+Route::get('/korostyshiv/news', [ZhytomyrNewsController::class, 'korostyshivHome'])->name('korostyshiv.line');
+Route::get('/korostyshiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('korostyshiv.news');
+Route::get('/malyn', [ZhytomyrNewsController::class, 'malynHome'])->name('malyn.news');
+Route::get('/malyn/news', [ZhytomyrNewsController::class, 'malynHome'])->name('malyn.line');
+Route::get('/malyn/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('malyn.news');
+Route::get('/novohrad-volynskiy', [ZhytomyrNewsController::class, 'novohradVolynskiyHome'])->name('novohrad-volynskiy.news');
+Route::get('/novohrad-volynskiy/news', [ZhytomyrNewsController::class, 'novohradVolynskiyHome'])->name('novohrad-volynskiy.line');
+Route::get('/novohrad-volynskiy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('novohrad-volynskiy.news');
+Route::get('/zhytomyr', [ZhytomyrNewsController::class, 'zhytomyrHome'])->name('zhytomyr.news');
+Route::get('/zhytomyr/news', [ZhytomyrNewsController::class, 'zhytomyrHome'])->name('zhytomyr.line');
+Route::get('/zhytomyr/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zhytomyr.news');
+// Zakarpatsk
+Route::get('/beregove', [ZakarpatskNewsController::class, 'beregoveHome'])->name('beregove.news');
+Route::get('/beregove/news', [ZakarpatskNewsController::class, 'beregoveHome'])->name('beregove.line');
+Route::get('/beregove/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('beregove.news');
+Route::get('/hust', [ZakarpatskNewsController::class, 'hustHome'])->name('hust.news');
+Route::get('/hust/news', [ZakarpatskNewsController::class, 'hustHome'])->name('hust.line');
+Route::get('/hust/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('hust.news');
+Route::get('/mukachevo', [ZakarpatskNewsController::class, 'mukachevoHome'])->name('mukachevo.news');
+Route::get('/mukachevo/news', [ZakarpatskNewsController::class, 'mukachevoHome'])->name('mukachevo.line');
+Route::get('/mukachevo/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('mukachevo.news');
+Route::get('/uzhhorod', [ZakarpatskNewsController::class, 'uzhhorodHome'])->name('uzhhorod.news');
+Route::get('/uzhhorod/news', [ZakarpatskNewsController::class, 'uzhhorodHome'])->name('uzhhorod.line');
+Route::get('/uzhhorod/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('uzhhorod.news');
+Route::get('/vinohradiv', [ZakarpatskNewsController::class, 'vinohradivHome'])->name('vinohradiv.news');
+Route::get('/vinohradiv/news', [ZakarpatskNewsController::class, 'vinohradivHome'])->name('vinohradiv.line');
+Route::get('/vinohradiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('vinohradiv.news');
+// Zaporizhzhia
+Route::get('/berdyansk', [ZaporizhzhiaNewsController::class, 'berdyanskHome'])->name('berdyansk.news');
+Route::get('/berdyansk/news', [ZaporizhzhiaNewsController::class, 'berdyanskHome'])->name('berdyansk.line');
+Route::get('/berdyansk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('berdyansk.news');
+Route::get('/dniprorudne', [ZaporizhzhiaNewsController::class, 'dniprorudneHome'])->name('dniprorudne.news');
+Route::get('/dniprorudne/news', [ZaporizhzhiaNewsController::class, 'dniprorudneHome'])->name('dniprorudne.line');
+Route::get('/dniprorudne/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('dniprorudne.news');
+Route::get('/energodar', [ZaporizhzhiaNewsController::class, 'energodarHome'])->name('energodar.news');
+Route::get('/energodar/news', [ZaporizhzhiaNewsController::class, 'energodarHome'])->name('energodar.line');
+Route::get('/energodar/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('energodar.news');
+Route::get('/melitopol', [ZaporizhzhiaNewsController::class, 'melitopolHome'])->name('melitopol.news');
+Route::get('/melitopol/news', [ZaporizhzhiaNewsController::class, 'melitopolHome'])->name('melitopol.line');
+Route::get('/melitopol/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('melitopol.news');
+Route::get('/pology', [ZaporizhzhiaNewsController::class, 'pologyHome'])->name('pology.news');
+Route::get('/pology/news', [ZaporizhzhiaNewsController::class, 'pologyHome'])->name('pology.line');
+Route::get('/pology/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('pology.news');
+Route::get('/tokmak', [ZaporizhzhiaNewsController::class, 'tokmakHome'])->name('tokmak.news');
+Route::get('/tokmak/news', [ZaporizhzhiaNewsController::class, 'tokmakHome'])->name('tokmak.line');
+Route::get('/tokmak/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('tokmak.news');
+Route::get('/zaporizhzhia', [ZaporizhzhiaNewsController::class, 'zaporizhzhiaHome'])->name('zaporizhzhia.news');
+Route::get('/zaporizhzhia/news', [ZaporizhzhiaNewsController::class, 'zaporizhzhiaHome'])->name('zaporizhzhia.line');
+Route::get('/zaporizhzhia/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zaporizhzhia.news');
+// Ivano-Frankivsk
+Route::get('/dolyna', [IvanoFrankivskNewsController::class, 'dolynaHome'])->name('dolyna.news');
+Route::get('/dolyna/news', [IvanoFrankivskNewsController::class, 'dolynaHome'])->name('dolyna.line');
+Route::get('/dolyna/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('dolyna.news');
+Route::get('/ivano-frankivsk', [IvanoFrankivskNewsController::class, 'ivanoFrankivskHome'])->name('ivano-frankivsk.news');
+Route::get('/ivano-frankivsk/news', [IvanoFrankivskNewsController::class, 'ivanoFrankivskHome'])->name('ivano-frankivsk.line');
+Route::get('/ivano-frankivsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('ivano-frankivsk.news');
+Route::get('/kalush', [IvanoFrankivskNewsController::class, 'kalushHome'])->name('kalush.news');
+Route::get('/kalush/news', [IvanoFrankivskNewsController::class, 'kalushHome'])->name('kalush.line');
+Route::get('/kalush/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kalush.news');
+Route::get('/kolomya', [IvanoFrankivskNewsController::class, 'kolomyaHome'])->name('kolomya.news');
+Route::get('/kolomya/news', [IvanoFrankivskNewsController::class, 'kolomyaHome'])->name('kolomya.line');
+Route::get('/kolomya/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kolomya.news');
+Route::get('/nadvirna', [IvanoFrankivskNewsController::class, 'nadvirnaHome'])->name('nadvirna.news');
+Route::get('/nadvirna/news', [IvanoFrankivskNewsController::class, 'nadvirnaHome'])->name('nadvirna.line');
+Route::get('/nadvirna/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('nadvirna.news');
+// Kirovograd
+Route::get('/kropyvnytskiy', [KirovogradNewsController::class, 'kropyvnytskiyHome'])->name('kropyvnytskiy.news');
+Route::get('/kropyvnytskiy/news', [KirovogradNewsController::class, 'kropyvnytskiyHome'])->name('kropyvnytskiy.line');
+Route::get('/kropyvnytskiy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kropyvnytskiy.news');
+Route::get('/olexandriya', [KirovogradNewsController::class, 'olexandriyaHome'])->name('olexandriya.news');
+Route::get('/olexandriya/news', [KirovogradNewsController::class, 'olexandriyaHome'])->name('olexandriya.line');
+Route::get('/olexandriya/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('olexandriya.news');
+Route::get('/svitlovodsk', [KirovogradNewsController::class, 'svitlovodskHome'])->name('svitlovodsk.news');
+Route::get('/svitlovodsk/news', [KirovogradNewsController::class, 'svitlovodskHome'])->name('svitlovodsk.line');
+Route::get('/svitlovodsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('svitlovodsk.news');
+Route::get('/znamyanka', [KirovogradNewsController::class, 'znamyankaHome'])->name('znamyanka.news');
+Route::get('/znamyanka/news', [KirovogradNewsController::class, 'znamyankaHome'])->name('znamyanka.line');
+Route::get('/znamyanka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('znamyanka.news');
+// Lviv
+Route::get('/boryslav', [LvivNewsController::class, 'boryslavHome'])->name('boryslav.news');
+Route::get('/boryslav/news', [LvivNewsController::class, 'boryslavHome'])->name('boryslav.line');
+Route::get('/boryslav/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('boryslav.news');
+Route::get('/brody', [LvivNewsController::class, 'brodyHome'])->name('brody.news');
+Route::get('/brody/news', [LvivNewsController::class, 'brodyHome'])->name('brody.line');
+Route::get('/brody/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('brody.news');
+Route::get('/chervonograd', [LvivNewsController::class, 'chervonogradHome'])->name('chervonograd.news');
+Route::get('/chervonograd/news', [LvivNewsController::class, 'chervonogradHome'])->name('chervonograd.line');
+Route::get('/chervonograd/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('chervonograd.news');
+Route::get('/drohobych', [LvivNewsController::class, 'drohobychHome'])->name('drohobych.news');
+Route::get('/drohobych/news', [LvivNewsController::class, 'drohobychHome'])->name('drohobych.line');
+Route::get('/drohobych/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('drohobych.news');
+Route::get('/lviv', [LvivNewsController::class, 'lvivHome'])->name('lviv.news');
+Route::get('/lviv/news', [LvivNewsController::class, 'lvivHome'])->name('lviv.line');
+Route::get('/lviv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('lviv.news');
+Route::get('/novoyavorivsk', [LvivNewsController::class, 'novoyavorivskHome'])->name('novoyavorivsk.news');
+Route::get('/novoyavorivsk/news', [LvivNewsController::class, 'novoyavorivskHome'])->name('novoyavorivsk.line');
+Route::get('/novoyavorivsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('novoyavorivsk.news');
+Route::get('/noviy-rozdil', [LvivNewsController::class, 'noviyRozdilHome'])->name('noviy-rozdil.news');
+Route::get('/noviy-rozdil/news', [LvivNewsController::class, 'noviyRozdilHome'])->name('noviy-rozdil.line');
+Route::get('/noviy-rozdil/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('noviy-rozdil.news');
+Route::get('/sambir', [LvivNewsController::class, 'sambirHome'])->name('sambir.news');
+Route::get('/sambir/news', [LvivNewsController::class, 'sambirHome'])->name('sambir.line');
+Route::get('/sambir/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('sambir.news');
+Route::get('/sokal', [LvivNewsController::class, 'sokalHome'])->name('sokal.news');
+Route::get('/sokal/news', [LvivNewsController::class, 'sokalHome'])->name('sokal.line');
+Route::get('/sokal/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('sokal.news');
+Route::get('/stebnyk', [LvivNewsController::class, 'stebnykHome'])->name('stebnyk.news');
+Route::get('/stebnyk/news', [LvivNewsController::class, 'stebnykHome'])->name('stebnyk.line');
+Route::get('/stebnyk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('stebnyk.news');
+Route::get('/striy', [LvivNewsController::class, 'striyHome'])->name('striy.news');
+Route::get('/striy/news', [LvivNewsController::class, 'striyHome'])->name('striy.line');
+Route::get('/striy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('striy.news');
+Route::get('/truskavets', [LvivNewsController::class, 'truskavetsHome'])->name('truskavets.news');
+Route::get('/truskavets/news', [LvivNewsController::class, 'truskavetsHome'])->name('truskavets.line');
+Route::get('/truskavets/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('truskavets.news');
+Route::get('/zolochiv', [LvivNewsController::class, 'zolochivHome'])->name('zolochiv.news');
+Route::get('/zolochiv/news', [LvivNewsController::class, 'zolochivHome'])->name('zolochiv.line');
+Route::get('/zolochiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zolochiv.news');
+// Mykolayiv
+Route::get('/mykolayiv', [MykolayivNewsController::class, 'mykolayivHome'])->name('mykolayiv.news');
+Route::get('/mykolayiv/news', [MykolayivNewsController::class, 'mykolayivHome'])->name('mykolayiv.line');
+Route::get('/mykolayiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('mykolayiv.news');
+Route::get('/pervomaisk', [MykolayivNewsController::class, 'pervomaiskHome'])->name('pervomaisk.news');
+Route::get('/pervomaisk/news', [MykolayivNewsController::class, 'pervomaiskHome'])->name('pervomaisk.line');
+Route::get('/pervomaisk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('pervomaisk.news');
+Route::get('/voznesensk', [MykolayivNewsController::class, 'voznesenskHome'])->name('voznesensk.news');
+Route::get('/voznesensk/news', [MykolayivNewsController::class, 'voznesenskHome'])->name('voznesensk.line');
+Route::get('/voznesensk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('voznesensk.news');
+Route::get('/yuzhnoukrainsk', [MykolayivNewsController::class, 'yuzhnoukrainskHome'])->name('yuzhnoukrainsk.news');
+Route::get('/yuzhnoukrainsk/news', [MykolayivNewsController::class, 'yuzhnoukrainskHome'])->name('yuzhnoukrainsk.line');
+Route::get('/yuzhnoukrainsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('yuzhnoukrainsk.news');
+// Poltava
+Route::get('/hadiach', [PoltavaNewsController::class, 'hadiachHome'])->name('hadiach.news');
+Route::get('/hadiach/news', [PoltavaNewsController::class, 'hadiachHome'])->name('hadiach.line');
+Route::get('/hadiach/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('hadiach.news');
+Route::get('/horishni-plavni', [PoltavaNewsController::class, 'horishniPlavniHome'])->name('horishni-plavni.news');
+Route::get('/horishni-plavni/news', [PoltavaNewsController::class, 'horishniPlavniHome'])->name('horishni-plavni.line');
+Route::get('/horishni-plavni/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('horishni-plavni.news');
+Route::get('/kremenchuk', [PoltavaNewsController::class, 'kremenchukHome'])->name('kremenchuk.news');
+Route::get('/kremenchuk/news', [PoltavaNewsController::class, 'kremenchukHome'])->name('kremenchuk.line');
+Route::get('/kremenchuk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kremenchuk.news');
+Route::get('/lubny', [PoltavaNewsController::class, 'lubnyHome'])->name('lubny.news');
+Route::get('/lubny/news', [PoltavaNewsController::class, 'lubnyHome'])->name('lubny.line');
+Route::get('/lubny/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('lubny.news');
+Route::get('/myrhorod', [PoltavaNewsController::class, 'myrhorodHome'])->name('myrhorod.news');
+Route::get('/myrhorod/news', [PoltavaNewsController::class, 'myrhorodHome'])->name('myrhorod.line');
+Route::get('/myrhorod/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('myrhorod.news');
+Route::get('/poltava', [PoltavaNewsController::class, 'poltavaHome'])->name('poltava.news');
+Route::get('/poltava/news', [PoltavaNewsController::class, 'poltavaHome'])->name('poltava.line');
+Route::get('/poltava/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('poltava.news');
+// Rivne
+Route::get('/dubno', [RivneNewsController::class, 'dubnoHome'])->name('dubno.news');
+Route::get('/dubno/news', [RivneNewsController::class, 'dubnoHome'])->name('dubno.line');
+Route::get('/dubno/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('dubno.news');
+Route::get('/kostopil', [RivneNewsController::class, 'kostopilHome'])->name('kostopil.news');
+Route::get('/kostopil/news', [RivneNewsController::class, 'kostopilHome'])->name('kostopil.line');
+Route::get('/kostopil/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kostopil.news');
+Route::get('/rivne', [RivneNewsController::class, 'rivneHome'])->name('rivne.news');
+Route::get('/rivne/news', [RivneNewsController::class, 'rivneHome'])->name('rivne.line');
+Route::get('/rivne/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('rivne.news');
+Route::get('/sarny', [RivneNewsController::class, 'sarnyHome'])->name('sarny.news');
+Route::get('/sarny/news', [RivneNewsController::class, 'sarnyHome'])->name('sarny.line');
+Route::get('/sarny/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('sarny.news');
+Route::get('/varash', [RivneNewsController::class, 'varashHome'])->name('varash.news');
+Route::get('/varash/news', [RivneNewsController::class, 'varashHome'])->name('varash.line');
+Route::get('/varash/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('varash.news');
+Route::get('/zdolbuniv', [RivneNewsController::class, 'zdolbunivHome'])->name('zdolbuniv.news');
+Route::get('/zdolbuniv/news', [RivneNewsController::class, 'zdolbunivHome'])->name('zdolbuniv.line');
+Route::get('/zdolbuniv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('zdolbuniv.news');
+// Sumy
+Route::get('/gluhiv', [SumyNewsController::class, 'gluhivHome'])->name('gluhiv.news');
+Route::get('/gluhiv/news', [SumyNewsController::class, 'gluhivHome'])->name('gluhiv.line');
+Route::get('/gluhiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('gluhiv.news');
+Route::get('/konotop', [SumyNewsController::class, 'konotopHome'])->name('konotop.news');
+Route::get('/konotop/news', [SumyNewsController::class, 'konotopHome'])->name('konotop.line');
+Route::get('/konotop/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('konotop.news');
+Route::get('/krolevets', [SumyNewsController::class, 'krolevetsHome'])->name('krolevets.news');
+Route::get('/krolevets/news', [SumyNewsController::class, 'krolevetsHome'])->name('krolevets.line');
+Route::get('/krolevets/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('krolevets.news');
+Route::get('/lebedyn', [SumyNewsController::class, 'lebedynHome'])->name('lebedyn.news');
+Route::get('/lebedyn/news', [SumyNewsController::class, 'lebedynHome'])->name('lebedyn.line');
+Route::get('/lebedyn/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('lebedyn.news');
+Route::get('/ohtyrka', [SumyNewsController::class, 'ohtyrkaHome'])->name('ohtyrka.news');
+Route::get('/ohtyrka/news', [SumyNewsController::class, 'ohtyrkaHome'])->name('ohtyrka.line');
+Route::get('/ohtyrka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('ohtyrka.news');
+Route::get('/romny', [SumyNewsController::class, 'romnyHome'])->name('romny.news');
+Route::get('/romny/news', [SumyNewsController::class, 'romnyHome'])->name('romny.line');
+Route::get('/romny/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('romny.news');
+Route::get('/shostka', [SumyNewsController::class, 'shostkaHome'])->name('shostka.news');
+Route::get('/shostka/news', [SumyNewsController::class, 'shostkaHome'])->name('shostka.line');
+Route::get('/shostka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('shostka.news');
+Route::get('/sumy', [SumyNewsController::class, 'sumyHome'])->name('sumy.news');
+Route::get('/sumy/news', [SumyNewsController::class, 'sumyHome'])->name('sumy.line');
+Route::get('/sumy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('sumy.news');
+Route::get('/trostyanets', [SumyNewsController::class, 'trostyanetsHome'])->name('trostyanets.news');
+Route::get('/trostyanets/news', [SumyNewsController::class, 'trostyanetsHome'])->name('trostyanets.line');
+Route::get('/trostyanets/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('trostyanets.news');
+// Ternopil
+Route::get('/chortkiv', [TernopilNewsController::class, 'chortkivHome'])->name('chortkiv.news');
+Route::get('/chortkiv/news', [TernopilNewsController::class, 'chortkivHome'])->name('chortkiv.line');
+Route::get('/chortkiv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('chortkiv.news');
+Route::get('/kremenets', [TernopilNewsController::class, 'kremenetsHome'])->name('kremenets.news');
+Route::get('/kremenets/news', [TernopilNewsController::class, 'kremenetsHome'])->name('kremenets.line');
+Route::get('/kremenets/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kremenets.news');
+Route::get('/ternopil', [TernopilNewsController::class, 'ternopilHome'])->name('ternopil.news');
+Route::get('/ternopil/news', [TernopilNewsController::class, 'ternopilHome'])->name('ternopil.line');
+Route::get('/ternopil/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('ternopil.news');
+// Kherson
+Route::get('/henichesk', [KhersonNewsController::class, 'henicheskHome'])->name('henichesk.news');
+Route::get('/henichesk/news', [KhersonNewsController::class, 'henicheskHome'])->name('henichesk.line');
+Route::get('/henichesk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('henichesk.news');
+Route::get('/kahovka', [KhersonNewsController::class, 'kahovkaHome'])->name('kahovka.news');
+Route::get('/kahovka/news', [KhersonNewsController::class, 'kahovkaHome'])->name('kahovka.line');
+Route::get('/kahovka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kahovka.news');
+Route::get('/kherson', [KhersonNewsController::class, 'khersonHome'])->name('kherson.news');
+Route::get('/kherson/news', [KhersonNewsController::class, 'khersonHome'])->name('kherson.line');
+Route::get('/kherson/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kherson.news');
+Route::get('/nova-kakhovka', [KhersonNewsController::class, 'novaKakhovkaHome'])->name('nova-kakhovka.news');
+Route::get('/nova-kakhovka/news', [KhersonNewsController::class, 'novaKakhovkaHome'])->name('nova-kakhovka.line');
+Route::get('/nova-kakhovka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('nova-kakhovka.news');
+Route::get('/oleshki', [KhersonNewsController::class, 'oleshkiHome'])->name('oleshki.news');
+Route::get('/oleshki/news', [KhersonNewsController::class, 'oleshkiHome'])->name('oleshki.line');
+Route::get('/nova-kakhovka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('nova-kakhovka.news');
+Route::get('/skadovsk', [KhersonNewsController::class, 'skadovskHome'])->name('skadovsk.news');
+Route::get('/skadovsk/news', [KhersonNewsController::class, 'skadovskHome'])->name('skadovsk.line');
+Route::get('/skadovsk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('skadovsk.news');
+// Hmelnytskiy
+Route::get('/hmelnytskiy', [HmelnytskiyNewsController::class, 'hmelnytskiyHome'])->name('hmelnytskiy.news');
+Route::get('/hmelnytskiy/news', [HmelnytskiyNewsController::class, 'hmelnytskiyHome'])->name('hmelnytskiy.line');
+Route::get('/hmelnytskiy/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('hmelnytskiy.news');
+Route::get('/kamyanets-podilsky', [HmelnytskiyNewsController::class, 'kamyanetsPodilskyHome'])->name('kamyanets-podilsky.news');
+Route::get('/kamyanets-podilsky/news', [HmelnytskiyNewsController::class, 'kamyanetsPodilskyHome'])->name('kamyanets-podilsky.line');
+Route::get('/kamyanets-podilsky/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('kamyanets-podilsky.news');
+Route::get('/krasyliv', [HmelnytskiyNewsController::class, 'krasylivHome'])->name('krasyliv.news');
+Route::get('/krasyliv/news', [HmelnytskiyNewsController::class, 'krasylivHome'])->name('krasyliv.line');
+Route::get('/krasyliv/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('krasyliv.news');
+Route::get('/netishin', [HmelnytskiyNewsController::class, 'netishinHome'])->name('netishin.news');
+Route::get('/netishin/news', [HmelnytskiyNewsController::class, 'netishinHome'])->name('netishin.line');
+Route::get('/netishin/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('netishin.news');
+Route::get('/polonne', [HmelnytskiyNewsController::class, 'polonneHome'])->name('polonne.news');
+Route::get('/polonne/news', [HmelnytskiyNewsController::class, 'polonneHome'])->name('polonne.line');
+Route::get('/polonne/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('polonne.news');
+Route::get('/shepetivka', [HmelnytskiyNewsController::class, 'shepetivkaHome'])->name('shepetivka.news');
+Route::get('/shepetivka/news', [HmelnytskiyNewsController::class, 'shepetivkaHome'])->name('shepetivka.line');
+Route::get('/shepetivka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('shepetivka.news');
+Route::get('/slavuta', [HmelnytskiyNewsController::class, 'slavutaHome'])->name('slavuta.news');
+Route::get('/slavuta/news', [HmelnytskiyNewsController::class, 'slavutaHome'])->name('slavuta.line');
+Route::get('/slavuta/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('slavuta.news');
+Route::get('/starokostyntynivka', [HmelnytskiyNewsController::class, 'starokostyntynivkaHome'])->name('starokostyntynivka.news');
+Route::get('/starokostyntynivka/news', [HmelnytskiyNewsController::class, 'starokostyntynivkaHome'])->name('starokostyntynivka.line');
+Route::get('/starokostyntynivka/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('starokostyntynivka.news');
+Route::get('/volochysk', [HmelnytskiyNewsController::class, 'volochyskHome'])->name('volochysk.news');
+Route::get('/volochysk/news', [HmelnytskiyNewsController::class, 'volochyskHome'])->name('volochysk.line');
+Route::get('/volochysk/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('volochysk.news');
+
+// Dnipro
+Route::get('/dnipro', [DniproNewsController::class, 'dniproHome'])->name('dnipro.news');
+Route::get('/kamianske', [DniproNewsController::class, 'kamianskeHome'])->name('kamianske.news');
+Route::get('/kryvyi-rih', [DniproNewsController::class, 'kryvyiRihHome'])->name('kryvyi-rih.news');
+Route::get('/marganets', [DniproNewsController::class, 'marganetsHome'])->name('marganets.news');
+Route::get('/nikopol', [DniproNewsController::class, 'nikopolHome'])->name('nikopol.news');
+Route::get('/novomoskovsk', [DniproNewsController::class, 'novomoskovskHome'])->name('novomoskovsk.news');
+Route::get('/pavlograd', [DniproNewsController::class, 'pavlogradHome'])->name('pavlograd.news');
+Route::get('/pershotravensk', [DniproNewsController::class, 'pershotravenskHome'])->name('pershotravensk.news');
+Route::get('/pokrov', [DniproNewsController::class, 'pokrovHome'])->name('pokrov.news');
+Route::get('/pyatihatky', [DniproNewsController::class, 'pyatihatkyHome'])->name('pyatihatky.news');
+Route::get('/sinelnikovo', [DniproNewsController::class, 'sinelnikovoHome'])->name('sinelnikovo.news');
+Route::get('/ternivka', [DniproNewsController::class, 'ternivkaHome'])->name('ternivka.news');
+Route::get('/vilnohorsk', [DniproNewsController::class, 'vilnohorskHome'])->name('vilnohorsk.news');
+Route::get('/zhovti-vody', [DniproNewsController::class, 'zhovtiVodyHome'])->name('zhovti-vody.news');
+
+Route::get('/dnipro/news/', [DniproNewsController::class, 'dniproLine'])->name('dnipro.line');
+Route::get('/kamianske/news/', [DniproNewsController::class, 'kamianskeLine'])->name('kamianske.line');
+Route::get('/kryvyi-rih/news/', [DniproNewsController::class, 'kryvyiRihLine'])->name('kryvyi-rih.line');
+Route::get('/marganets/news/', [DniproNewsController::class, 'marganetsLine'])->name('marganets.line');
+Route::get('/nikopol/news/', [DniproNewsController::class, 'nikopolLine'])->name('nikopol.line');
+Route::get('/novomoskovsk/news/', [DniproNewsController::class, 'novomoskovskLine'])->name('novomoskovsk.line');
+Route::get('/pavlograd/news/', [DniproNewsController::class, 'pavlogradLine'])->name('pavlograd.line');
+Route::get('/pershotravensk/news/', [DniproNewsController::class, 'pershotravenskLine'])->name('pershotravensk.line');
+Route::get('/pokrov/news/', [DniproNewsController::class, 'pokrovLine'])->name('pokrov.line');
+Route::get('/pyatihatky/news/', [DniproNewsController::class, 'pyatihatkyLine'])->name('pyatihatky.line');
+Route::get('/sinelnikovo/news/', [DniproNewsController::class, 'sinelnikovoLine'])->name('sinelnikovo.line');
+Route::get('/ternivka/news/', [DniproNewsController::class, 'ternivkaLine'])->name('ternivka.line');
+Route::get('/vilnohorsk/news/', [DniproNewsController::class, 'vilnohorskLine'])->name('vilnohorsk.line');
+Route::get('/zhovti-vody/news/', [DniproNewsController::class, 'zhovtiVodyLine'])->name('zhovti-vody.line');
+
+Route::get('/dnipro/news/{url}', [DniproNewsController::class, 'dniproNews'])->name('dnipro.news');
+Route::get('/kamianske/news/{url}', [DniproNewsController::class, 'kamianskeNews'])->name('kamianske.news');
+Route::get('/kryvyi-rih/news/{url}', [DniproNewsController::class, 'kryvyiRihNews'])->name('kryvyi-rih.news');
+Route::get('/marganets/news/{url}', [DniproNewsController::class, 'marganetsNews'])->name('marganets.news');
+Route::get('/nikopol/news/{url}', [DniproNewsController::class, 'nikopolNews'])->name('nikopol.news');
+Route::get('/novomoskovsk/news/{url}', [DniproNewsController::class, 'novomoskovskNews'])->name('novomoskovsk.news');
+Route::get('/pavlograd/news/{url}', [DniproNewsController::class, 'pavlogradNews'])->name('pavlograd.news');
+Route::get('/pershotravensk/news/{url}', [DniproNewsController::class, 'pershotravenskNews'])->name('pershotravensk.news');
+Route::get('/pokrov/news/{url}', [DniproNewsController::class, 'pokrovNews'])->name('pokrov.news');
+Route::get('/pyatihatky/news/{url}', [DniproNewsController::class, 'pyatihatkyNews'])->name('pyatihatky.news');
+Route::get('/sinelnikovo/news/{url}', [DniproNewsController::class, 'sinelnikovoNews'])->name('sinelnikovo.news');
+Route::get('/ternivka/news/{url}', [DniproNewsController::class, 'ternivkaNews'])->name('ternivka.news');
+Route::get('/vilnohorsk/news/{url}', [DniproNewsController::class, 'vilnohorskNews'])->name('vilnohorsk.news');
+Route::get('/zhovti-vody/news/{url}', [DniproNewsController::class, 'zhovtiVodyNews'])->name('zhovti-vody.news');
+
+// Odessa
+Route::get('/bilgorod-dnistrovsky/news/', [OdesaNewsController::class, 'bilgorodDnistrovskyLine'])->name('bilgorod.line');
+Route::get('/chornomorsk/news/', [OdesaNewsController::class, 'chornomorskLine'])->name('chornomorsk.line');
+Route::get('/izmail/news/', [LineNewsController::class, 'index'])->name('izmail.line');
+Route::get('/kiliya/news/', [OdesaNewsController::class, 'kiliyaLine'])->name('kiliya.line');
+Route::get('/odesa/news/', [OdesaNewsController::class, 'odesaLine'])->name('odesa.line');
+Route::get('/podilsk/news/', [OdesaNewsController::class, 'podilskLine'])->name('podilsk.line');
+Route::get('/teplodar/news/', [OdesaNewsController::class, 'teplodarLine'])->name('teplodar.line');
+Route::get('/youzhne/news/', [OdesaNewsController::class, 'youzhneLine'])->name('youzhne.line');
+
+// Route::get('//news/', [OdesaNewsController::class, 'Line'])->name('.line');
+
+Route::get('/bilgorod-dnistrovsky/news/{url}', [OdesaNewsController::class, 'bilgorodDnistrovskyNews'])->name('bilgorod.news');
+Route::get('/chornomorsk/news/{url}', [OdesaNewsController::class, 'chornomorskNews'])->name('chornomorsk.news');
+Route::get('/izmail/news/{url}', [OdesaNewsController::class, 'izmailNews'])->name('izmail.news');
+Route::get('/kiliya/news/{url}', [OdesaNewsController::class, 'kiliyaNews'])->name('kiliya.news');
+Route::get('/odesa/news/{url}', [OdesaNewsController::class, 'odesaNews'])->name('odesa.news');
+Route::get('/podilsk/news/{url}', [OdesaNewsController::class, 'podilskNews'])->name('podilsk.news');
+Route::get('/teplodar/news/{url}', [OdesaNewsController::class, 'teplodarNews'])->name('teplodar.news');
+Route::get('/youzhne/news/{url}', [OdesaNewsController::class, 'youzhneNews'])->name('youzhne.news');
+// Route::get('//news/{url}', [OdesaNewsController::class, 'News'])->name('.news');
+
+Route::get('/teplodar/search', [SearchController::class, 'teplodarSearch'])->name('teplodar.search');
+

@@ -1335,7 +1335,12 @@ class OdesaNewsController extends Controller
             // 'news_today' => 'news',
         ];
 
-        $rUrl = 'https://sside.daycom.com.ua/api/bilgorod-dnistrovsky/news/' . $url;
+        $SERVER_NEWS = 'https://sside.daycom.com.ua/api';
+        $LOCAL_NEWS = 'http://localhost:4444/api';
+
+
+        $rUrl = $LOCAL_NEWS . '/get-news/' . $url;
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $rUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -1344,10 +1349,11 @@ class OdesaNewsController extends Controller
         if ($response) {
 
             $data = json_decode($response, true);
-
             if ($data !== null) {
+                $SERVER_USERS = 'https://sside.daycom.com.ua/api/users/';
+                $LOCAL_USERS = 'http://localhost:4444/api/api/users/';
                 $userId = $data['UserId'];
-                $userUrl = 'https://sside.daycom.com.ua/api/users/' . $userId;
+                $userUrl = $LOCAL_USERS . $userId;
                 $userCh = curl_init();
                 curl_setopt($userCh, CURLOPT_URL, $userUrl);
                 curl_setopt($userCh, CURLOPT_RETURNTRANSFER, 1);

@@ -2,25 +2,27 @@
     style="background-color: white; font-size: 14px; line-height: 16px;">
     <div class="container border-bottom p-0" style="height: 40px;">
         <div class="" style="font-weight: 300; width: 400px;">
-            {{ \Carbon\Carbon::now()->locale('uk')->isoFormat($city['name'] . ', dddd, D MMMM YYYY') }}
+            {{ \Carbon\Carbon::now()->locale('uk')->isoFormat($cityData['name'] . ', dddd, D MMMM YYYY') }}
         </div>
-        <a class="navbar-brand mx-auto" href="{{ route($city['main_link']) }}">
+        <a class="navbar-brand mx-auto" href="{{ route('city.feed', ['city' => $cityData['name_link']]) }}">
             <img src="{{ asset('images/icons/logo.svg') }}" alt="Логотип">
         </a>
         <div class="d-flex gap-2" style="font-weight: 300;">
             <a href="{{ route('news-today.index') }}">Сьогоднішня газета</a>
-            <a href="{{ route($city['news_line']) }}">Стрічка новин</a>
+            <a href="{{ route($cityData['news_line']) }}">Стрічка новин</a>
             <a href="#">Підписка</a>
         </div>
     </div>
 </header>
 <nav class="navbar sticky-top px-4 py-0 container-fluid nav-style">
+    <img src="{{ asset('images/blacklogo.svg') }}" alt="Логотип" class="slide-in-logo">
     <div class="container p-0" style="height: 40px;">
         <button class="btn btn-sm ps-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
             aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="d-xl-none" href="{{ route($city['main_link']) }}" style="transform: translateX(-6px)">
+        <a class="d-xl-none" href="{{ route('city.feed', ['city' => $cityData['name_link']]) }}"
+            style="transform: translateX(-6px)">
             <img src="{{ asset('images/icons/logo.svg') }}" alt="Логотип">
         </a>
         <div class="d-none d-xl-block">
@@ -73,7 +75,8 @@
                                         Америка</a></li>
                                 <li><a class="dropdown-item" href="{{ route('south-america.index') }}">Південна
                                         Америка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('middle-east.index') }}">Близький схід</a>
+                                <li><a class="dropdown-item" href="{{ route('middle-east.index') }}">Близький
+                                        схід</a>
                                 </li>
                                 <li><a class="dropdown-item"
                                         href="{{ route('pacific-region.index') }}">Тихоокеанський
@@ -127,13 +130,21 @@
                                 Вінницька область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('vinnytsa.index') }}">Вінниця</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zhmerynka.index') }}">Жмеринка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('mohyliv-podilskyi.index') }}">Могилів-Подільський</a></li>
-                                <li><a class="dropdown-item" href="{{ route('hmilnyk.index') }}">Хмільник</a></li>
-                                <li><a class="dropdown-item" href="{{ route('gaysin.index') }}">Гайсин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kozyatyn.index') }}">Козятин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('ladyzhin.index') }}">Ладижин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vinnytsa']) }}">Вінниця</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zhmerynka']) }}">Жмеринка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'mohyliv-podilskyi']) }}">Могилів-Подільський</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'hmilnyk']) }}">Хмільник</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'gaysin']) }}">Гайсин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kozyatyn']) }}">Козятин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'ladyzhin']) }}">Ладижин</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -142,10 +153,16 @@
                                 Волинська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('kovel.index') }}">Ковель</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lutsk.index') }}">Луцьк</a></li>
-                                <li><a class="dropdown-item" href="{{ route('novovolynsk.index') }}">Нововолинськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('volodymyr-volynskiy.index') }}">Володимир-Волинський</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kovel']) }}">Ковель</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'lutsk']) }}">Луцьк</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'novovolynsk']) }}">Нововолинськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'volodymyr-volynskiy']) }}">Володимир-Волинський</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -154,12 +171,20 @@
                                 Житомирська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('berdychiv.index') }}">Бердичів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('korosten.index') }}">Коростень</a></li>
-                                <li><a class="dropdown-item" href="{{ route('korostyshiv.index') }}">Коростишів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('malyn.index') }}">Малин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('novohrad-volynskiy.index') }}">Новоград-Волинський</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zhytomyr.index') }}">Житомир</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'berdychiv']) }}">Бердичів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'korosten']) }}">Коростень</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'korostyshiv']) }}">Коростишів</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'malyn']) }}">Малин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'novohrad-volynskiy']) }}">Новоград-Волинський</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zhytomyr']) }}">Житомир</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -168,11 +193,17 @@
                                 Закарпатська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('beregove.index') }}">Берегове</a></li>
-                                <li><a class="dropdown-item" href="{{ route('hust.index') }}">Хуст</a></li>
-                                <li><a class="dropdown-item" href="{{ route('mukachevo.index') }}">Мукачево</a></li>
-                                <li><a class="dropdown-item" href="{{ route('uzhhorod.index') }}">Ужгород</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vinohradiv.index') }}">Виноградів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'beregove']) }}">Берегове</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'hust']) }}">Хуст</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'mukachevo']) }}">Мукачево</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'uzhhorod']) }}">Ужгород</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vinohradiv']) }}">Виноградів</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -181,13 +212,23 @@
                                 Запорізька область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('berdyansk.index') }}">Бердянськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('dniprorudne.index') }}">Дніпрорудне</a></li>
-                                <li><a class="dropdown-item" href="{{ route('energodar.index') }}">Енергодар</a></li>
-                                <li><a class="dropdown-item" href="{{ route('melitopol.index') }}">Мелітополь</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pology.index') }}">Пологи</a></li>
-                                <li><a class="dropdown-item" href="{{ route('tokmak.index') }}">Токмак</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zaporizhzhia.index') }}">Запоріжжя</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'berdyansk']) }}">Бердянськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'dniprorudne']) }}">Дніпрорудне</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'energodar']) }}">Енергодар</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'melitopol']) }}">Мелітополь</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pology']) }}">Пологи</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'tokmak']) }}">Токмак</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zaporizhzhia']) }}">Запоріжжя</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -196,11 +237,17 @@
                                 Івано-Франківська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('dolyna.index') }}">Долина</a></li>
-                                <li><a class="dropdown-item" href="{{ route('ivano-frankivsk.index') }}">Івано-Франківськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kalush.index') }}">Калуш</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kolomya.index') }}">Коломия</a></li>
-                                <li><a class="dropdown-item" href="{{ route('nadvirna.index') }}">Надвірна</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'dolyna']) }}">Долина</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'ivano-frankivsk']) }}">Івано-Франківськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kalush']) }}">Калуш</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kolomya']) }}">Коломия</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'nadvirna']) }}">Надвірна</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -209,10 +256,17 @@
                                 Кіровоградська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('kropyvnytskiy.index') }}">Кропивницький</a></li>
-                                <li><a class="dropdown-item" href="{{ route('olexandriya.index') }}">Олександрія</a></li>
-                                <li><a class="dropdown-item" href="{{ route('svitlovodsk.index') }}">Світловодськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('znamyanka.index') }}">Знам'янка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kropyvnytskiy']) }}">Кропивницький</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'olexandriya']) }}">Олександрія</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'svitlovodsk']) }}">Світловодськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'znamyanka']) }}">Знам'янка</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -221,19 +275,36 @@
                                 Львівська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('boryslav.index') }}">Борислав</a></li>
-                                <li><a class="dropdown-item" href="{{ route('brody.index') }}">Броди</a></li>
-                                <li><a class="dropdown-item" href="{{ route('chervonograd.index') }}">Червоноград</a></li>
-                                <li><a class="dropdown-item" href="{{ route('drohobych.index') }}">Дрогобич</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lviv.index') }}">Львів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('novoyavorivsk.index') }}">Новояворівськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('noviy-rozdil.index') }}">Новий Розділ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sambir.index') }}">Самбір</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sokal.index') }}">Сокаль</a></li>
-                                <li><a class="dropdown-item" href="{{ route('stebnyk.index') }}">Стебник</a></li>
-                                <li><a class="dropdown-item" href="{{ route('striy.index') }}">Стрий</a></li>
-                                <li><a class="dropdown-item" href="{{ route('truskavets.index') }}">Трускавець</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zolochiv.index') }}">Золочів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'boryslav']) }}">Борислав</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'brody']) }}">Броди</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'chervonograd']) }}">Червоноград</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'drohobych']) }}">Дрогобич</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'lviv']) }}">Львів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'novoyavorivsk']) }}">Новояворівськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'noviy-rozdil']) }}">Новий
+                                        Розділ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'sambir']) }}">Самбір</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'sokal']) }}">Сокаль</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'stebnyk']) }}">Стебник</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'striy']) }}">Стрий</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'truskavets']) }}">Трускавець</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zolochiv']) }}">Золочів</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -242,10 +313,17 @@
                                 Миколаївська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('mykolayiv.index') }}">Миколаїв</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pervomaisk.index') }}">Первомайськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('voznesensk.index') }}">Вознесенськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('yuzhnoukrainsk.index') }}">Южноукраїнськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'mykolayiv']) }}">Миколаїв</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pervomaisk']) }}">Первомайськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'voznesensk']) }}">Вознесенськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'yuzhnoukrainsk']) }}">Южноукраїнськ</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -254,12 +332,20 @@
                                 Полтавська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('hadiach.index') }}">Гадяч</a></li>
-                                <li><a class="dropdown-item" href="{{ route('horishni-plavni.index') }}">Горішні Плавні</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kremenchuk.index') }}">Кременчук</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lubny.index') }}">Лубни</a></li>
-                                <li><a class="dropdown-item" href="{{ route('myrhorod.index') }}">Миргород</a></li>
-                                <li><a class="dropdown-item" href="{{ route('poltava.index') }}">Полтава</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'hadiach']) }}">Гадяч</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'horishni-plavni']) }}">Горішні
+                                        Плавні</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kremenchuk']) }}">Кременчук</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'lubny']) }}">Лубни</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'myrhorod']) }}">Миргород</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'poltava']) }}">Полтава</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -268,12 +354,19 @@
                                 Рівненська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('dubno.index') }}">Дубно</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kostopil.index') }}">Костопіль</a></li>
-                                <li><a class="dropdown-item" href="{{ route('rivne.index') }}">Рівне</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sarny.index') }}">Сарни</a></li>
-                                <li><a class="dropdown-item" href="{{ route('varash.index') }}">Вараш</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zdolbuniv.index') }}">Здолбунів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'dubno']) }}">Дубно</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kostopil']) }}">Костопіль</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'rivne']) }}">Рівне</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'sarny']) }}">Сарни</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'varash']) }}">Вараш</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zdolbuniv']) }}">Здолбунів</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -282,15 +375,26 @@
                                 Сумська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('gluhiv.index') }}">Глухів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('konotop.index') }}">Конотоп</a></li>
-                                <li><a class="dropdown-item" href="{{ route('krolevets.index') }}">Кролевець</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lebedyn.index') }}">Лебедин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('ohtyrka.index') }}">Охтирка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('romny.index') }}">Ромни</a></li>
-                                <li><a class="dropdown-item" href="{{ route('shostka.index') }}">Шостка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sumy.index') }}">Суми</a></li>
-                                <li><a class="dropdown-item" href="{{ route('trostyanets.index') }}">Тростянець</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'gluhiv']) }}">Глухів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'konotop']) }}">Конотоп</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'krolevets']) }}">Кролевець</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'lebedyn']) }}">Лебедин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'ohtyrka']) }}">Охтирка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'romny']) }}">Ромни</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'shostka']) }}">Шостка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'sumy']) }}">Суми</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'trostyanets']) }}">Тростянець</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -299,9 +403,13 @@
                                 Тернопільська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('chortkiv.index') }}">Чортків</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kremenets.index') }}">Кременець</a></li>
-                                <li><a class="dropdown-item" href="{{ route('ternopil.index') }}">Тернопіль</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'chortkiv']) }}">Чортків</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kremenets']) }}">Кременець</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'ternopil']) }}">Тернопіль</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -310,12 +418,20 @@
                                 Херсонська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('henichesk.index') }}">Генічеськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kahovka.index') }}">Каховка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kherson.index') }}">Херсон</a></li>
-                                <li><a class="dropdown-item" href="{{ route('nova-kakhovka.index') }}">Нова Каховка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('oleshki.index') }}">Олешки</a></li>
-                                <li><a class="dropdown-item" href="{{ route('skadovsk.index') }}">Скадовськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'henichesk']) }}">Генічеськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kahovka']) }}">Каховка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kherson']) }}">Херсон</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'nova-kakhovka']) }}">Нова
+                                        Каховка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'oleshki']) }}">Олешки</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'skadovsk']) }}">Скадовськ</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -324,15 +440,29 @@
                                 Хмельницька область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('hmelnytskiy.index') }}">Хмельницький</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kamyanets-podilsky.index') }}">Кам'янець-Подільський</a></li>
-                                <li><a class="dropdown-item" href="{{ route('krasyliv.index') }}">Красилів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('netishin.index') }}">Нетішин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('polonne.index') }}">Полонне</a></li>
-                                <li><a class="dropdown-item" href="{{ route('shepetivka.index') }}">Шепетівка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('slavuta.index') }}">Славута</a></li>
-                                <li><a class="dropdown-item" href="{{ route('starokostyntynivka.index') }}">Старокостянтинівка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('volochysk.index') }}">Волочиськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'hmelnytskiy']) }}">Хмельницький</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kamyanets-podilsky']) }}">Кам'янець-Подільський</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'krasyliv']) }}">Красилів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'netishin']) }}">Нетішин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'polonne']) }}">Полонне</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'shepetivka']) }}">Шепетівка</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'slavuta']) }}">Славута</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'starokostyntynivka']) }}">Старокостянтинівка</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'volochysk']) }}">Волочиськ</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -341,20 +471,44 @@
                                 Дніпропетровська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('dnipro.index') }}">Дніпро</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kryvyi-rih.index') }}">Кривий Ріг</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kamianske.index') }}">Кам'янське</a></li>
-                                <li><a class="dropdown-item" href="{{ route('nikopol.index') }}">Нікополь</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pavlograd.index') }}">Павлоград</a></li>
-                                <li><a class="dropdown-item" href="{{ route('novomoskovsk.index') }}">Новомосковськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zhovti-vody.index') }}">Жовті Води</a></li>
-                                <li><a class="dropdown-item" href="{{ route('marganets.index') }}">Марганець</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pokrov.index') }}">Покров</a></li>
-                                <li><a class="dropdown-item" href="{{ route('sinelnikovo.index') }}">Синельникове</a></li>
-                                <li><a class="dropdown-item" href="{{ route('ternivka.index') }}">Тернівка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pershotravensk.index') }}">Першотравенськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vilnohorsk.index') }}">Вільногірськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pyatihatky.index') }}">П'ятихатки</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'dnipro']) }}">Дніпро</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kryvyi-rih']) }}">Кривий Ріг</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kamianske']) }}">Кам'янське</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'nikopol']) }}">Нікополь</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pavlograd']) }}">Павлоград</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'novomoskovsk']) }}">Новомосковськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zhovti-vody']) }}">Жовті Води</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'marganets']) }}">Марганець</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pokrov']) }}">Покров</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'sinelnikovo']) }}">Синельникове</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'ternivka']) }}">Тернівка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pershotravensk']) }}">Першотравенськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vilnohorsk']) }}">Вільногірськ</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pyatihatky']) }}">П'ятихатки</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -363,23 +517,42 @@
                                 Київська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('kyiv.index') }}">Київ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('berezan.index') }}">Березань</a></li>
-                                <li><a class="dropdown-item" href="{{ route('bilacerkva.index') }}">Біла Церква</a></li>
-                                <li><a class="dropdown-item" href="{{ route('boryspil.index') }}">Бориспіль</a></li>
-                                <li><a class="dropdown-item" href="{{ route('boyarka.index') }}">Боярка</a></li>
-                                <li><a class="dropdown-item" href="{{ route('brovary.index') }}">Бровари</a></li>
-                                <li><a class="dropdown-item" href="{{ route('bucha.index') }}">Буча</a></li>
-                                <li><a class="dropdown-item" href="{{ route('fastiv.index') }}">Фастів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('irpin.index') }}">Ірпінь</a></li>
-                                <li><a class="dropdown-item" href="{{ route('obukhiv.index') }}">Обухів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pereyaslav.index') }}">Переяслав</a></li>
-                                <li><a class="dropdown-item" href="{{ route('skvyra.index') }}">Сквира</a></li>
-                                <li><a class="dropdown-item" href="{{ route('slavutych.index') }}">Славутич</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vasylkiv.index') }}">Васильків</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vyshhorod.index') }}">Вишгород</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vyshneve.index') }}">Вишневе</a></li>
-                                <li><a class="dropdown-item" href="{{ route('yagotyn.index') }}">Яготин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kyiv']) }}">Київ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'berezan']) }}">Березань</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'bilacerkva']) }}">Біла Церква</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'boryspil']) }}">Бориспіль</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'boyarka']) }}">Боярка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'brovary']) }}">Бровари</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'bucha']) }}">Буча</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'fastiv']) }}">Фастів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'irpin']) }}">Ірпінь</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'obukhiv']) }}">Обухів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pereyaslav']) }}">Переяслав</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'skvyra']) }}">Сквира</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'slavutych']) }}">Славутич</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vasylkiv']) }}">Васильків</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vyshhorod']) }}">Вишгород</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vyshneve']) }}">Вишневе</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'yagotyn']) }}">Яготин</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -388,16 +561,24 @@
                                 Одеська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('odesa.index') }}">Одеса</a></li>
-                                <li><a class="dropdown-item" href="{{ route('izmail.index') }}">Ізмаїл</a></li>
-                                <li><a class="dropdown-item" href="{{ route('chornomorsk.index') }}">Чорноморськ</a>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'odesa']) }}">Одеса</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'izmail']) }}">Ізмаїл</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'chornomorsk']) }}">Чорноморськ</a>
                                 </li>
                                 <li><a class="dropdown-item"
-                                        href="{{ route('bilgorod.index') }}">Білгород-Дністровський</a></li>
-                                <li><a class="dropdown-item" href="{{ route('podilsk.index') }}">Подільськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('teplodar.index') }}">Теплодар</a></li>
-                                <li><a class="dropdown-item" href="{{ route('youzhne.index') }}">Южне</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kiliya.index') }}">Кілія</a></li>
+                                        href="{{ route('city.feed', ['city' => 'bilgorod']) }}">Білгород-Дністровський</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'podilsk']) }}">Подільськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'teplodar']) }}">Теплодар</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'youzhne']) }}">Южне</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kiliya']) }}">Кілія</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -406,18 +587,33 @@
                                 Харківська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('balaklia.index') }}">Балаклія</a></li>
-                                <li><a class="dropdown-item" href="{{ route('chuguyiv.index') }}">Чугуїв</a></li>
-                                <li><a class="dropdown-item" href="{{ route('dergachi.index') }}">Дергачі</a></li>
-                                <li><a class="dropdown-item" href="{{ route('harkiv.index') }}">Харків</a></li>
-                                <li><a class="dropdown-item" href="{{ route('izum.index') }}">Ізюм</a></li>
-                                <li><a class="dropdown-item" href="{{ route('krasnograd.index') }}">Красноград</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kupyansk.index') }}">Куп'янськ</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lozova.index') }}">Лозова</a></li>
-                                <li><a class="dropdown-item" href="{{ route('lubotin.index') }}">Люботин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('merefa.index') }}">Мерефа</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pervomayskiy.index') }}">Первомайський</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vovchansk.index') }}">Вовчанськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'balaklia']) }}">Балаклія</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'chuguyiv']) }}">Чугуїв</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'dergachi']) }}">Дергачі</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'harkiv']) }}">Харків</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'izum']) }}">Ізюм</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'krasnograd']) }}">Красноград</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kupyansk']) }}">Куп'янськ</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'lozova']) }}">Лозова</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'lubotin']) }}">Люботин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'merefa']) }}">Мерефа</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pervomayskiy']) }}">Первомайський</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vovchansk']) }}">Вовчанськ</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -426,13 +622,22 @@
                                 Черкаська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('cherkasy.index') }}">Черкаси</a></li>
-                                <li><a class="dropdown-item" href="{{ route('kaniv.index') }}">Канів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('smila.index') }}">Сміла</a></li>
-                                <li><a class="dropdown-item" href="{{ route('uman.index') }}">Умань</a></li>
-                                <li><a class="dropdown-item" href="{{ route('vatutine.index') }}">Ватутіне</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zolotonosha.index') }}">Золотоноша</a></li>
-                                <li><a class="dropdown-item" href="{{ route('zvenyhorodka.index') }}">Звенигородка</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'cherkasy']) }}">Черкаси</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'kaniv']) }}">Канів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'smila']) }}">Сміла</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'uman']) }}">Умань</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'vatutine']) }}">Ватутіне</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zolotonosha']) }}">Золотоноша</a>
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'zvenyhorodka']) }}">Звенигородка</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -441,10 +646,14 @@
                                 Чернігівська область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('bahmach.index') }}">Бахмач</a></li>
-                                <li><a class="dropdown-item" href="{{ route('chernihiv.index') }}">Чернігів</a></li>
-                                <li><a class="dropdown-item" href="{{ route('nizhin.index') }}">Ніжин</a></li>
-                                <li><a class="dropdown-item" href="{{ route('pryluki.index') }}">Прилуки</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'bahmach']) }}">Бахмач</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'chernihiv']) }}">Чернігів</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'nizhin']) }}">Ніжин</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'pryluki']) }}">Прилуки</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -453,7 +662,9 @@
                                 Чернівецька область
                             </button>
                             <ul class="dropdown-menu drop-cat" style="width: 100%">
-                                <li><a class="dropdown-item" href="{{ route('chernivtsi.index') }}">Чернівці</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('city.feed', ['city' => 'chernivtsi']) }}">Чернівці</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -481,7 +692,8 @@
                                     регіон</a></li>
                             <li><a class="dropdown-item" href="{{ route('africa.index') }}">Африка</a></li>
                             <li><a class="dropdown-item" href="{{ route('nauka.index') }}">Наука</a></li>
-                            <li><a class="dropdown-item" href="{{ route('technologies.index') }}">Технології</a></li>
+                            <li><a class="dropdown-item" href="{{ route('technologies.index') }}">Технології</a>
+                            </li>
                             <li><a class="dropdown-item" href="{{ route('ekolohiia.index') }}">Екологія</a></li>
                             <li><a class="dropdown-item" href="{{ route('ekonomika.index') }}">Економіка</a></li>
                             <li><a class="dropdown-item" href="{{ route('finance.index') }}">Фінанси</a></li>
@@ -535,7 +747,8 @@
                             <li><a class="dropdown-item" href="{{ route('health.index') }}">Здоров’я</a></li>
                             <li><a class="dropdown-item" href="{{ route('parenting.index') }}">Виховання дітей</a>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('real-estate.index') }}">Нерухомість</a></li>
+                            <li><a class="dropdown-item" href="{{ route('real-estate.index') }}">Нерухомість</a>
+                            </li>
                             <li><a class="dropdown-item" href="{{ route('traveling.index') }}">Подорожі</a></li>
                         </ul>
                     </div>
