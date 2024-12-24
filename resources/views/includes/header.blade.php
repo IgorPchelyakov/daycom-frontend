@@ -10,7 +10,7 @@
         <div class="d-flex gap-2">
             <a href="{{ route('news-today.index') }}">Сьогоднішня газета</a>
             <a href="{{ route('news.line') }}">Стрічка новин</a>
-            <a href="#">Підписка</a>
+            <a href="{{ route('subscription.month') }}">Підписка</a>
         </div>
     </div>
 </header>

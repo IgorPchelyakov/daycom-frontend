@@ -75,10 +75,11 @@
             </div>
         </div>
         <div class="col-xl-2 ps-xl-3">
-            <h3 class="pt-xl-1">Підписка</h3>
+            <h3 class="pt-xl-1"><a href="{{ route('subscription.month') }}">Підписка</a></h3>
             <div class="dis border-b mb-2">
                 <div class="pb-2">Інформаційна розсилка</div>
-                <div class="">Цифрова підписка 2$</div>
+                <div class="">Цифрова підписка</div>
+                <div class="">5,99$/міс</div>
             </div>
             <div class="border-b mb-2">
                 <a href="#" class="pb-2">Покриття в Україні</a>
