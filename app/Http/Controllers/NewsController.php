@@ -16,7 +16,7 @@ class NewsController extends Controller
         $LOCAL_USERS = 'http://localhost:4444/api/users/';
         $LOCAL_BANNERS = 'http://localhost:4444/api/banners';
 
-        $rUrl = $SERVER_NEWS . $url;
+        $rUrl = $LOCAL_NEWS . $url;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $rUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -70,7 +70,7 @@ class NewsController extends Controller
             abort(404);
         }
 
-        $userUrl = $SERVER_USERS . $userId;
+        $userUrl = $LOCAL_USERS . $userId;
         $userCh = curl_init();
         curl_setopt($userCh, CURLOPT_URL, $userUrl);
         curl_setopt($userCh, CURLOPT_RETURNTRANSFER, 1);

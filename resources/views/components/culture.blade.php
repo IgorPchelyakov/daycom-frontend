@@ -29,34 +29,33 @@
             <div class="culture__carousel pb-4 mb-4">
                 <div id="carouselCulture" class="carousel slide carousel-dark block-title">
                     <div class="carousel-inner">
-                        @for ($i = 2; $i < count($culture); $i++)
-                            <div class="carousel-item{{ $i === 2 ? ' active' : '' }} border rounded p-3">
+                        @foreach (array_slice($culture, 2, 8) as $index => $item)
+                            <div class="carousel-item{{ $index === 0 ? ' active' : '' }} border rounded p-3">
                                 <article>
-                                    <a href="{{ route('homepage.index') . '/news/' . $culture[$i]['url'] }}">
+                                    <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                                         <div class="d-xl-flex align-items-center gap-4">
                                             <div class="title-cont-sm-slide">
-                                                <h2>{{ $culture[$i]['title'] }}</h2>
+                                                <h2>{{ $item['title'] }}</h2>
                                                 <p class="text-gray-600">
-                                                    {{ $culture[$i]['desc'] }}</p>
+                                                    {{ $item['desc'] }}</p>
                                             </div>
                                             <div class="mb-4 img-cont-sm-slide">
                                                 <img class="img-fluid rounded object-fit-cover img-sm-slide"
-                                                    src="{{ $culture[$i]['mainImage'] }}"
-                                                    alt="{{ $culture[$i]['mainImgDesc'] }}">
+                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
                                             </div>
                                         </div>
                                     </a>
                                 </article>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                     <div class="carousel-indicators pb-2" style="transform: translateY(20px)">
-                        @for ($i = 2; $i < count($culture); $i++)
+                        @foreach (array_slice($culture, 2, 8) as $index => $item)
                             <button type="button" data-bs-target="#carouselCulture"
-                                data-bs-slide-to="{{ $i - 2 }}" class="{{ $i === 2 ? 'active' : '' }}"
-                                aria-current="{{ $i === 2 ? 'true' : 'false' }}"
-                                aria-label="Slide {{ $i - 2 }}"></button>
-                        @endfor
+                                data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}"
+                                aria-current="{{ $index === 0 ? 'true' : 'false' }}"
+                                aria-label="Slide {{ $index }}"></button>
+                        @endforeach
                     </div>
                 </div>
             </div>

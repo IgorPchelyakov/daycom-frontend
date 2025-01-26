@@ -218,7 +218,7 @@
                                             <p>{{ $item['desc'] }}</p>
                                             <p>
                                                 {{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }},
-                                                {{ $item['section'] }}
+                                                {{ $item['section'][0] }}
                                             </p>
                                         </div>
                                         <div class="city-news-img__cont">
@@ -243,7 +243,7 @@
                                             <p>{{ $item['desc'] }}</p>
                                             <p>
                                                 {{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }},
-                                                {{ $item['section'] }}
+                                                {{ $item['section'][0] }}
                                             </p>
                                         </div>
                                         <div class="city-news-img__cont">
@@ -263,7 +263,7 @@
                 </h2>
                 <div class="d-xl-flex d-flex flex-xl-row flex-column-reverse mb-3 gap-xl-4">
                     <div class="city-news">
-                        @foreach ($data['data']['society'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Суспільство'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -285,7 +285,7 @@
                         @endforeach
                     </div>
                     <div class="city-news-img__cont">
-                        @foreach ($data['data']['society'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Суспільство'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -308,7 +308,7 @@
                         <article>
                             <a href="{{ route('news.index', ['url' => $item['url']]) }}">
                                 <h2>{{ $item['title'] }}</h2>
-                                <p>{{ $item['section'] }}</p>
+                                <p>{{ $item['Sections'][0]['sectionTitle'] }}</p>
                             </a>
                         </article>
                     @endforeach
@@ -336,7 +336,7 @@
                                             <p>{{ $item['desc'] }}</p>
                                             <p>
                                                 {{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }},
-                                                {{ $item['section'] }}
+                                                {{ $item['Sections'][0]['sectionTitle'] }}
                                             </p>
                                         </div>
                                         <div class="city-news-img__cont">
@@ -357,7 +357,7 @@
                 </h2>
                 <div class="d-xl-flex d-flex flex-xl-row flex-column-reverse mb-3 gap-xl-4">
                     <div class="city-news">
-                        @foreach ($data['data']['warRussianVsUkraine'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Війна Росії проти України'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -379,7 +379,7 @@
                         @endforeach
                     </div>
                     <div class="city-news-img__cont">
-                        @foreach ($data['data']['warRussianVsUkraine'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Війна Росії проти України'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -400,7 +400,7 @@
                         <a class="under" href="{{ route('europe.index') }}">Більше новин »</a>
                     </div>
                     <div class="border-bottom border-black mb-3">
-                        @foreach ($data['data']['europe'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Європа'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -429,7 +429,7 @@
                         <a class="under" href="{{ route('usa.index') }}">Більше новин »</a>
                     </div>
                     <div class="border-bottom border-black mb-3">
-                        @foreach ($data['data']['usa'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Сполучені Штати'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -458,7 +458,7 @@
                         <a class="under" href="{{ route('china.index') }}">Більше новин »</a>
                     </div>
                     <div class="mb-3">
-                        @foreach ($data['data']['china'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Китай'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -501,7 +501,7 @@
                                             <p>{{ $item['desc'] }}</p>
                                             <p>
                                                 {{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }},
-                                                {{ $item['section'] }}
+                                                {{ $item['Sections'][0]['sectionTitle'] }}
                                             </p>
                                         </div>
                                         <div class="city-news-img__cont">
@@ -521,7 +521,21 @@
                         кіно »</a></h2>
                 <div class="d-xl-flex d-flex flex-xl-row flex-column-reverse mb-3 gap-xl-4">
                     <div class="city-news">
-                        @foreach ($data['data']['cultureMusicCinema'] as $key => $item)
+                        @php
+                            $combinedCultureMusicCinema = array_merge(
+                                $data['groupedSectionsData']['Культура'],
+                                $data['groupedSectionsData']['Музика'],
+                                $data['groupedSectionsData']['Кіно'],
+                            );
+
+                            usort($combinedCultureMusicCinema, function ($a, $b) {
+                                $dateA = strtotime($a['published_at']);
+                                $dateB = strtotime($b['published_at']);
+
+                                return $dateB - $dateA;
+                            });
+                        @endphp
+                        @foreach ($combinedCultureMusicCinema as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -543,7 +557,7 @@
                         @endforeach
                     </div>
                     <div class="city-news-img__cont">
-                        @foreach ($data['data']['cultureMusicCinema'] as $key => $item)
+                        @foreach ($combinedCultureMusicCinema as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -564,7 +578,20 @@
                         <a class="under" href="{{ route('ekonomika.index') }}">Більше новин »</a>
                     </div>
                     <div class="border-bottom border-black mb-3">
-                        @foreach ($data['data']['economyFinance'] as $key => $item)
+                        @php
+                            $combinedEconomyAndFinance = array_merge(
+                                $data['groupedSectionsData']['Економіка'],
+                                $data['groupedSectionsData']['Фінанси'],
+                            );
+
+                            usort($combinedEconomyAndFinance, function ($a, $b) {
+                                $dateA = strtotime($a['published_at']);
+                                $dateB = strtotime($b['published_at']);
+
+                                return $dateB - $dateA;
+                            });
+                        @endphp
+                        @foreach ($combinedEconomyAndFinance as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -593,7 +620,7 @@
                         <a class="under" href="{{ route('technologies.index') }}">Більше новин »</a>
                     </div>
                     <div class="border-bottom border-black mb-3">
-                        @foreach ($data['data']['technology'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Технології'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">
@@ -622,7 +649,7 @@
                         <a class="under" href="{{ route('nauka.index') }}">Більше новин »</a>
                     </div>
                     <div class="mb-3">
-                        @foreach ($data['data']['science'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Наука'] as $key => $item)
                             @if ($key < 1)
                                 <article>
                                     <a href="{{ route('news.index', ['url' => $item['url']]) }}">

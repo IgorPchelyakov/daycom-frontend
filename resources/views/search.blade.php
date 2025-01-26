@@ -1,6 +1,5 @@
 @extends('layouts.line_news')
 @section('search')
-
     @if ($query && empty($data))
         <div class="seacrh__container border-top border-bottom mb-3 pb-3">
             <div class="container px-xl-0">
@@ -20,6 +19,7 @@
                     @if ($query)
                         <p>Результати пошуку на сайті газети Дейком:</p>
                     @endif
+                    @csrf
                     <form action="/search" method="GET">
                         <input type="text" name="query" placeholder="Що Вас цікавить?" value="{{ $query }}">
                         <button type="submit">Пошук</button>
@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="container px-xl-0 results__container">
-            <div class="endless mx-auto">
-                @foreach ($data as $key => $item)
+            <div id="news-container" class="endless mx-auto">
+                @foreach ($data['posts'] as $key => $item)
                     <article class="border-bottom mb-3">
                         <a href="{{ route('news.index', ['url' => $item['url']]) }}"
                             class="d-xl-flex d-flex gap-4 justify-content-between">
@@ -37,7 +37,7 @@
                                 <div class="endless-info">
                                     <p>
                                         <time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                        {{ $item['section'] }}
+                                        {{ $item['section'][0] }}
                                     </p>
                                 </div>
                                 <div class="endless-title">
@@ -53,6 +53,14 @@
                     </article>
                 @endforeach
             </div>
+            @if ($data['pagination']['page'] < $data['pagination']['totalPages'])
+                <div class="text-center mt-4">
+                    <button id="load" class="btn btn-dark" data-current-page="{{ $data['pagination']['page'] }}"
+                        data-query="{{ $query }}" data-limit="{{ $data['pagination']['limit'] }}">
+                        Показати більше новин
+                    </button>
+                </div>
+            @endif
         </div>
     @endif
 @endsection

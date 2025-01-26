@@ -2,7 +2,7 @@
 
 @php
     $lineNews = $data['data']['lineNews'] ?? null;
-    $science = $data['data']['science'] ?? null;
+    $science = $data['groupedSectionsData']['Наука'] ?? null;
 @endphp
 
 <div class="container px-0">

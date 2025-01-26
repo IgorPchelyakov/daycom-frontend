@@ -931,6 +931,74 @@ line-height: 16px;">
             }
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loadButton = document.getElementById("load");
+
+            if (loadButton) {
+                loadButton.addEventListener("click", function() {
+                    const currentPage = parseInt(loadButton.getAttribute("data-current-page"));
+                    const query = loadButton.getAttribute("data-query");
+                    const limit = loadButton.getAttribute("data-limit");
+                    const nextPage = currentPage + 1;
+
+                    fetch(
+                            `https://sside.daycom.com.ua/api/search?query=${query}&page=${nextPage}&limit=${limit}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Ошибка загрузки данных");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            const newsContainer = document.getElementById("news-container");
+
+                            // Добавляем новые элементы
+                            data.posts.forEach(item => {
+                                const article = `
+                            <article class="border-bottom mb-3">
+                                <a href="/news/${item.url}" class="d-xl-flex d-flex gap-4 justify-content-between">
+                                    <div class="d-xl-flex gap-4 justify-content-between" style="max-width: 608px; width: 100%;">
+                                        <div class="endless-info">
+                                            <p>
+                                                <time>${new Date(item.publishedAt).toLocaleDateString('uk-UA', {
+                                                    day: 'numeric',
+                                                    month: 'long',
+                                                    year: 'numeric'
+                                                })}</time>, ${item.section}
+                                            </p>
+                                        </div>
+                                        <div class="endless-title">
+                                            <h2>${item.title}</h2>
+                                            <p class="d-none d-xl-block">${item.desc}</p>
+                                        </div>
+                                    </div>
+                                    <div class="img-prev img-mini">
+                                        <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                             src="${item.mainImage}" alt="${item.mainImgDesc}">
+                                    </div>
+                                </a>
+                            </article>
+                        `;
+                                newsContainer.insertAdjacentHTML("beforeend", article);
+                            });
+
+                            // Обновляем текущую страницу
+                            loadButton.setAttribute("data-current-page", nextPage);
+
+                            // Проверяем, есть ли еще страницы
+                            if (nextPage >= data.pagination.totalPages) {
+                                loadButton.style.display =
+                                    "none"; // Скрываем кнопку, если это последняя страница
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Ошибка:", error);
+                        });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

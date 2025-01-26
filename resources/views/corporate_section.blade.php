@@ -113,10 +113,16 @@
                                     alt="Стрілка переходу до розділу">Детальніше</a>
                         </div>
                     </div>
-                    <div class="company-raw d-xl-flex justify-content-between">
+                    <div class="company-raw d-xl-flex" style="gap: 45px;">
                         <div class="company-card">
                             <div class="company-card-title">Соціальна відповідальність</div>
-                            <a href="#" class="company-card-link"><img
+                            <a href="{{ route('social_responsability.index') }}" class="company-card-link"><img
+                                    src="{{ asset('images/icons/corpLinkArrow.svg') }}"
+                                    alt="Стрілка переходу до розділу">Детальніше</a>
+                        </div>
+                        <div class="company-card">
+                            <div class="company-card-title">Журналістика</div>
+                            <a href="{{ route('journalist.index') }}" class="company-card-link"><img
                                     src="{{ asset('images/icons/corpLinkArrow.svg') }}"
                                     alt="Стрілка переходу до розділу">Детальніше</a>
                         </div>

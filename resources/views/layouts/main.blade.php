@@ -406,7 +406,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url({{ asset('images/corpWallpapers.png') }});
+            background-image: url({{ asset('images/bg.webp') }});
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -826,6 +826,8 @@ line-height: 16px;">
         @yield('terms_of_sale')
         @yield('comments_section')
         @yield('presentation_for_readers')
+        @yield('social_responsability')
+        @yield('journalist')
     </main>
     @if (!request()->cookie('cookie_accepted'))
         <div class="cookie-notification fixed-bottom bg-white p-3">

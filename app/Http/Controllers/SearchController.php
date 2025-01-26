@@ -9,6 +9,8 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $query = $request->input('query');
+        $page = $request->input('page', 1);
+        $limit = $request->input('limit', 50);
 
         if (empty($query)) {
             $metaData = [
@@ -28,7 +30,10 @@ class SearchController extends Controller
             'url' => 'https://daycom.com.ua/search?query=' . $query,
         ];
 
-        $url = 'https://sside.daycom.com.ua/api/search?query=' . urlencode($query);
+        $SERVER = 'https://sside.daycom.com.ua/api/search?query=';
+        $LOCAL_URL = 'http://localhost:4444/api/search?query=';
+
+        $url = $SERVER . urlencode($query) . '&page=' . $page . '&limit=' . $limit;
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($ch);
@@ -61,7 +66,7 @@ class SearchController extends Controller
                 'main_link' => 'podilsk.index',
                 'news_line' => 'podilsk.line',
                 'news_link' => 'podilsk.news',
-    
+
             ];
 
             $data = [];

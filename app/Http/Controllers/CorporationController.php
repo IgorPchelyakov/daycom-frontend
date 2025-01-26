@@ -99,4 +99,13 @@ class CorporationController extends Controller
     {
         return view('presentation_for_readers');
     }
+
+    public function social_responsability()
+    {
+        return view('social_responsability');
+    }
+    public function journalist()
+    {
+        return view('journalist');
+    }
 }

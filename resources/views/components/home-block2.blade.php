@@ -1,16 +1,28 @@
 @props(['data'])
 
 @php
-    $war = $data['data']['warRussianVsUkraine'] ?? null;
+    $war = $data['groupedSectionsData']['Війна Росії проти України'] ?? null;
     $lineNews = $data['data']['lineNews'] ?? null;
-    $society = $data['data']['society'] ?? null;
-    $europe = $data['data']['europe'] ?? null;
-    $china = $data['data']['china'] ?? null;
-    $usa = $data['data']['usa'] ?? null;
-    $economy = $data['data']['economyFinance'] ?? null;
-    $technology = $data['data']['technology'] ?? null;
-    $opinion = $data['data']['opinion'] ?? null;
-    $analytics = $data['data']['analytics'] ?? null;
+    $society = $data['groupedSectionsData']['Суспільство'] ?? null;
+    $europe = $data['groupedSectionsData']['Європа'] ?? null;
+    $china = $data['groupedSectionsData']['Китай'] ?? null;
+    $usa = $data['groupedSectionsData']['Сполучені Штати'] ?? null;
+    $technology = $data['groupedSectionsData']['Технології'] ?? null;
+    $opinion = $data['groupedSectionsData']['Думка'] ?? null;
+    $analytics = $data['groupedSectionsData']['Аналітика'] ?? null;
+
+    $combinedEconomyAndFinance = array_merge(
+        $data['groupedSectionsData']['Економіка'],
+        $data['groupedSectionsData']['Фінанси'],
+    );
+
+    usort($combinedEconomyAndFinance, function ($a, $b) {
+        $dateA = strtotime($a['published_at']);
+        $dateB = strtotime($b['published_at']);
+
+        return $dateB - $dateA;
+    });
+    $economy = $combinedEconomyAndFinance ?? null;
 @endphp
 
 <div class="container px-0">

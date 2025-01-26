@@ -962,7 +962,7 @@
                     Цей матеріал опубліковано
                     {{ \Carbon\Carbon::parse($data['publishedAt'])->locale('uk')->isoFormat('D.MM.YYYY') }} року,
                     {{ $updatedDate->equalTo($createdDate) ? 'оновлення відсутні' : 'оновлення ' . $updatedDate->isoFormat('D.MM.YYYY') }},
-                    розділ {{ $data['section'] }}, із заголовком: {{ $data['title'] }}. | <a class="under"
+                    розділ {{ $data['section'][0] }}, із заголовком: {{ $data['title'] }}. | <a class="under"
                         href="{{ route('news-today.index') }}">Сьогоднішня
                         газета</a> | <a class="under" href="{{ route('news.line') }}">Стрічка новин</a> | <a
                         class="under" href="#">Підпишіться</a>

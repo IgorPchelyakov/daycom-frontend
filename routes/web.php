@@ -120,6 +120,8 @@ Route::get('/content', [CorporationController::class, 'content'])->name('content
 Route::get('/terms-of-sale', [CorporationController::class, 'terms_of_sale'])->name('terms_of_sale.index');
 Route::get('/comments-section', [CorporationController::class, 'comments_section'])->name('comments_section.index');
 Route::get('/presentation-for-readers', [CorporationController::class, 'presentation_for_readers'])->name('presentation_for_readers.index');
+Route::get('/social-responsability', [CorporationController::class, 'social_responsability'])->name('social_responsability.index');
+Route::get('/journalist', [CorporationController::class, 'journalist'])->name('journalist.index');
 
 
 Route::get('/{city}', [HomepageController::class, 'feed'])->name('city.feed');

@@ -164,7 +164,7 @@
                 <div class="war-news__block mb-4">
                     <div class="mb-4 img-rel">
                         <p class="block-title">Війна Росії проти України</p>
-                        @foreach ($data['data']['warRussianVsUkraine'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Війна Росії проти України'] as $key => $item)
                             @if ($key <= 1)
                                 <article>
                                     <a class=""
@@ -186,7 +186,7 @@
                         @endforeach
                     </div>
                     <div class="xl-border-top border-bottom py-xl-3 px-0">
-                        @foreach ($data['data']['warRussianVsUkraine'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Війна Росії проти України'] as $key => $item)
                             @if ($key === 2)
                                 <article class="">
                                     <a
@@ -212,7 +212,7 @@
                         @endforeach
                     </div>
                     <div class="block-title border-bottom border-black py-3 me-xl-1 ms-xl-1 d-xl-flex">
-                        @foreach ($data['data']['warRussianVsUkraine'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Війна Росії проти України'] as $key => $item)
                             @if ($key >= 3 && $key <= 4)
                                 <article class="col-xl-6 {{ $key === 3 ? 'pe-xl-3 xl-border-end' : 'xl-ps-3' }}">
                                     <a
@@ -230,7 +230,7 @@
                 <div class="soecity__block mb-4">
                     <div class="img-rel border-bottom">
                         <p class="block-title">Суспільство</p>
-                        @foreach ($data['data']['society'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Суспільство'] as $key => $item)
                             @if ($key <= 1)
                                 <article class="">
                                     <a class=""
@@ -253,7 +253,7 @@
                         @endforeach
                     </div>
                     <div class="block-title border-bottom border-black py-3 me-xl-1 ms-xl-1 d-xl-flex">
-                        @foreach ($data['data']['society'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Суспільство'] as $key => $item)
                             @if ($key >= 3 && $key <= 4)
                                 <article class="col-xl-6 {{ $key === 3 ? 'pe-xl-3 xl-border-end' : 'xl-ps-3' }}">
                                     <a
@@ -271,7 +271,7 @@
                 <div class="europe__block">
                     <div class="position-relative mb-2">
                         <p class="block-title">Європа</p>
-                        @foreach ($data['data']['europe'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Європа'] as $key => $item)
                             @if ($key <= 1)
                                 <article class="">
                                     <a class=""
@@ -296,23 +296,23 @@
                     <div class="europe__carousel pb-4 mb-4 border-bottom border-black">
                         <div id="carouselEurope" class="carousel slide carousel-dark block-title">
                             <div class="carousel-inner">
-                                @for ($i = 2; $i < count($data['data']['europe']); $i++)
+                                @for ($i = 2; $i < count($data['groupedSectionsData']['Європа']); $i++)
                                     <div class="carousel-item{{ $i === 2 ? ' active' : '' }} border rounded p-3">
                                         <article>
                                             <a
-                                                href="{{ $data['data']['europe'][$i]['feed'] === 'Загальнонаціональна стрічка'
+                                                href="{{ $data['groupedSectionsData']['Європа'][$i]['feed'] === 'Загальнонаціональна стрічка'
                                                     ? route('homepage.index') . '/news/' . $data['data']['europe'][$i]['url']
                                                     : route($cityData['news_link'], ['url' => $data['data']['europe'][$i]['url']]) }}">
                                                 <div class="d-xl-flex align-items-center gap-4">
                                                     <div class="title-cont-sm-slide">
-                                                        <h2>{{ $data['data']['europe'][$i]['title'] }}</h2>
+                                                        <h2>{{ $data['groupedSectionsData']['Європа'][$i]['title'] }}</h2>
                                                         <p class="text-gray-600">
-                                                            {{ $data['data']['europe'][$i]['desc'] }}</p>
+                                                            {{ $data['groupedSectionsData']['Європа'][$i]['desc'] }}</p>
                                                     </div>
                                                     <div class="mb-4 img-cont-sm-slide">
                                                         <img class="img-fluid rounded object-fit-cover img-sm-slide"
-                                                            src="{{ $data['data']['europe'][$i]['mainImage'] }}"
-                                                            alt="{{ $data['data']['europe'][$i]['mainImgDesc'] }}">
+                                                            src="{{ $data['groupedSectionsData']['Європа'][$i]['mainImage'] }}"
+                                                            alt="{{ $data['groupedSectionsData']['Європа'][$i]['mainImgDesc'] }}">
                                                     </div>
                                                 </div>
                                             </a>
@@ -321,7 +321,7 @@
                                 @endfor
                             </div>
                             <div class="carousel-indicators pb-2" style="transform: translateY(20px)">
-                                @for ($i = 2; $i < count($data['data']['europe']); $i++)
+                                @for ($i = 2; $i < count($data['groupedSectionsData']['Європа']); $i++)
                                     <button type="button" data-bs-target="#carouselEurope"
                                         data-bs-slide-to="{{ $i - 2 }}" class="{{ $i === 2 ? 'active' : '' }}"
                                         aria-current="{{ $i === 2 ? 'true' : 'false' }}"
@@ -334,7 +334,7 @@
                 <div class="china__block mb-4 border-bottom border-black">
                     <div class="mb-4 img-rel">
                         <p class="block-title"></p>
-                        @foreach ($data['data']['china'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Китай'] as $key => $item)
                             @if ($key <= 1)
                                 <article>
                                     <a class=""
@@ -360,7 +360,7 @@
                 <div class="usa__block mb-4 border-bottom border-black">
                     <div class="mb-4 img-rel">
                         <p class="block-title">Сполучені Штати</p>
-                        @foreach ($data['data']['usa'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Сполучені Штати'] as $key => $item)
                             @if ($key <= 1)
                                 <article>
                                     <a class=""
@@ -382,7 +382,7 @@
                         @endforeach
                     </div>
                     <div class="xl-border-top py-xl-3 px-0">
-                        @foreach ($data['data']['usa'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Сполучені Штати'] as $key => $item)
                             @if ($key === 2)
                                 <article class="">
                                     <a
@@ -408,10 +408,23 @@
                         @endforeach
                     </div>
                 </div>
+                @php
+                    $combinedEconomyAndFinance = array_merge(
+                        $data['groupedSectionsData']['Економіка'],
+                        $data['groupedSectionsData']['Фінанси'],
+                    );
+
+                    usort($combinedEconomyAndFinance, function ($a, $b) {
+                        $dateA = strtotime($a['published_at']);
+                        $dateB = strtotime($b['published_at']);
+
+                        return $dateB - $dateA;
+                    });
+                @endphp
                 <div class="economic__block mb-4 border-bottom border-black">
                     <div class="mb-4 img-rel">
                         <p class="block-title">Економіка та Фінанси</p>
-                        @foreach ($data['data']['economyFinance'] as $key => $item)
+                        @foreach ($combinedEconomyAndFinance as $key => $item)
                             @if ($key <= 1)
                                 <article>
                                     <a class=""
@@ -437,7 +450,7 @@
                 <div class="technologies__block">
                     <div class="position-relative mb-2">
                         <p class="block-title">Технології</p>
-                        @foreach ($data['data']['technology'] as $key => $item)
+                        @foreach ($data['groupedSectionsData']['Технології'] as $key => $item)
                             @if ($key <= 1)
                                 <article class="">
                                     <a class=""
@@ -462,24 +475,24 @@
                     <div class="technologies__carousel pb-4 mb-4">
                         <div id="carouselTechnologies" class="carousel slide carousel-dark block-title">
                             <div class="carousel-inner">
-                                @for ($i = 2; $i < count($data['data']['technology']); $i++)
+                                @for ($i = 2; $i < count($data['groupedSectionsData']['Технології']); $i++)
                                     <div class="carousel-item{{ $i === 2 ? ' active' : '' }} border rounded p-3">
                                         <article>
                                             <a
-                                                href="{{ $data['data']['technology'][$i]['feed'] === 'Загальнонаціональна стрічка'
+                                                href="{{ $data['groupedSectionsData']['Технології'][$i]['feed'] === 'Загальнонаціональна стрічка'
                                                     ? route('homepage.index') . '/news/' . $data['data']['technology'][$i]['url']
                                                     : route($cityData['news_link'], ['url' => $data['data']['technology'][$i]['url']]) }}">
                                                 <div class="d-xl-flex align-items-center gap-4">
                                                     <div class="title-cont-sm-slide">
                                                         <h2>{{ $data['data']['technology'][$i]['title'] }}</h2>
                                                         <p class="text-gray-600">
-                                                            {{ $data['data']['technology'][$i]['desc'] }}
+                                                            {{ $data['groupedSectionsData']['Технології'][$i]['desc'] }}
                                                         </p>
                                                     </div>
                                                     <div class="mb-4 img-cont-sm-slide">
                                                         <img class="img-fluid rounded object-fit-cover img-sm-slide"
-                                                            src="{{ $data['data']['technology'][$i]['mainImage'] }}"
-                                                            alt="{{ $data['data']['technology'][$i]['mainImgDesc'] }}">
+                                                            src="{{ $data['groupedSectionsData']['Технології'][$i]['mainImage'] }}"
+                                                            alt="{{ $data['groupedSectionsData']['Технології'][$i]['mainImgDesc'] }}">
                                                     </div>
                                                 </div>
                                             </a>
@@ -488,7 +501,7 @@
                                 @endfor
                             </div>
                             <div class="carousel-indicators pb-2" style="transform: translateY(20px)">
-                                @for ($i = 2; $i < count($data['data']['technology']); $i++)
+                                @for ($i = 2; $i < count($data['groupedSectionsData']['Технології']); $i++)
                                     <button type="button" data-bs-target="#carouselTechnologies"
                                         data-bs-slide-to="{{ $i - 2 }}" class="{{ $i === 2 ? 'active' : '' }}"
                                         aria-current="{{ $i === 2 ? 'true' : 'false' }}"
