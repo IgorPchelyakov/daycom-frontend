@@ -425,7 +425,7 @@
                                 @endif
                                 <div>
                                     <p><time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                        {{ $item['section'] }}
+                                        {{ $item['section'][0] }}
                                     </p>
                                 </div>
                             </a>
@@ -444,7 +444,7 @@
                                 <p>{{ $item['desc'] }}</p>
                                 <div>
                                     <p><time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                        {{ $item['section'] }}
+                                        {{ $item['section'][0] }}
                                     </p>
                                 </div>
                             </a>
@@ -467,7 +467,7 @@
                                 @endif
                                 <div>
                                     <p><time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                        {{ $item['section'] }}
+                                        {{ $item['section'][0] }}
                                     </p>
                                 </div>
                             </a>
@@ -485,7 +485,7 @@
                                 <h2>{{ $item['title'] }}</h2>
                                 <p>
                                     <time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                    {{ $item['section'] }}
+                                    {{ $item['section'][0] }}
                                 </p>
                             </div>
                         </a>
@@ -503,7 +503,7 @@
                             <h2 class="{{ $key === 8 ? '' : 'mb-2 pb-2' }}">{{ $item['title'] }}</h2>
                             <div class="{{ $key !== 12 ? 'bb-sm mb-3 mb-xl-0' : '' }}">
                                 <p><time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                    {{ $item['section'] }}
+                                    {{ $item['section'][0] }}
                                 </p>
                             </div>
                         </a>
@@ -935,7 +935,7 @@
                                     <div class="endless-info">
                                         <p>
                                             <time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                            {{ $item['section'] }}
+                                            {{ $item['section'][0] }}
                                         </p>
                                     </div>
                                     <div class="endless-title">
@@ -1381,7 +1381,7 @@
                                 <div class="endless-info">
                                     <p>
                                         <time>{{ \Carbon\Carbon::parse($item['publishedAt'])->locale('uk')->isoFormat('D MMMM YYYY') }}</time>,
-                                        {{ $item['section'] }}
+                                        {{ $item['section'][0] }}
                                     </p>
                                 </div>
                                 <div class="endless-title">
