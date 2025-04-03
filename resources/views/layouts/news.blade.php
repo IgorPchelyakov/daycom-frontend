@@ -1458,6 +1458,21 @@
         }
     </style>
     <style>
+        iframe,
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content iframe,
+        .content video {
+            width: 600px;
+            height: 400px;
+            object-fit: contain;
+        }
+    </style>
+    <style>
         .slide-in-logo {
             position: fixed;
             /* position: absolute; */
@@ -1636,6 +1651,13 @@ line-height: 16px;">
                 button.textContent = 'ЗГОРНУТИ';
             }
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('video').forEach(video => {
+                video.muted = true;
+            });
+        });
     </script>
     <script>
         $(document).ready(function() {

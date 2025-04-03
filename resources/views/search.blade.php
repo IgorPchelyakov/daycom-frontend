@@ -46,8 +46,22 @@
                                 </div>
                             </div>
                             <div class="img-prev img-mini">
-                                <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
-                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                {{-- <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                @php
+                                    $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                    $isVideo = in_array(strtolower($extension), ['mp4', 'webm', 'ogg']);
+                                @endphp
+
+                                @if ($isVideo)
+                                    <video class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop
+                                        muted playsinline>
+                                        <source src="{{ $item['mainImage'] }}" type="video/{{ $extension }}">
+                                    </video>
+                                @else
+                                    <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                @endif
                             </div>
                         </a>
                     </article>

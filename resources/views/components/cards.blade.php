@@ -9,8 +9,21 @@
                     class="col-xl px-0 {{ $key === 0 ? 'ps-xl-0 pe-xl-2' : '' }} {{ $key >= 1 && $key <= 3 ? 'px-xl-2' : '' }} {{ $key === 4 ? 'pe-xl-0 ps-xl-2' : '' }}">
                     <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                         <div>
-                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
-                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                            @php
+                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                <video autoplay loop muted
+                                    class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont">
+                                    <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                </video>
+                            @else
+                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            @endif
                             <h2 class="block-title">{{ $item['title'] }}</h2>
                         </div>
                     </a>
@@ -26,8 +39,21 @@
                     class="col-xl px-0 {{ $key === 0 ? 'ps-xl-0 pe-xl-2' : '' }} {{ $key >= 1 && $key <= 3 ? 'px-xl-2' : '' }} {{ $key === 4 ? 'pe-xl-0 ps-xl-2' : '' }}">
                     <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                         <div>
-                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
-                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                            @php
+                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                <video autoplay loop muted
+                                    class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont">
+                                    <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                </video>
+                            @else
+                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            @endif
                             <h2 class="block-title">{{ $item['title'] }}</h2>
                         </div>
                     </a>
@@ -43,8 +69,21 @@
                     class="col-xl px-0 {{ $key === 0 ? 'ps-xl-0 pe-xl-2' : '' }} {{ $key >= 1 && $key <= 3 ? 'px-xl-2' : '' }} {{ $key === 4 ? 'pe-xl-0 ps-xl-2' : '' }}">
                     <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                         <div>
-                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
-                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                            @php
+                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                <video autoplay loop muted
+                                    class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont">
+                                    <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                </video>
+                            @else
+                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            @endif
                             <h2 class="block-title">{{ $item['title'] }}</h2>
                         </div>
                     </a>
@@ -60,8 +99,21 @@
                     class="col-xl px-0 {{ $key === 0 ? 'ps-xl-0 pe-xl-2' : '' }} {{ $key >= 1 && $key <= 3 ? 'px-xl-2' : '' }} {{ $key === 4 ? 'pe-xl-0 ps-xl-2' : '' }}">
                     <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                         <div>
-                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
-                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                            @php
+                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                <video autoplay loop muted
+                                    class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont">
+                                    <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                </video>
+                            @else
+                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            @endif
                             <h2 class="block-title">{{ $item['title'] }}</h2>
                         </div>
                     </a>
@@ -77,8 +129,21 @@
                     class="col-xl px-0 {{ $key === 0 ? 'ps-xl-0 pe-xl-2' : '' }} {{ $key >= 1 && $key <= 3 ? 'px-xl-2' : '' }} {{ $key === 4 ? 'pe-xl-0 ps-xl-2' : '' }}">
                     <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                         <div>
-                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
-                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                            @php
+                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                <video autoplay loop muted
+                                    class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont">
+                                    <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                </video>
+                            @else
+                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover fivecard-img img-cont"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            @endif
                             <h2 class="block-title">{{ $item['title'] }}</h2>
                         </div>
                     </a>

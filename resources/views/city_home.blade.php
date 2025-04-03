@@ -31,8 +31,24 @@
                                 <a
                                     href="{{ $item['feed'] === 'Загальнонаціональна стрічка' ? route('news.index', ['url' => $item['url']]) : route($cityData['news_link'], ['url' => $item['url']]) }}">
                                     <div class="">
-                                        <img class="img-fluid xl-rounded w-100 img-min-400 object-fit-cover"
-                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        {{-- <img class="img-fluid xl-rounded w-100 img-min-400 object-fit-cover"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                            $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                                        @endphp
+
+                                        @if (in_array(strtolower($extension), $imageExtensions))
+                                            <img class="img-fluid xl-rounded w-100 img-min-400 object-fit-cover"
+                                                src="{{ asset($item['mainImage']) }}" alt="{{ $item['mainImgDesc'] }}">
+                                        @elseif (in_array(strtolower($extension), $videoExtensions))
+                                            <video autoplay muted loop
+                                                class="img-fluid xl-rounded w-100 img-min-400 object-fit-cover">
+                                                <source src="{{ asset($item['mainImage']) }}"
+                                                    type="video/{{ $extension }}">
+                                            </video>
+                                        @endif
                                         <p class="text-end text-gray-600 xl-id">{{ $item['mainImgAuthor'] }}</p>
                                     </div>
                                     <div class="xl-mb-4-px-4">
@@ -52,8 +68,23 @@
                                     <a
                                         href="{{ $item['feed'] === 'Загальнонаціональна стрічка' ? route('news.index', ['url' => $item['url']]) : route($cityData['news_link'], ['url' => $item['url']]) }}">
                                         <div class="">
-                                            <img class="img-fluid rounded" src="{{ $item['mainImage'] }}"
-                                                alt="mainImgDesc">
+                                            {{-- <img class="img-fluid rounded" src="{{ $item['mainImage'] }}"
+                                                alt="mainImgDesc"> --}}
+                                            @php
+                                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                                $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                                $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                                            @endphp
+
+                                            @if (in_array(strtolower($extension), $imageExtensions))
+                                                <img class="img-fluid rounded" src="{{ asset($item['mainImage']) }}"
+                                                    alt="{{ $item['mainImgDesc'] }}">
+                                            @elseif (in_array(strtolower($extension), $videoExtensions))
+                                                <video autoplay muted loop class="img-fluid rounded">
+                                                    <source src="{{ asset($item['mainImage']) }}"
+                                                        type="video/{{ $extension }}">
+                                                </video>
+                                            @endif
                                             <p class="text-end text-gray-600">{{ $item['mainImgAuthor'] }}</p>
                                         </div>
                                         <h2 class="">{{ $item['title'] }}</h2>
@@ -100,9 +131,30 @@
                                                     ? route('homepage.index') . '/news/' . $data['data']['topNews'][$j]['url']
                                                     : route($cityData['news_link'], ['url' => $data['data']['topNews'][$j]['url']]) }}">
                                                 <div class="mb-4" style="height: 190px;">
-                                                    <img class="img-fluid rounded h-100 object-fit-cover"
+                                                    {{-- <img class="img-fluid rounded h-100 object-fit-cover"
                                                         src="{{ $data['data']['topNews'][$j]['mainImage'] }}"
-                                                        alt="{{ $data['data']['topNews'][$j]['mainImage'] }}">
+                                                        alt="{{ $data['data']['topNews'][$j]['mainImage'] }}"> --}}
+                                                    @php
+                                                        $extension = pathinfo(
+                                                            $data['data']['topNews'][$j]['mainImage'],
+                                                            PATHINFO_EXTENSION,
+                                                        );
+                                                        $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                                        $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                                                    @endphp
+
+                                                    @if (in_array(strtolower($extension), $imageExtensions))
+                                                        <img class="img-fluid rounded h-100 object-fit-cover"
+                                                            src="{{ asset($data['data']['topNews'][$j]['mainImage']) }}"
+                                                            alt="{{ $data['data']['topNews'][$j]['mainImage'] }}">
+                                                    @elseif (in_array(strtolower($extension), $videoExtensions))
+                                                        <video autoplay muted loop
+                                                            class="img-fluid rounded h-100 object-fit-cover">
+                                                            <source
+                                                                src="{{ asset($data['data']['topNews'][$j]['mainImage']) }}"
+                                                                type="video/{{ $extension }}">
+                                                        </video>
+                                                    @endif
                                                 </div>
                                                 <h2 class="px-2">{{ $data['data']['topNews'][$j]['title'] }}</h2>
                                             </a>
@@ -133,10 +185,33 @@
                                                 ? route('homepage.index') . '/news/' . $data['data']['topNews'][$i]['url']
                                                 : route($cityData['news_link'], ['url' => $data['data']['topNews'][$i]['url']]) }}">
                                             <div class="mb-4" style="">
-                                                <img class="img-fluid xl-rounded w-100 h-100 object-fit-cover"
+                                                {{-- <img class="img-fluid xl-rounded w-100 h-100 object-fit-cover"
                                                     style="min-height: 400px; max-height: 500px;"
                                                     src="{{ $data['data']['topNews'][$i]['mainImage'] }}"
-                                                    alt="{{ $data['data']['topNews'][$i]['mainImage'] }}">
+                                                    alt="{{ $data['data']['topNews'][$i]['mainImage'] }}"> --}}
+                                                @php
+                                                    $extension = pathinfo(
+                                                        $data['data']['topNews'][$i]['mainImage'],
+                                                        PATHINFO_EXTENSION,
+                                                    );
+                                                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                                    $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                                                @endphp
+
+                                                @if (in_array(strtolower($extension), $imageExtensions))
+                                                    <img class="img-fluid xl-rounded w-100 h-100 object-fit-cover"
+                                                        style="min-height: 400px; max-height: 500px;"
+                                                        src="{{ asset($data['data']['topNews'][$i]['mainImage']) }}"
+                                                        alt="{{ $data['data']['topNews'][$i]['mainImage'] }}">
+                                                @elseif (in_array(strtolower($extension), $videoExtensions))
+                                                    <video autoplay muted loop
+                                                        class="img-fluid xl-rounded w-100 h-100 object-fit-cover">
+                                                        style="min-height: 400px; max-height: 500px;"
+                                                        <source
+                                                            src="{{ asset($data['data']['topNews'][$i]['mainImage']) }}"
+                                                            type="video/{{ $extension }}">
+                                                    </video>
+                                                @endif
                                             </div>
                                             <h2 class="px-4">{{ $data['data']['topNews'][$i]['title'] }}</h2>
                                         </a>
@@ -171,8 +246,25 @@
                                         href="{{ $item['feed'] === 'Загальнонаціональна стрічка' ? route('news.index', ['url' => $item['url']]) : route($cityData['news_link'], ['url' => $item['url']]) }}">
                                         @if ($key === 0)
                                             <div class="img-abs">
-                                                <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
-                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                                {{-- <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
+                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                                @php
+                                                    $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                                    $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                                                @endphp
+
+                                                @if (in_array(strtolower($extension), $imageExtensions))
+                                                    <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
+                                                        src="{{ asset($item['mainImage']) }}"
+                                                        alt="{{ $item['mainImgDesc'] }}">
+                                                @elseif (in_array(strtolower($extension), $videoExtensions))
+                                                    <video autoplay muted loop
+                                                        class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg">
+                                                        <source src="{{ asset($item['mainImage']) }}"
+                                                            type="video/{{ $extension }}">
+                                                    </video>
+                                                @endif
                                                 <p class="text-end text-gray-600 xl-id">{{ $item['mainImgAuthor'] }}</p>
                                             </div>
                                         @endif
@@ -197,8 +289,25 @@
                                                 <p class="text-gray-600 mb-0">{{ $item['desc'] }}</p>
                                             </div>
                                             <div class="d-xl-flex gap-3 b-fig-w pb-2 pb-xl-0">
-                                                <img class="pb-1 pb-xl-0 img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-warimg"
-                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                                {{-- <img class="pb-1 pb-xl-0 img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-warimg"
+                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                                @php
+                                                    $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                                                    $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                                                @endphp
+
+                                                @if (in_array(strtolower($extension), $imageExtensions))
+                                                    <img class="pb-1 pb-xl-0 img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-warimg"
+                                                        src="{{ asset($item['mainImage']) }}"
+                                                        alt="{{ $item['mainImgDesc'] }}">
+                                                @elseif (in_array(strtolower($extension), $videoExtensions))
+                                                    <video autoplay muted loop
+                                                        class="pb-1 pb-xl-0 img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-warimg">
+                                                        <source src="{{ asset($item['mainImage']) }}"
+                                                            type="video/{{ $extension }}">
+                                                    </video>
+                                                @endif
                                                 <div class="text-end px-4 px-xl-0">
                                                     <p className="text-gray-600">
                                                         {{ $item['mainImgDesc'] }} {{ $item['mainImgAuthor'] }}
@@ -301,8 +410,8 @@
                                         <article>
                                             <a
                                                 href="{{ $data['groupedSectionsData']['Європа'][$i]['feed'] === 'Загальнонаціональна стрічка'
-                                                    ? route('homepage.index') . '/news/' . $data['data']['europe'][$i]['url']
-                                                    : route($cityData['news_link'], ['url' => $data['data']['europe'][$i]['url']]) }}">
+                                                    ? route('homepage.index') . '/news/' . $data['groupedSectionsData']['Європа'][$i]['url']
+                                                    : route($cityData['news_link'], ['url' => $data['groupedSectionsData']['Європа'][$i]['url']]) }}">
                                                 <div class="d-xl-flex align-items-center gap-4">
                                                     <div class="title-cont-sm-slide">
                                                         <h2>{{ $data['groupedSectionsData']['Європа'][$i]['title'] }}</h2>
@@ -480,11 +589,12 @@
                                         <article>
                                             <a
                                                 href="{{ $data['groupedSectionsData']['Технології'][$i]['feed'] === 'Загальнонаціональна стрічка'
-                                                    ? route('homepage.index') . '/news/' . $data['data']['technology'][$i]['url']
-                                                    : route($cityData['news_link'], ['url' => $data['data']['technology'][$i]['url']]) }}">
+                                                    ? route('homepage.index') . '/news/' . $data['groupedSectionsData']['Технології'][$i]['url']
+                                                    : route($cityData['news_link'], ['url' => $data['groupedSectionsData']['Технології'][$i]['url']]) }}">
                                                 <div class="d-xl-flex align-items-center gap-4">
                                                     <div class="title-cont-sm-slide">
-                                                        <h2>{{ $data['data']['technology'][$i]['title'] }}</h2>
+                                                        <h2>{{ $data['groupedSectionsData']['Технології'][$i]['title'] }}
+                                                        </h2>
                                                         <p class="text-gray-600">
                                                             {{ $data['groupedSectionsData']['Технології'][$i]['desc'] }}
                                                         </p>
@@ -523,7 +633,7 @@
                     </p>
                 </div>
                 <div class="line-news__block block-title">
-                    @foreach ($data['data']['lineNews'] as $key => $item)
+                    @foreach ($data['groupedSectionsData']['Думка'] as $key => $item)
                         @if ($key < 5)
                             <article class="border-bottom pb-1 mb-2 px-xl-2 {{ $key === 4 ? 'border-black' : '' }}">
                                 <a
@@ -548,22 +658,23 @@
                     <p class="mb-2">Думка</p>
                     <div id="carouselSec" class="carousel slide carousel-dark">
                         <div class="carousel-inner" style="min-height: 250px;">
-                            @for ($i = 0; $i < count($data['data']['opinion']); $i += 2)
+                            @for ($i = 0; $i < count($data['groupedSectionsData']['Думка']); $i += 2)
                                 <div class="carousel-item{{ $i === 0 ? ' active' : '' }}">
                                     <div class="row">
-                                        @for ($j = $i; $j < min($i + 2, count($data['data']['opinion'])); $j++)
+                                        @for ($j = $i; $j < min($i + 2, count($data['groupedSectionsData']['Думка'])); $j++)
                                             <div class="col-md-6">
                                                 <article>
                                                     <a
-                                                        href="{{ $data['data']['opinion'][$j]['feed'] === 'Загальнонаціональна стрічка'
+                                                        href="{{ $data['groupedSectionsData']['Думка'][$j]['feed'] === 'Загальнонаціональна стрічка'
                                                             ? route('homepage.index') . '/news/' . $data['data']['opinion'][$j]['url']
-                                                            : route($cityData['news_link'], ['url' => $data['data']['opinion'][$j]['url']]) }}">
+                                                            : route($cityData['news_link'], ['url' => $data['data']['Думка'][$j]['url']]) }}">
                                                         <div class="mb-2" style="height: 110px;">
                                                             <img class="img-fluid rounded w-100 h-100 object-fit-cover"
-                                                                src="{{ $data['data']['opinion'][$j]['mainImage'] }}"
-                                                                alt="{{ $data['data']['opinion'][$j]['mainImage'] }}">
+                                                                src="{{ $data['groupedSectionsData']['Думка'][$j]['mainImage'] }}"
+                                                                alt="{{ $data['groupedSectionsData']['Думка'][$j]['mainImage'] }}">
                                                         </div>
-                                                        <h2 class="px-1 fs-6">{{ $data['data']['opinion'][$j]['title'] }}
+                                                        <h2 class="px-1 fs-6">
+                                                            {{ $data['groupedSectionsData']['Думка'][$j]['title'] }}
                                                         </h2>
                                                     </a>
                                                 </article>
@@ -574,7 +685,7 @@
                             @endfor
                         </div>
                         <div class="carousel-indicators pb-2" style="transform: translateY(40px)">
-                            @for ($i = 0; $i < count($data['data']['opinion']); $i += 2)
+                            @for ($i = 0; $i < count($data['groupedSectionsData']['Думка']); $i += 2)
                                 <button type="button" data-bs-target="#carouselSec"
                                     data-bs-slide-to="{{ $i / 2 }}" class="{{ $i === 0 ? 'active' : '' }}"
                                     aria-current="{{ $i === 0 ? 'true' : 'false' }}"
@@ -584,7 +695,7 @@
                     </div>
                 </div>
                 <div class="line-news__block mb-4 block-title">
-                    @foreach ($data['data']['lineNews'] as $key => $item)
+                    @foreach ($data['groupedSectionsData']['lineNews'] as $key => $item)
                         @if ($key >= 5 && $key <= 9)
                             <article class="border-bottom pb-1 mb-2 px-xl-2 {{ $key === 9 ? 'border-black' : '' }}">
                                 <a

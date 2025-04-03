@@ -2248,7 +2248,7 @@ class HomepageController extends Controller
         $SERVER_NEWS = "https://sside.daycom.com.ua/api/main-page?feed={$encodedFeed}";
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $SERVER_NEWS);
+        curl_setopt($ch, CURLOPT_URL, $LOCAL_NEWS);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($ch);
         curl_close($ch);

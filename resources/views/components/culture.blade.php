@@ -11,8 +11,21 @@
                             <a class="" href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                                 @if ($key === 0)
                                     <div class="img-abs">
-                                        <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
-                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        {{-- <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                            <video autoplay loop muted
+                                                class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg">
+                                                <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                            </video>
+                                        @else
+                                            <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
+                                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        @endif
                                         <p class="text-end text-gray-600 xl-id">{{ $item['mainImgAuthor'] }}</p>
                                     </div>
                                 @endif
@@ -40,8 +53,22 @@
                                                     {{ $item['desc'] }}</p>
                                             </div>
                                             <div class="mb-4 img-cont-sm-slide">
-                                                <img class="img-fluid rounded object-fit-cover img-sm-slide"
-                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                                {{-- <img class="img-fluid rounded object-fit-cover img-sm-slide"
+                                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                                @php
+                                                    $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                                @endphp
+
+                                                @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                                    <video autoplay loop muted
+                                                        class="img-fluid rounded object-fit-cover img-sm-slide">
+                                                        <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                                    </video>
+                                                @else
+                                                    <img class="img-fluid rounded object-fit-cover img-sm-slide"
+                                                        src="{{ $item['mainImage'] }}"
+                                                        alt="{{ $item['mainImgDesc'] }}">
+                                                @endif
                                             </div>
                                         </div>
                                     </a>
@@ -69,8 +96,20 @@
                         <a href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                             @if ($key === 32)
                                 <div class="">
-                                    <img class="img-fluid rounded" src="{{ $item['mainImage'] }}"
-                                        alt="{{ $item['mainImgDesc'] }}">
+                                    {{-- <img class="img-fluid rounded" src="{{ $item['mainImage'] }}"
+                                        alt="{{ $item['mainImgDesc'] }}"> --}}
+                                    @php
+                                        $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                    @endphp
+
+                                    @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                        <video autoplay loop muted class="img-fluid rounded">
+                                            <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                        </video>
+                                    @else
+                                        <img class="img-fluid rounded" src="{{ $item['mainImage'] }}"
+                                            alt="{{ $item['mainImgDesc'] }}">
+                                    @endif
                                     <p class="text-end text-gray-600">{{ $item['mainImgAuthor'] }}</p>
                                 </div>
                             @endif
@@ -98,8 +137,21 @@
                                     </p>
                                 </div>
                                 <div class="" style="max-width: 80px; max-height: 80px">
-                                    <img class="img-fluid rounded w-100 h-100 object-fit-cover"
-                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                    {{-- <img class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                    @php
+                                        $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                    @endphp
+
+                                    @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                        <video autoplay loop muted
+                                            class="img-fluid rounded w-100 h-100 object-fit-cover">
+                                            <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                        </video>
+                                    @else
+                                        <img class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                    @endif
                                 </div>
                             </div>
                         </a>
@@ -120,8 +172,21 @@
                             <a class="" href="{{ route('homepage.index') . '/news/' . $item['url'] }}">
                                 @if ($key === 0)
                                     <div class="img-abs">
-                                        <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
-                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        {{-- <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                            <video autoplay loop muted
+                                                class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg">
+                                                <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                            </video>
+                                        @else
+                                            <img class="img-fluid w-100 h-100 xl-rounded object-fit-cover xl-w-biimg"
+                                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        @endif
                                         <p class="text-end text-gray-600 xl-id">{{ $item['mainImgAuthor'] }}</p>
                                     </div>
                                 @endif
@@ -164,8 +229,21 @@
                                     </p>
                                 </div>
                                 <div class="" style="max-width: 80px; max-height: 80px">
-                                    <img class="img-fluid rounded w-100 h-100 object-fit-cover"
-                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                    {{-- <img class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                    @php
+                                        $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                    @endphp
+
+                                    @if (in_array(strtolower($extension), ['mp4', 'webm', 'avi']))
+                                        <video autoplay loop muted
+                                            class="img-fluid rounded w-100 h-100 object-fit-cover">
+                                            <source src="{{ $item['mainImage'] }}" type="video/mp4">
+                                        </video>
+                                    @else
+                                        <img class="img-fluid rounded w-100 h-100 object-fit-cover"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                    @endif
                                 </div>
                             </div>
                         </a>

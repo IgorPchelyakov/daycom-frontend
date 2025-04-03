@@ -283,7 +283,8 @@
             font-weight: 400;
         }
 
-        .block-1 img {
+        .block-1 img,
+        .block-1 video {
             max-width: 310px;
             min-width: 310px;
             width: 100%;
@@ -312,7 +313,8 @@
             border-bottom: none;
         }
 
-        .block-2 img {
+        .block-2 img,
+        .block-2 video {
             max-width: 520px;
             min-width: 520px;
             width: 100%;
@@ -321,7 +323,8 @@
             height: 100%;
         }
 
-        .block-3 img {
+        .block-3 img,
+        .block-3 video {
             max-width: 310px;
             min-width: 310px;
             width: 100%;
@@ -352,7 +355,8 @@
                 transform: translateX(-42px);
             }
 
-            .img-prev img {
+            .img-prev img,
+            .img-prev video {
                 max-width: 205px;
                 min-width: 205px;
                 width: 100%;
@@ -407,7 +411,8 @@
 
         @media(max-width:1200px) {
 
-            .block-1 img {
+            .block-1 img,
+            .block-1 video {
                 max-width: 100%;
                 min-width: 100%;
                 width: 100%;
@@ -421,7 +426,8 @@
                 max-width: 100%;
             }
 
-            .block-2 img {
+            .block-2 img,
+            .block-2 video {
                 max-width: 100%;
                 min-width: 100%;
                 width: 100%;
@@ -430,7 +436,8 @@
                 height: 100%;
             }
 
-            .block-3 img {
+            .block-3 img,
+            .block-3 video {
                 max-width: 100%;
                 min-width: 100%;
                 width: 100%;
@@ -455,7 +462,8 @@
                 height: 100%;
             }
 
-            .img-prev img {
+            .img-prev img,
+            .img-prev video {
                 max-width: 80px;
                 width: 100%;
                 min-width: 80px;
@@ -943,7 +951,8 @@ line-height: 16px;">
                     const nextPage = currentPage + 1;
 
                     fetch(
-                            `https://sside.daycom.com.ua/api/search?query=${query}&page=${nextPage}&limit=${limit}`)
+                            `https://sside.daycom.com.ua/api/search?query=${query}&page=${nextPage}&limit=${limit}`
+                        )
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error("Ошибка загрузки данных");

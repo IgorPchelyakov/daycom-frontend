@@ -13,9 +13,25 @@
                                     <article>
                                         <a href="{{ route('homepage.index') . '/news/' . $data[$j]['url'] }}">
                                             <div class="mb-4" style="height: 190px;">
-                                                <img class="img-fluid rounded h-100 object-fit-cover"
+                                                {{-- <img class="img-fluid rounded h-100 object-fit-cover"
                                                     src="{{ $data[$j]['mainImage'] }}"
-                                                    alt="{{ $data[$j]['mainImage'] }}">
+                                                    alt="{{ $data[$j]['mainImage'] }}"> --}}
+                                                @php
+                                                    // Получаем расширение файла
+                                                    $extension = pathinfo($data[$j]['mainImage'], PATHINFO_EXTENSION);
+                                                @endphp
+
+                                                @if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                                    <img class="img-fluid rounded h-100 object-fit-cover"
+                                                        src="{{ asset($data[$j]['mainImage']) }}"
+                                                        alt="{{ $data[$j]['mainImgDesc'] }}">
+                                                @elseif (in_array(strtolower($extension), ['mp4', 'avi', 'mov']))
+                                                    <video autoplay muted loop
+                                                        class="img-fluid rounded h-100 object-fit-cover">
+                                                        <source src="{{ asset($data[$j]['mainImage']) }}"
+                                                            type="video/mp4">
+                                                    </video>
+                                                @endif
                                             </div>
                                             <h2 class="px-2">{{ $data[$j]['title'] }}
                                             </h2>

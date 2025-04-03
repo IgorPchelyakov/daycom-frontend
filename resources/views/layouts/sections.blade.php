@@ -767,9 +767,9 @@ line-height: 16px;">
                     const formattedMonth = month < 10 ? `0${month}` : month;
 
                     const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
-                    // https://sside.daycom.com.ua/api/news/news-today
-                    // http://localhost:4444/api/news/news-today/
-                    fetch(`https://sside.daycom.com.ua/api/news/news-today/${formattedDate}`)
+                    const server = 'https://sside.daycom.com.ua/api/news/news-today'
+                    const local = 'http://localhost:4444/api/news/news-today'
+                    fetch(`${server}/${formattedDate}`)
                         .then(response => response.json())
                         .then(data => {
                             const currentDate = new Date();
@@ -789,6 +789,7 @@ line-height: 16px;">
                         });
 
                     function renderData(data) {
+                        console.log(data)
                         const block1 = document.querySelector('.block-1');
                         if (block1) {
                             block1.innerHTML = '';
@@ -800,8 +801,17 @@ line-height: 16px;">
                                 articleElement.classList.add('article');
 
                                 if (index === 0 || index === 1) {
-                                    const img =
+                                    const fileExtension = item.mainImage.split('.').pop()
+                                        .toLowerCase();
+                                    const isVideo = ['mp4', 'webm', 'ogg'].includes(
+                                        fileExtension);
+
+                                    const mediaElement = isVideo ?
+                                        `<video class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop muted playsinline>
+                                            <source src="${item.mainImage}" type="video/${fileExtension}">
+                                        </video>` :
                                         `<img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" src="${item.mainImage}" alt="${item.mainImgDesc}">`;
+
                                     const border = ` class="bb-sm mb-3 mb-xl-0"`;
                                     const formattedDate = new Date(item.publishedAt)
                                         .toLocaleDateString('uk-UA', {
@@ -809,19 +819,19 @@ line-height: 16px;">
                                             month: 'long',
                                             day: 'numeric'
                                         }).replace(/\sр\.$/, '');
-                                    // https://daycom.com.ua/news
-                                    // http://127.0.0.1:8000/news/
+
                                     articleElement.innerHTML = `
                                         <article ${index === 1 ? border : ''}>
                                             <a href="https://daycom.com.ua/news/${item.url}">
-                                                ${ index === 0 ? img : ''}
+                                                ${index === 0 ? mediaElement : ''}
                                                 <h2>${item.title}</h2>
                                                 <p>${item.desc}</p>
                                                 <div>
-                                                    <p><time>${formattedDate}</time>, ${item.section}</p>
+                                                    <p><time>${formattedDate}</time>, ${item.sections[0]}</p>
                                                 </div>
                                             </a>
                                         </article>`;
+
                                     block1.appendChild(containerElement);
                                     containerElement.appendChild(articleElement);
                                 }
@@ -841,8 +851,17 @@ line-height: 16px;">
                                 articleElement.classList.add('article');
 
                                 if (index === 2) {
-                                    const img =
+                                    const fileExtension = item.mainImage.split('.').pop()
+                                        .toLowerCase();
+                                    const isVideo = ['mp4', 'webm', 'ogg'].includes(
+                                        fileExtension);
+
+                                    const mediaElement = isVideo ?
+                                        `<video class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop muted playsinline>
+                                            <source src="${item.mainImage}" type="video/${fileExtension}">
+                                        </video>` :
                                         `<img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" src="${item.mainImage}" alt="${item.mainImgDesc}">`;
+
                                     const border = ` class="bb-sm mb-3 mb-xl-0"`;
                                     const formattedDate = new Date(item.publishedAt)
                                         .toLocaleDateString('uk-UA', {
@@ -850,17 +869,19 @@ line-height: 16px;">
                                             month: 'long',
                                             day: 'numeric'
                                         }).replace(/\sр\.$/, '');
+
                                     articleElement.innerHTML = `
                                         <article ${border}>
                                             <a href="https://daycom.com.ua/news/${item.url}">
-                                                ${img}
+                                                ${mediaElement}
                                                 <h2>${item.title}</h2>
                                                 <p>${item.desc}</p>
                                                 <div>
-                                                    <p><time>${formattedDate}</time>, ${item.section}</p>
+                                                    <p><time>${formattedDate}</time>, ${item.sections[0]}</p>
                                                 </div>
                                             </a>
                                         </article>`;
+
                                     containerElement.appendChild(articleElement);
                                 }
                             });
@@ -880,25 +901,36 @@ line-height: 16px;">
                                 articleElement.classList.add('article');
 
                                 if (index > 2 && index <= 4) {
-                                    const img =
+                                    const fileExtension = item.mainImage.split('.').pop()
+                                        .toLowerCase();
+                                    const isVideo = ['mp4', 'webm', 'ogg'].includes(
+                                        fileExtension);
+
+                                    const mediaElement = isVideo ?
+                                        `<video class="mb-3 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop muted playsinline>
+                                            <source src="${item.mainImage}" type="video/${fileExtension}">
+                                        </video>` :
                                         `<img class="mb-3 img-fluid w-100 h-100 rounded object-fit-cover" src="${item.mainImage}" alt="${item.mainImgDesc}">`;
+
                                     const formattedDate = new Date(item.publishedAt)
                                         .toLocaleDateString('uk-UA', {
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric'
                                         }).replace(/\sр\.$/, '');
+
                                     articleElement.innerHTML = `
                                         <article>
                                             <a href="https://daycom.com.ua/news/${item.url}">
-                                                ${index === 3 ? img : ''}
+                                                ${index === 3 ? mediaElement : ''}
                                                 <h2>${item.title}</h2>
                                                 <p>${item.desc}</p>
                                                 <div>
-                                                    <p><time>${formattedDate}</time>, ${item.section}</p>
+                                                    <p><time>${formattedDate}</time>, ${item.sections[0]}</p>
                                                 </div>
                                             </a>
                                         </article>`;
+
                                     containerElement.appendChild(articleElement);
                                 }
                             });
@@ -917,8 +949,17 @@ line-height: 16px;">
                                 articleElement.classList.add('article', 'col-xl-3');
 
                                 if (index > 4) {
-                                    const img =
+                                    const fileExtension = item.mainImage.split('.').pop()
+                                        .toLowerCase();
+                                    const isVideo = ['mp4', 'webm', 'ogg'].includes(
+                                        fileExtension);
+
+                                    const mediaElement = isVideo ?
+                                        `<video class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop muted playsinline>
+                                            <source src="${item.mainImage}" type="video/${fileExtension}">
+                                        </video>` :
                                         `<img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" src="${item.mainImage}" alt="${item.mainImgDesc}">`;
+
                                     const border = ` class="bb-sm mb-2 mb-xl-0"`;
                                     const formattedDate = new Date(item.publishedAt)
                                         .toLocaleDateString('uk-UA', {
@@ -926,17 +967,19 @@ line-height: 16px;">
                                             month: 'long',
                                             day: 'numeric'
                                         }).replace(/\sр\.$/, '');
+
                                     articleElement.innerHTML = `
                                         <article ${border}>
                                             <a href="https://daycom.com.ua/news/${item.url}">
-                                                ${img}
+                                                ${mediaElement}
                                                 <h2>${item.title}</h2>
                                                 <p>${item.desc}</p>
                                                 <div>
-                                                    <p><time>${formattedDate}</time>, ${item.section}</p>
+                                                    <p><time>${formattedDate}</time>, ${item.sections[0]}</p>
                                                 </div>
                                             </a>
                                         </article>`;
+
                                     row.appendChild(articleElement);
                                 }
                             });
@@ -976,7 +1019,7 @@ line-height: 16px;">
     <script>
         window.addEventListener("scroll", function() {
             const logo = document.querySelector(".slide-in-logo");
-            if (window.scrollY > 100) { // Например, при прокрутке больше 100px
+            if (window.scrollY > 100) {
                 logo.classList.add("visible");
             } else {
                 logo.classList.remove("visible");

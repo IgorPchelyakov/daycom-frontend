@@ -415,8 +415,22 @@
                     @if ($key < 1)
                         <article>
                             <a href="{{ route('news.index', ['url' => $item['url']]) }}" class="bb-sm">
-                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
-                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                @php
+                                    $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                    $isVideo = in_array(strtolower($extension), ['mp4', 'webm', 'ogg']);
+                                @endphp
+
+                                @if ($isVideo)
+                                    <video class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop muted
+                                        playsinline>
+                                        <source src="{{ $item['mainImage'] }}" type="video/{{ $extension }}">
+                                    </video>
+                                @else
+                                    <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                @endif
                                 <h2>{{ $item['title'] }}</h2>
                                 <p>{{ $item['desc'] }}</p>
                                 <div>
@@ -437,8 +451,22 @@
                                 <div
                                     class="{{ $key === 1 ? 'border-bottom mb-3' : '' }} {{ $key === 2 ? 'bb-sm mb-3 mb-xl-0' : '' }}">
                                     @if ($key === 1)
-                                        <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
-                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                            $isVideo = in_array(strtolower($extension), ['mp4', 'webm', 'ogg']);
+                                        @endphp
+
+                                        @if ($isVideo)
+                                            <video class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay
+                                                loop muted playsinline>
+                                                <source src="{{ $item['mainImage'] }}" type="video/{{ $extension }}">
+                                            </video>
+                                        @else
+                                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                        @endif
                                     @endif
                                     <h2>{{ $item['title'] }}</h2>
                                     <p>{{ $item['desc'] }}</p>
@@ -494,8 +522,22 @@
                 @if ($key > 9 && $key < 14)
                     <article class="">
                         <a href="{{ route('news.index', ['url' => $item['url']]) }}">
-                            <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
-                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            {{-- <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                            @php
+                                $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                $isVideo = in_array(strtolower($extension), ['mp4', 'webm', 'ogg']);
+                            @endphp
+
+                            @if ($isVideo)
+                                <video class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay loop muted
+                                    playsinline>
+                                    <source src="{{ $item['mainImage'] }}" type="video/{{ $extension }}">
+                                </video>
+                            @else
+                                <img class="mb-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                            @endif
                             <h2 class="{{ $key === 9 ? '' : 'mb-2 pb-2' }}">{{ $item['title'] }}</h2>
                             <div class="{{ $key !== 13 ? 'bb-sm mb-3 mb-xl-0' : '' }}">
                                 <p>
@@ -631,7 +673,8 @@
                                                             style="height: 110px; bottom: 0;">
                                                             <div class="d-md-flex align-items-center justify-content-between gap-4 w-100 h-100"
                                                                 style="padding: 10px 30px; position: absolute; bottom: 0; max-width: 1200px; max-height: 110px;">
-                                                                <div class="d-flex flex-column text-start text-white w-100">
+                                                                <div
+                                                                    class="d-flex flex-column text-start text-white w-100">
                                                                     @if (isset($headlines[$key]))
                                                                         <h3 style="font-weight: 500; font-size: 20px; line-height: 24px;"
                                                                             class="w-100">
@@ -937,8 +980,22 @@
                                     </div>
                                 </div>
                                 <div class="img-prev img-mini">
-                                    <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
-                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                    {{-- <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                    @php
+                                        $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                        $isVideo = in_array(strtolower($extension), ['mp4', 'webm', 'ogg']);
+                                    @endphp
+
+                                    @if ($isVideo)
+                                        <video class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay
+                                            loop muted playsinline>
+                                            <source src="{{ $item['mainImage'] }}" type="video/{{ $extension }}">
+                                        </video>
+                                    @else
+                                        <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                            src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                    @endif
                                 </div>
                             </a>
                         </article>
@@ -1076,7 +1133,8 @@
                                                             style="height: 110px; bottom: 0;">
                                                             <div class="d-md-flex align-items-center justify-content-between gap-4 w-100 h-100"
                                                                 style="padding: 10px 30px; position: absolute; bottom: 0; max-width: 1200px; max-height: 110px;">
-                                                                <div class="d-flex flex-column text-start text-white  w-100">
+                                                                <div
+                                                                    class="d-flex flex-column text-start text-white  w-100">
                                                                     @if (isset($headlines[$key]))
                                                                         <h3 style="font-weight: 500; font-size: 20px; line-height: 24px;"
                                                                             class="w-100">
@@ -1381,8 +1439,22 @@
                                 </div>
                             </div>
                             <div class="img-prev img-mini">
-                                <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
-                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                {{-- <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                    src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}"> --}}
+                                @php
+                                    $extension = pathinfo($item['mainImage'], PATHINFO_EXTENSION);
+                                    $isVideo = in_array(strtolower($extension), ['mp4', 'webm', 'ogg']);
+                                @endphp
+
+                                @if ($isVideo)
+                                    <video class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover" autoplay
+                                        loop muted playsinline>
+                                        <source src="{{ $item['mainImage'] }}" type="video/{{ $extension }}">
+                                    </video>
+                                @else
+                                    <img class="mb-3 mb-xl-2 img-fluid w-100 h-100 rounded object-fit-cover"
+                                        src="{{ $item['mainImage'] }}" alt="{{ $item['mainImgDesc'] }}">
+                                @endif
                             </div>
                         </a>
                     </article>

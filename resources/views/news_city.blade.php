@@ -469,8 +469,21 @@
         </div>
     @else
         <div class="container px-0">
-            <img class="img-fluid w-100 object-fit-cover" src="{{ $data['mainImage'] }}"
-                alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="img-fluid w-100 object-fit-cover" src="{{ $data['mainImage'] }}"
+                alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+
+            @if ($isVideo)
+                <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            @endif
             <figcaption style="padding: 0 20px;">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
             </figcaption>
         </div>
@@ -886,23 +899,62 @@
     </div>
     @if ($data['imageSize'] === true)
         <div class="content__container mx-auto">
-            <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
-                alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+
+            @if ($isVideo)
+                <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            @endif
             <div class="title-block" style="padding: 0 20px;">
                 <figcaption>{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
             </div>
         </div>
     @else
         <div class="container px-0">
-            <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
-                alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+            @if ($isVideo)
+                <video class="" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}">
+            @endif
             <div class="title-block" style="padding: 0 20px;">
                 <figcaption>{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
             </div>
         </div>
     @endif
 @elseif ($data['postType'] === 'Публікація Premium')
-    <img class="img-fluid object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+    {{-- <img class="img-fluid object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+     --}}
+    @php
+        $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+    @endphp
+
+    @if ($isVideo)
+        <video class="w-100" style="min-height: 400px;" controls muted>
+            <source src="{{ $data['mainImage'] }}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+    @else
+        <img class="img-fluid object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+            alt="{{ $data['mainImgDesc'] }}">
+    @endif
     <figcaption class="title-block">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
     <div class="title-container title-block">
         <h1 class="">{{ $data['title'] }}</h1>
@@ -920,7 +972,19 @@
             @endif
         </div>
         <div class="col-xl-6">
-            <img class="object-fit-cover h-100" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="object-fit-cover h-100" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+            @if ($isVideo)
+                <video class="" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}">
+            @endif
         </div>
     </div>
     <figcaption class="title-block text-end">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
@@ -935,7 +999,19 @@
             @endif
         </div>
         <div class="col-xl-6">
-            <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+            @if ($isVideo)
+                <video class="" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}">
+            @endif
         </div>
     </div>
     <figcaption class="title-block text-end">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}

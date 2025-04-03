@@ -534,17 +534,38 @@
                 <h2 class="border-bottom mb-3 pb-3">{{ $data['desc'] }}</h2>
             @endif
         </div>
+        @php
+            $extension = pathinfo($data['mainImage'], PATHINFO_EXTENSION);
+            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+        @endphp
         @if ($data['imageSize'] === true)
             <div class="content__container mx-auto" style="max-width: 600px;">
-                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
-                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+                {{-- <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+                @if (in_array(strtolower($extension), $imageExtensions))
+                    <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                        src="{{ asset($data['mainImage']) }}" alt="{{ $data['mainImgDesc'] }}">
+                @elseif (in_array(strtolower($extension), $videoExtensions))
+                    <video autoplay muted loop class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;">
+                        <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+                    </video>
+                @endif
                 <figcaption style="padding: 0 20px;">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
                 </figcaption>
             </div>
         @else
             <div class="container px-0">
-                <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
-                    alt="{{ $data['mainImgDesc'] }}">
+                {{-- <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}"> --}}
+                @if (in_array(strtolower($extension), $imageExtensions))
+                    <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;"
+                        src="{{ asset($data['mainImage']) }}" alt="{{ $data['mainImgDesc'] }}">
+                @elseif (in_array(strtolower($extension), $videoExtensions))
+                    <video autoplay muted loop class="img-fluid w-100 object-fit-cover" style="min-height: 400px;">
+                        <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+                    </video>
+                @endif
                 <figcaption style="padding: 0 20px;">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
                 </figcaption>
             </div>
@@ -972,25 +993,59 @@
             @endif
             <h1 class="border-bottom mb-3 pb-3 px-xl-0 text-center smoothie title-block">{{ $data['title'] }}</h1>
         </div>
+        @php
+            $extension = pathinfo($data['mainImage'], PATHINFO_EXTENSION);
+            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+        @endphp
         @if ($data['imageSize'] === true)
             <div class="content__container mx-auto">
-                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
-                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+                {{-- <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+                @if (in_array(strtolower($extension), $imageExtensions))
+                    <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                        src="{{ asset($data['mainImage']) }}" alt="{{ $data['mainImgDesc'] }}">
+                @elseif (in_array(strtolower($extension), $videoExtensions))
+                    <video autoplay muted loop class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;">
+                        <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+                    </video>
+                @endif
                 <div class="title-block" style="padding: 0 20px;">
                     <figcaption>{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
                 </div>
             </div>
         @else
             <div class="container px-0">
-                <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
-                    alt="{{ $data['mainImgDesc'] }}">
+                {{-- <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}"> --}}
+                @if (in_array(strtolower($extension), $imageExtensions))
+                    <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;"
+                        src="{{ asset($data['mainImage']) }}" alt="{{ $data['mainImgDesc'] }}">
+                @elseif (in_array(strtolower($extension), $videoExtensions))
+                    <video autoplay muted loop class="img-fluid w-100 object-fit-cover" style="min-height: 400px;">
+                        <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+                    </video>
+                @endif
                 <div class="title-block" style="padding: 0 20px;">
                     <figcaption>{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
                 </div>
             </div>
         @endif
     @elseif ($data['postType'] === 'Публікація Premium')
-        <img class="img-fluid object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+        @php
+            $extension = pathinfo($data['mainImage'], PATHINFO_EXTENSION);
+            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+        @endphp
+        {{-- <img class="img-fluid object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+        @if (in_array(strtolower($extension), $imageExtensions))
+            <img class="img-fluid object-fit-cover" src="{{ asset($data['mainImage']) }}"
+                alt="{{ $data['mainImgDesc'] }}">
+        @elseif (in_array(strtolower($extension), $videoExtensions))
+            <video autoplay muted loop class="img-fluid object-fit-cover" style="min-height: 400px;">
+                <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+            </video>
+        @endif
         <figcaption class="title-block">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
         <div class="title-container title-block">
             <div class="">
@@ -1020,7 +1075,20 @@
                 @endif
             </div>
             <div class="col-xl-6">
-                <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+                {{-- <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+                @php
+                    $extension = pathinfo($data['mainImage'], PATHINFO_EXTENSION);
+                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                    $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                @endphp
+                @if (in_array(strtolower($extension), $imageExtensions))
+                    <img class="object-fit-cover" src="{{ asset($data['mainImage']) }}"
+                        alt="{{ $data['mainImgDesc'] }}">
+                @elseif (in_array(strtolower($extension), $videoExtensions))
+                    <video autoplay muted loop class="object-fit-cover" style="min-height: 400px;">
+                        <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+                    </video>
+                @endif
             </div>
         </div>
         <figcaption class="title-block text-end">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
@@ -1040,7 +1108,20 @@
                 @endif
             </div>
             <div class="col-xl-6">
-                <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+                {{-- <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+                @php
+                    $extension = pathinfo($data['mainImage'], PATHINFO_EXTENSION);
+                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                    $videoExtensions = ['mp4', 'avi', 'mov', 'webm'];
+                @endphp
+                @if (in_array(strtolower($extension), $imageExtensions))
+                    <img class="object-fit-cover" src="{{ asset($data['mainImage']) }}"
+                        alt="{{ $data['mainImgDesc'] }}">
+                @elseif (in_array(strtolower($extension), $videoExtensions))
+                    <video autoplay muted loop class="object-fit-cover" style="min-height: 400px;">
+                        <source src="{{ asset($data['mainImage']) }}" type="video/{{ $extension }}">
+                    </video>
+                @endif
             </div>
         </div>
         <figcaption class="title-block text-end">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
@@ -1095,7 +1176,20 @@
                             <a href="{{ $article['url'] }}">
                                 <h2>{{ $article['title'] }}</h2>
                             </a>
-                            <img src="{{ $article['mainImage'] }}" alt="Главное изображение">
+                            {{-- <img src="{{ $article['mainImage'] }}" alt="Главное изображение"> --}}
+                            @php
+                                $fileExtension = pathinfo($article['mainImage'], PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                <img src="{{ $article['mainImage'] }}" alt="Головне зображення">
+                            @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg']))
+                                <video controls>
+                                    <source src="{{ $article['mainImage'] }}" type="video/{{ $fileExtension }}">
+                                </video>
+                            @else
+                                <p>Файл не підтримується для відображення.</p>
+                            @endif
                             {!! $article['content'] !!}
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
@@ -1997,16 +2091,48 @@
     </div>
     @if ($data['imageSize'] === true)
         <div class="content__container mx-auto" style="max-width: 600px;">
-            <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+            {{-- <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
                 src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
             <figcaption style="padding: 0 20px;">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
+            </figcaption> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+
+            @if ($isVideo)
+                <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            @endif
+            <figcaption style="padding: 0 20px;">
+                {{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
             </figcaption>
         </div>
     @else
         <div class="container px-0">
-            <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+            {{-- <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
                 alt="{{ $data['mainImgDesc'] }}">
             <figcaption style="padding: 0 20px;">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
+            </figcaption> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+
+            @if ($isVideo)
+                <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            @endif
+            <figcaption style="padding: 0 20px;">
+                {{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
             </figcaption>
         </div>
     @endif
@@ -2428,23 +2554,62 @@
     </div>
     @if ($data['imageSize'] === true)
         <div class="content__container mx-auto">
-            <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
-                src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+
+            @if ($isVideo)
+                <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            @endif
             <div class="title-block" style="padding: 0 20px;">
                 <figcaption>{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
             </div>
         </div>
     @else
         <div class="container px-0">
-            <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
-                alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="img-fluid w-100 object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+
+            @if ($isVideo)
+                <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="img-fluid w-100 pb-1 object-fit-cover" style="min-height: 400px;"
+                    src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            @endif
             <div class="title-block" style="padding: 0 20px;">
                 <figcaption>{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
             </div>
         </div>
     @endif
 @elseif ($data['postType'] === 'Публікація Premium')
-    <img class="img-fluid object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+    {{-- <img class="img-fluid object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+    @php
+        $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+    @endphp
+
+    @if ($isVideo)
+        <video class="w-100 pb-1" style="min-height: 400px;" controls muted>
+            <source src="{{ $data['mainImage'] }}" type="video/mp4">
+            Ваш браузер не підтримує відео.
+        </video>
+    @else
+        <img class="img-fluid object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+            alt="{{ $data['mainImgDesc'] }}">
+    @endif
     <figcaption class="title-block">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}</figcaption>
     <div class="title-container title-block">
         <div class="">
@@ -2464,7 +2629,19 @@
             @endif
         </div>
         <div class="col-xl-6">
-            <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+            @if ($isVideo)
+                <video class="" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}">
+            @endif
         </div>
     </div>
     <figcaption class="title-block text-end">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
@@ -2479,7 +2656,19 @@
             @endif
         </div>
         <div class="col-xl-6">
-            <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}">
+            {{-- <img class="object-fit-cover" src="{{ $data['mainImage'] }}" alt="{{ $data['mainImgDesc'] }}"> --}}
+            @php
+                $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $data['mainImage']);
+            @endphp
+            @if ($isVideo)
+                <video class="" style="min-height: 400px;" controls muted>
+                    <source src="{{ $data['mainImage'] }}" type="video/mp4">
+                    Ваш браузер не підтримує відео.
+                </video>
+            @else
+                <img class="object-fit-cover" style="min-height: 400px;" src="{{ $data['mainImage'] }}"
+                    alt="{{ $data['mainImgDesc'] }}">
+            @endif
         </div>
     </div>
     <figcaption class="title-block text-end">{{ $data['mainImgDesc'] . ' - ' . $data['mainImgAuthor'] }}
@@ -2490,7 +2679,9 @@
         <div class="content__container mx-auto mt-4">
             <div class="content">
                 <div class="border-top">
-                    {!! $data['content'] !!}
+                    <div class="video-container">
+                        {!! $data['content'] !!}
+                    </div>
                 </div>
             </div>
             <div class="content">
@@ -2955,7 +3146,7 @@
         </div>
     @endif
     @endif
-    {{-- @php
+    @php
         function filterPosts($posts, $currentDate, $limit)
         {
             $filteredPosts = [];
@@ -2986,9 +3177,25 @@
                             <article class="col">
                                 <a href="{{ $post['url'] }}">
                                     <div>
-                                        <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
+                                        {{-- <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
                                             style="min-width: 100%;" src="{{ $post['mainImage'] }}"
-                                            alt="{{ $post['mainImgDesc'] }}">
+                                            alt="{{ $post['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $fileExtension = pathinfo($post['mainImage'], PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                            <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
+                                                style="min-width: 100%;" src="{{ $post['mainImage'] }}"
+                                                alt="{{ $post['mainImgDesc'] }}">
+                                        @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg']))
+                                            <video class="img-fluid w-100 h-100 object-fit-cover rounded mb-2" controls>
+                                                <source src="{{ $post['mainImage'] }}"
+                                                    type="video/{{ $fileExtension }}">
+                                            </video>
+                                        @else
+                                            <p>Файл не підтримується.</p>
+                                        @endif
                                         <h2 class="other-title">{{ $post['title'] }}</h2>
                                     </div>
                                 </a>
@@ -3003,8 +3210,24 @@
                             <article class="col">
                                 <a href="{{ $post['url'] }}">
                                     <div class="">
-                                        <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
-                                            src="{{ $post['mainImage'] }}" alt="{{ $post['mainImgDesc'] }}">
+                                        {{-- <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
+                                            src="{{ $post['mainImage'] }}" alt="{{ $post['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $fileExtension = pathinfo($post['mainImage'], PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                            <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
+                                                style="min-width: 100%;" src="{{ $post['mainImage'] }}"
+                                                alt="{{ $post['mainImgDesc'] }}">
+                                        @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg']))
+                                            <video class="img-fluid w-100 h-100 object-fit-cover rounded mb-2" controls>
+                                                <source src="{{ $post['mainImage'] }}"
+                                                    type="video/{{ $fileExtension }}">
+                                            </video>
+                                        @else
+                                            <p>Файл не підтримується.</p>
+                                        @endif
                                         <h2 class="other-title">{{ $post['title'] }}</h2>
                                     </div>
                                 </a>
@@ -3019,8 +3242,24 @@
                             <article class="col">
                                 <a href="{{ $post['url'] }}">
                                     <div class="">
-                                        <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
-                                            src="{{ $post['mainImage'] }}" alt="{{ $post['mainImgDesc'] }}">
+                                        {{-- <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
+                                            src="{{ $post['mainImage'] }}" alt="{{ $post['mainImgDesc'] }}"> --}}
+                                        @php
+                                            $fileExtension = pathinfo($post['mainImage'], PATHINFO_EXTENSION);
+                                        @endphp
+
+                                        @if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                            <img class="img-fluid w-100 h-100 object-fit-cover rounded mb-2"
+                                                style="min-width: 100%;" src="{{ $post['mainImage'] }}"
+                                                alt="{{ $post['mainImgDesc'] }}">
+                                        @elseif (in_array(strtolower($fileExtension), ['mp4', 'webm', 'ogg']))
+                                            <video class="img-fluid w-100 h-100 object-fit-cover rounded mb-2" controls>
+                                                <source src="{{ $post['mainImage'] }}"
+                                                    type="video/{{ $fileExtension }}">
+                                            </video>
+                                        @else
+                                            <p>Файл не підтримується.</p>
+                                        @endif
                                         <h2 class="other-title">{{ $post['title'] }}</h2>
                                     </div>
                                 </a>
@@ -3046,5 +3285,5 @@
                 @endforeach
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
